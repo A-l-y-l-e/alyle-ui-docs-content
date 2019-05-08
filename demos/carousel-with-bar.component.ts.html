@@ -1,0 +1,46 @@
+<div class="lang-ts ttb"><pre class="ttm"><span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Component<span class="tt18 ttae">,</span> ChangeDetectionStrategy <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/core'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyTheme2 <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui'</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">const</span> <span class="tt18 ttbb">STYLES</span> <span class="tt18 ttb0">=</span> <span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  carousel<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    maxWidth<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'360px'</span><span class="tt18 ttae">,</span>
+    height<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'220px'</span><span class="tt18 ttae">,</span>
+    margin<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'auto'</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  carouselItem<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    textAlign<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'center'</span>
+  <span class="tt18 ttae">&#125;</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+@<span class="tt18 tta3">Component</span><span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  selector<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'aui-carousel-with-bar'</span><span class="tt18 ttae">,</span>
+  templateUrl<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'./carousel-with-bar.component.html'</span><span class="tt18 ttae">,</span>
+  changeDetection<span class="tt18 ttae">:</span> ChangeDetectionStrategy<span class="tt18 ttae">.</span>OnPush
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span>
+<span class="tt18 tt1j">export</span> <span class="tt18 tt1j">class</span> <span class="tt18 ttc8">CarouselWithBarComponent</span> <span class="tt18 ttae">&#123;</span>
+
+  <span class="tt18 tt1j">readonly</span> classes <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>theme<span class="tt18 ttae">.</span><span class="tt18 tta3">addStyleSheet</span><span class="tt18 ttae">(</span><span class="tt18 ttbb">STYLES</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  items <span class="tt18 ttb0">=</span> <span class="tt18 ttae">[</span>
+    <span class="tt18 ttae">&#123;</span>
+      title<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'Mountains'</span><span class="tt18 ttae">,</span>
+      img<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'https://firebasestorage.googleapis.com/v0/b/alyle-ui.appspot.com/o/img%2F'</span> <span class="tt18 ttb0">+</span>
+      <span class="tt18 tt3z">'Mountains-Blue.jpg?alt=media&amp;token=d04f0279-79c6-4752-8b5a-cccd73720243'</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttae">&#123;</span>
+      title<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'Four Lakes, Queshuachaca'</span><span class="tt18 ttae">,</span>
+      img<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'https://firebasestorage.googleapis.com/v0/b/head-expeditions.appspot.com/o/img%2F'</span> <span class="tt18 ttb0">+</span>
+      <span class="tt18 tt3z">'files%2F61028703-1476458588-5a289afc-59e8-4a8d-1dea-369e-570b-cfb2.jpg?alt=media&amp;token=ceaf31b5-2b87-438b-b0d1-e4cc4f8603a2'</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttae">&#123;</span>
+      title<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'Mountains'</span><span class="tt18 ttae">,</span>
+      img<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'https://firebasestorage.googleapis.com/v0/b/alyle-ui.appspot.com/o/img%2F'</span> <span class="tt18 ttb0">+</span>
+          <span class="tt18 tt3z">'mads-schmidt-rasmussen-567063-unsplash.jpg?alt=media&amp;token=5acdfbb2-7eff-4879-b7d0-a441826d88ae'</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">]</span><span class="tt18 ttae">;</span>
+
+  <span class="tt18 tt1j">constructor</span><span class="tt18 ttae">(</span>
+    <span class="tt18 parameter"><span class="tt18 tt1j">private</span> theme<span class="tt18 ttae">:</span> LyTheme2</span>
+  <span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span> <span class="tt18 ttae">&#125;</span>
+
+<span class="tt18 ttae">&#125;</span>
+</pre></div>

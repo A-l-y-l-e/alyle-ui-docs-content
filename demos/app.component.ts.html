@@ -1,0 +1,358 @@
+<div class="lang-ts ttb"><pre class="ttm"><span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Component<span class="tt18 ttae">,</span> ChangeDetectionStrategy<span class="tt18 ttae">,</span> Renderer2<span class="tt18 ttae">,</span> OnInit<span class="tt18 ttae">,</span> ViewChild<span class="tt18 ttae">,</span> ElementRef <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/core'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> SwUpdate <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/service-worker'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Router<span class="tt18 ttae">,</span> NavigationEnd <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/router'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> <span class="tt18 ttbb">AUI_VERSION</span><span class="tt18 ttae">,</span> LyTheme2<span class="tt18 ttae">,</span> ThemeVariables<span class="tt18 ttae">,</span> Platform<span class="tt18 ttae">,</span> ThemeRef <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyIconService <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/icon'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyDrawer <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/drawer'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> CustomMinimaLight<span class="tt18 ttae">,</span> CustomMinimaDark<span class="tt18 ttae">,</span> AUIThemeVariables <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./app.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LySnackBar <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/snack-bar'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> DomSanitizer <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/platform-browser'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> AUIRoutes <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./routes'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Location <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/common'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> filter <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'rxjs/operators'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> TitleComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./document/title/title.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> PageContentComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./page-content/page-content.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> prismCustomClass <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./core/prism-custom-class'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttb0">*</span> <span class="tt18 tt1j">as</span> _chroma <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'chroma-js'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> <span class="tt18 ttbb">SVG_ICONS</span> <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./core/svg-icons'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">const</span> chroma <span class="tt18 ttb0">=</span> _chroma<span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">const</span> <span class="tt18 function-variable tta3">styles</span> <span class="tt18 ttb0">=</span> <span class="tt18 ttae">(</span><span class="tt18 parameter">theme<span class="tt18 ttae">:</span> ThemeVariables <span class="tt18 ttb0">&amp;</span> CustomMinimaLight <span class="tt18 ttb0">&amp;</span> CustomMinimaDark</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  $name<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'app'</span><span class="tt18 ttae">,</span>
+  <span class="tt18 tt3z">'@global'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt3z">'body'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      backgroundColor<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>background<span class="tt18 ttae">.</span><span class="tt18 tt1j">default</span><span class="tt18 ttae">,</span>
+      color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>text<span class="tt18 ttae">.</span><span class="tt18 tt1j">default</span><span class="tt18 ttae">,</span>
+      fontFamily<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>typography<span class="tt18 ttae">.</span>fontFamily<span class="tt18 ttae">,</span>
+      margin<span class="tt18 ttae">:</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">,</span>
+      direction<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>direction
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  appContainer<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    display<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'flex'</span><span class="tt18 ttae">,</span>
+    alignItems<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'center'</span><span class="tt18 ttae">,</span>
+    justifyContent<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'center'</span><span class="tt18 ttae">,</span>
+    minHeight<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'calc(100vh)'</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'&#123;demo&#125;'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      maxWidth<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'960px'</span><span class="tt18 ttae">,</span>
+      flex<span class="tt18 ttae">:</span> <span class="tt18 ttap">1</span><span class="tt18 ttae">,</span>
+      padding<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'96px 2rem'</span><span class="tt18 ttae">,</span>
+      width<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'100%'</span><span class="tt18 ttae">,</span>
+      boxSizing<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'border-box'</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  demo<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+  docsViewer<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    p<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      lineHeight<span class="tt18 ttae">:</span> <span class="tt18 ttap">1.5</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  root<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    display<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'block'</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'&amp; .docs-viewer > * > a:not([ly-button]), &amp; ul a:not([ly-button]), &amp; p > a'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>accent<span class="tt18 ttae">.</span><span class="tt18 tt1j">default</span><span class="tt18 ttae">,</span>
+      textDecoration<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'inherit'</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'&amp;:hover'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        textDecoration<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'underline'</span>
+      <span class="tt18 ttae">&#125;</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  <span class="tt18 tt3o">// header: &#123;</span>
+  <span class="tt18 tt3o">//   position: 'fixed',</span>
+  <span class="tt18 tt3o">//   zIndex: 11,</span>
+  <span class="tt18 tt3o">//   width: '100%',</span>
+  <span class="tt18 tt3o">//   // '@media print': &#123;</span>
+  <span class="tt18 tt3o">//   //   color: 'blue'</span>
+  <span class="tt18 tt3o">//   // &#125;,</span>
+  <span class="tt18 tt3o">//   // '&amp;:hover': &#123;</span>
+  <span class="tt18 tt3o">//   //   '@media screen': &#123;</span>
+  <span class="tt18 tt3o">//   //     color: 'red'</span>
+  <span class="tt18 tt3o">//   //   &#125;,</span>
+  <span class="tt18 tt3o">//   // &#125;,</span>
+  <span class="tt18 tt3o">// &#125;,</span>
+  drawer<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt3z">'&amp;::-webkit-scrollbar-thumb'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      background<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:rgba(0,0,0,.26);color:white;opacity:0.26">rgba(0,0,0,.26)</span>'</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'&amp;::-webkit-scrollbar'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      height<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'3px'</span><span class="tt18 ttae">,</span>
+      width<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'3px'</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  drawerUl<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    overflow<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'hidden'</span><span class="tt18 ttae">,</span>
+    position<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'relative'</span><span class="tt18 ttae">,</span>
+    listStyle<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'none'</span><span class="tt18 ttae">,</span>
+    padding<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'2rem 1.8rem'</span><span class="tt18 ttae">,</span>
+    margin<span class="tt18 ttae">:</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">,</span>
+    borderBottom<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'1px solid <span style="background:rgba(0, 0, 0, 0.11);color:white;opacity:0.11">rgba(0, 0, 0, 0.11)</span>'</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  drawerButton<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>drawerButton<span class="tt18 ttae">,</span>
+    fontWeight<span class="tt18 ttae">:</span> <span class="tt18 ttap">400</span><span class="tt18 ttae">,</span>
+    borderBefore<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'3px solid transparent'</span><span class="tt18 ttae">,</span>
+    display<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'flex'</span><span class="tt18 ttae">,</span>
+    justifyContent<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'space-between'</span><span class="tt18 ttae">,</span>
+    borderRadius<span class="tt18 ttae">:</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'&amp;:hover, &amp;&#123;onLinkActive&#125;'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>primary<span class="tt18 ttae">.</span><span class="tt18 tt1j">default</span><span class="tt18 ttae">,</span>
+      borderBefore<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'3px solid'</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  onLinkActive<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+  footer<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    position<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'relative'</span><span class="tt18 ttae">,</span>
+    padding<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'1em'</span><span class="tt18 ttae">,</span>
+    textAlign<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'center'</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  discordHover<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt3z">'&amp;:hover'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>discord
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">const</span> <span class="tt18 function-variable tta3">PRISM_STYLES</span> <span class="tt18 ttb0">=</span> <span class="tt18 ttae">(</span><span class="tt18 parameter">theme<span class="tt18 ttae">:</span> AUIThemeVariables<span class="tt18 ttae">,</span> tref<span class="tt18 ttae">:</span> ThemeRef</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+  <span class="tt18 tt1j">const</span> $host <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'fonts/firacode/'</span><span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">const</span> classes <span class="tt18 ttb0">=</span> tref<span class="tt18 ttae">.</span><span class="tt18 tta3">toClassSelector</span><span class="tt18 ttae">(</span><span class="tt18 tta3">prismCustomClass</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+  <span class="tt18 tt1j">return</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt3z">'@global'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt3z">'@font-face'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        fontFamily<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'Fira Code'</span><span class="tt18 ttae">,</span>
+        src<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">eot/FiraCode-Light.eot')`</span></span><span class="tt18 ttae">,</span>
+        <span class="tt18 template-string"><span class="tt18 tt3z">`url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">eot/FiraCode-Light.eot') format('embedded-opentype'),
+            url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">woff2/FiraCode-Light.woff2') format('woff2'),
+            url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">woff/FiraCode-Light.woff') format('woff'),
+            url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">ttf/FiraCode-Light.ttf') format('truetype')`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
+        fontWeight<span class="tt18 ttae">:</span> <span class="tt18 ttap">300</span><span class="tt18 ttae">,</span>
+        fontStyle<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'normal'</span><span class="tt18 ttae">,</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'@font-face '</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          fontFamily<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'Fira Code'</span><span class="tt18 ttae">,</span>
+          src<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">eot/FiraCode-Regular.eot')`</span></span><span class="tt18 ttae">,</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">eot/FiraCode-Regular.eot') format('embedded-opentype'),`</span></span> <span class="tt18 ttb0">+</span>
+              <span class="tt18 template-string"><span class="tt18 tt3z">`url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">woff2/FiraCode-Regular.woff2') format('woff2'),`</span></span> <span class="tt18 ttb0">+</span>
+              <span class="tt18 template-string"><span class="tt18 tt3z">`url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">woff/FiraCode-Regular.woff') format('woff'),`</span></span> <span class="tt18 ttb0">+</span>
+              <span class="tt18 template-string"><span class="tt18 tt3z">`url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">ttf/FiraCode-Regular.ttf') format('truetype')`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
+          fontWeight<span class="tt18 ttae">:</span> <span class="tt18 ttap">400</span><span class="tt18 ttae">,</span>
+          fontStyle<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'normal'</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+
+      <span class="tt18 tt3z">'@font-face  '</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          fontFamily<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'Fira Code'</span><span class="tt18 ttae">,</span>
+          src<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">eot/FiraCode-Medium.eot')`</span></span><span class="tt18 ttae">,</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">eot/FiraCode-Medium.eot') format('embedded-opentype'),`</span></span> <span class="tt18 ttb0">+</span>
+              <span class="tt18 template-string"><span class="tt18 tt3z">`url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">woff2/FiraCode-Medium.woff2') format('woff2'),`</span></span> <span class="tt18 ttb0">+</span>
+              <span class="tt18 template-string"><span class="tt18 tt3z">`url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">woff/FiraCode-Medium.woff') format('woff'),`</span></span> <span class="tt18 ttb0">+</span>
+              <span class="tt18 template-string"><span class="tt18 tt3z">`url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">ttf/FiraCode-Medium.ttf') format('truetype')`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
+          fontWeight<span class="tt18 ttae">:</span> <span class="tt18 ttap">500</span><span class="tt18 ttae">,</span>
+          fontStyle<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'normal'</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+
+      <span class="tt18 tt3z">'@font-face   '</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          fontFamily<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'Fira Code'</span><span class="tt18 ttae">,</span>
+          src<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">eot/FiraCode-Bold.eot')`</span></span><span class="tt18 ttae">,</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">eot/FiraCode-Bold.eot') format('embedded-opentype'),`</span></span> <span class="tt18 ttb0">+</span>
+              <span class="tt18 template-string"><span class="tt18 tt3z">`url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">woff2/FiraCode-Bold.woff2') format('woff2'),`</span></span> <span class="tt18 ttb0">+</span>
+              <span class="tt18 template-string"><span class="tt18 tt3z">`url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">woff/FiraCode-Bold.woff') format('woff'),`</span></span> <span class="tt18 ttb0">+</span>
+              <span class="tt18 template-string"><span class="tt18 tt3z">`url('</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>$host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">ttf/FiraCode-Bold.ttf') format('truetype')`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
+          fontWeight<span class="tt18 ttae">:</span> <span class="tt18 ttap">700</span><span class="tt18 ttae">,</span>
+          fontStyle<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'normal'</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+
+      <span class="tt18 ttae">[</span>classes<span class="tt18 ttae">.</span>pre<span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        padding<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'16px'</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 ttae">[</span>classes<span class="tt18 ttae">.</span>code<span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        padding<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'4px 2px'</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 ttae">[</span>
+        <span class="tt18 ttae">[</span>
+          classes<span class="tt18 ttae">.</span>pre<span class="tt18 ttae">,</span>
+          classes<span class="tt18 ttae">.</span>code
+        <span class="tt18 ttae">]</span><span class="tt18 ttae">.</span><span class="tt18 tta3">join</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span>
+      <span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>codeColor<span class="tt18 ttae">,</span>
+        backgroundColor<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>codeBg<span class="tt18 ttae">,</span>
+        fontFamily<span class="tt18 ttae">:</span> <span class="tt18 template-string"><span class="tt18 tt3z">`'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace`</span></span><span class="tt18 ttae">,</span>
+        textAlign<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'left'</span><span class="tt18 ttae">,</span>
+        fontSize<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'0.8125em'</span><span class="tt18 ttae">,</span>
+        fontWeight<span class="tt18 ttae">:</span> <span class="tt18 ttap">500</span><span class="tt18 ttae">,</span>
+        whiteSpace<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'pre'</span><span class="tt18 ttae">,</span>
+        wordSpacing<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'normal'</span><span class="tt18 ttae">,</span>
+        wordBreak<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'break-word'</span><span class="tt18 ttae">,</span>
+        wordWrap<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'normal'</span><span class="tt18 ttae">,</span>
+        lineHeight<span class="tt18 ttae">:</span> <span class="tt18 ttap">1.5</span><span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'-moz-tab-size'</span><span class="tt18 ttae">:</span> <span class="tt18 ttap">4</span><span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'-o-tab-size'</span><span class="tt18 ttae">:</span> <span class="tt18 ttap">4</span><span class="tt18 ttae">,</span>
+        tabSize<span class="tt18 ttae">:</span> <span class="tt18 ttap">4</span><span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'-webkit-hyphens'</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'none'</span><span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'-moz-hyphens'</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'none'</span><span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'-ms-hyphens'</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'none'</span><span class="tt18 ttae">,</span>
+        hyphens<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'none'</span><span class="tt18 ttae">,</span>
+        borderRadius<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'3px'</span><span class="tt18 ttae">,</span>
+        overflow<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'auto'</span><span class="tt18 ttae">,</span>
+        margin<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'0'</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 ttae">[</span>classes<span class="tt18 ttae">.</span>root<span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        marginBottom<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'16px'</span><span class="tt18 ttae">,</span>
+        direction<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'ltr'</span><span class="tt18 ttae">,</span>
+        <span class="tt18 ttae">[</span>
+          <span class="tt18 ttae">[</span>
+            classes<span class="tt18 ttae">.</span>keyword<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">[</span><span class="tt18 tt3z">'selector-tag'</span><span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>title<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>section<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>doctag<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>name<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>strong
+          <span class="tt18 ttae">]</span><span class="tt18 ttae">.</span><span class="tt18 tta3">map</span><span class="tt18 ttae">(</span><span class="tt18 parameter">c</span> <span class="tt18 ttb0">=></span> <span class="tt18 template-string"><span class="tt18 tt3z">`&amp; </span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>c<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">join</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span>
+        <span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>prism<span class="tt18 ttae">.</span>keyword<span class="tt18 ttae">,</span>
+          fontWeight<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'600'</span>
+        <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+        <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>classes<span class="tt18 ttae">.</span>comment<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          color<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:rgba(115, 129, 145, 0.65);color:white;opacity:0.65">rgba(115, 129, 145, 0.65)</span>'</span>
+        <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+        <span class="tt18 ttae">[</span>
+          <span class="tt18 ttae">[</span>
+            classes<span class="tt18 ttae">.</span><span class="tt18 ttcj">string</span><span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>title<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>section<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>built_in<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>literal<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span><span class="tt18 tt1j">type</span><span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>addition<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>tag<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>quote<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>name<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">[</span><span class="tt18 tt3z">'selector-id'</span><span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">[</span><span class="tt18 tt3z">'selector-class'</span><span class="tt18 ttae">]</span>
+          <span class="tt18 ttae">]</span><span class="tt18 ttae">.</span><span class="tt18 tta3">map</span><span class="tt18 ttae">(</span><span class="tt18 parameter">c</span> <span class="tt18 ttb0">=></span> <span class="tt18 template-string"><span class="tt18 tt3z">`&amp; </span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>c<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">join</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span>
+        <span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>prism<span class="tt18 ttae">.</span>keyword
+        <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+        <span class="tt18 ttae">[</span>
+          <span class="tt18 ttae">[</span>
+            classes<span class="tt18 ttae">.</span>meta<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>subst<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span><span class="tt18 ttcj">symbol</span><span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>regexp<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>attribute<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>deletion<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>variable<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">[</span><span class="tt18 tt3z">'template-variable'</span><span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>link<span class="tt18 ttae">,</span>
+            classes<span class="tt18 ttae">.</span>bullet
+          <span class="tt18 ttae">]</span><span class="tt18 ttae">.</span><span class="tt18 tta3">map</span><span class="tt18 ttae">(</span><span class="tt18 parameter">c</span> <span class="tt18 ttb0">=></span> <span class="tt18 template-string"><span class="tt18 tt3z">`&amp; </span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>c<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">join</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span>
+        <span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          color<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#4c81c9;color:white;opacity:1">#4c81c9</span>'</span>
+        <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+        <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>classes<span class="tt18 ttae">.</span>emphasis<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          fontStyle<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'italic'</span>
+        <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+        <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>classes<span class="tt18 ttae">.</span><span class="tt18 tt1j">function</span><span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          color<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#4584ff;color:white;opacity:1">#4584ff</span>'</span>
+        <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+        <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>classes<span class="tt18 ttae">[</span><span class="tt18 tt3z">'attr-name'</span><span class="tt18 ttae">]</span><span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          color<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'#FFB62C'</span>
+        <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+        <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>classes<span class="tt18 ttae">[</span><span class="tt18 tt3z">'attr-value'</span><span class="tt18 ttae">]</span><span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>prism<span class="tt18 ttae">.</span>keyword
+        <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+        <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>classes<span class="tt18 ttae">.</span><span class="tt18 ttcj">string</span><span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>prism<span class="tt18 ttae">.</span><span class="tt18 ttcj">string</span>
+        <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+        <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>classes<span class="tt18 ttae">.</span><span class="tt18 ttcj">number</span><span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          color<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:rgb(36, 212, 158);color:white;opacity:1">rgb(36, 212, 158)</span>'</span>
+        <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+        <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`&amp; </span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>classes<span class="tt18 ttae">.</span>punctuation<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">, &amp; </span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>classes<span class="tt18 ttae">.</span>operator<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          color<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#9786c5;color:white;opacity:1">#9786c5</span>'</span>
+        <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+        <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>classes<span class="tt18 ttae">[</span><span class="tt18 tt3z">'class-name'</span><span class="tt18 ttae">]</span><span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          color<span class="tt18 ttae">:</span> <span class="tt18 tta3">chroma</span><span class="tt18 ttae">(</span>theme<span class="tt18 ttae">.</span>accent<span class="tt18 ttae">.</span><span class="tt18 tt1j">default</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">alpha</span><span class="tt18 ttae">(</span><span class="tt18 ttap">.88</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">css</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span>
+        <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+        <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>classes<span class="tt18 ttae">.</span>constant<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          color<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'#EF5350'</span>
+        <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+        <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>classes<span class="tt18 ttae">.</span>builtin<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          color<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#8796b0;color:white;opacity:1">#8796b0</span>'</span>
+        <span class="tt18 ttae">&#125;</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+
+@<span class="tt18 tta3">Component</span><span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  selector<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'aui-root'</span><span class="tt18 ttae">,</span>
+  templateUrl<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'./app.component.html'</span><span class="tt18 ttae">,</span>
+  preserveWhitespaces<span class="tt18 ttae">:</span> <span class="tt18 boolean">false</span><span class="tt18 ttae">,</span>
+  changeDetection<span class="tt18 ttae">:</span> ChangeDetectionStrategy<span class="tt18 ttae">.</span>OnPush
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span>
+<span class="tt18 tt1j">export</span> <span class="tt18 tt1j">class</span> <span class="tt18 ttc8">AppComponent</span> <span class="tt18 tt1j">implements</span> <span class="tt18 ttc8">OnInit</span> <span class="tt18 ttae">&#123;</span>
+  <span class="tt18 tt1j">readonly</span> classes <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>theme<span class="tt18 ttae">.</span><span class="tt18 tta3">addStyleSheet</span><span class="tt18 ttae">(</span>styles<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  routesComponents<span class="tt18 ttae">:</span> <span class="tt18 ttcj">any</span><span class="tt18 ttae">;</span>
+  version <span class="tt18 ttb0">=</span> <span class="tt18 ttbb">AUI_VERSION</span><span class="tt18 ttae">;</span>
+  routes <span class="tt18 ttb0">=</span> AUIRoutes<span class="tt18 ttae">.</span><span class="tt18 tta3">slice</span><span class="tt18 ttae">(</span><span class="tt18 ttap">1</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  currentRoutePath<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">;</span>
+
+  @<span class="tt18 tta3">ViewChild</span><span class="tt18 ttae">(</span>LyDrawer<span class="tt18 ttae">)</span> drawer<span class="tt18 ttae">:</span> LyDrawer<span class="tt18 ttae">;</span>
+  @<span class="tt18 tta3">ViewChild</span><span class="tt18 ttae">(</span>LySnackBar<span class="tt18 ttae">)</span> sb<span class="tt18 ttae">:</span> LySnackBar<span class="tt18 ttae">;</span>
+  @<span class="tt18 tta3">ViewChild</span><span class="tt18 ttae">(</span>TitleComponent<span class="tt18 ttae">)</span> titleComponent<span class="tt18 ttae">:</span> TitleComponent<span class="tt18 ttae">;</span>
+  @<span class="tt18 tta3">ViewChild</span><span class="tt18 ttae">(</span>PageContentComponent<span class="tt18 ttae">)</span> page<span class="tt18 ttae">:</span> PageContentComponent<span class="tt18 ttae">;</span>
+
+  <span class="tt18 tt1j">constructor</span><span class="tt18 ttae">(</span>
+    <span class="tt18 parameter"><span class="tt18 tt1j">private</span> _el<span class="tt18 ttae">:</span> ElementRef<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">public</span> router<span class="tt18 ttae">:</span> Router<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> theme<span class="tt18 ttae">:</span> LyTheme2<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> renderer<span class="tt18 ttae">:</span> Renderer2<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> _location<span class="tt18 ttae">:</span> Location<span class="tt18 ttae">,</span>
+    sanitizer<span class="tt18 ttae">:</span> DomSanitizer<span class="tt18 ttae">,</span>
+    iconService<span class="tt18 ttae">:</span> LyIconService<span class="tt18 ttae">,</span>
+    updates<span class="tt18 ttae">:</span> SwUpdate</span>
+  <span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>theme<span class="tt18 ttae">.</span><span class="tt18 tta3">addStyleSheet</span><span class="tt18 ttae">(</span><span class="tt18 ttbb">PRISM_STYLES</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>Platform<span class="tt18 ttae">.</span>isBrowser<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      updates<span class="tt18 ttae">.</span>available<span class="tt18 ttae">.</span><span class="tt18 tta3">subscribe</span><span class="tt18 ttae">(</span><span class="tt18 parameter">event</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 ttcj">console</span><span class="tt18 ttae">.</span><span class="tt18 tta3">log</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'current version is'</span><span class="tt18 ttae">,</span> event<span class="tt18 ttae">.</span>current<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        <span class="tt18 ttcj">console</span><span class="tt18 ttae">.</span><span class="tt18 tta3">log</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'available version is'</span><span class="tt18 ttae">,</span> event<span class="tt18 ttae">.</span>available<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        updates<span class="tt18 ttae">.</span><span class="tt18 tta3">activateUpdate</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">then</span><span class="tt18 ttae">(</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>sb<span class="tt18 ttae">.</span><span class="tt18 tta3">open</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+    iconService<span class="tt18 ttae">.</span><span class="tt18 tta3">setSvg</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'github'</span><span class="tt18 ttae">,</span> sanitizer<span class="tt18 ttae">.</span><span class="tt18 tta3">bypassSecurityTrustResourceUrl</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'assets/svg/social/social-color-1_logo-github'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    iconService<span class="tt18 ttae">.</span><span class="tt18 tta3">setSvg</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'code'</span><span class="tt18 ttae">,</span> sanitizer<span class="tt18 ttae">.</span><span class="tt18 tta3">bypassSecurityTrustResourceUrl</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'assets/svg/code'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    iconService<span class="tt18 ttae">.</span><span class="tt18 tta3">setSvg</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'Theme'</span><span class="tt18 ttae">,</span> sanitizer<span class="tt18 ttae">.</span><span class="tt18 tta3">bypassSecurityTrustResourceUrl</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'assets/svg/round-format_color_fill-24px'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    iconService<span class="tt18 ttae">.</span><span class="tt18 tta3">setSvg</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'Heart'</span><span class="tt18 ttae">,</span> sanitizer<span class="tt18 ttae">.</span><span class="tt18 tta3">bypassSecurityTrustResourceUrl</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'assets/svg/Heart'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    iconService<span class="tt18 ttae">.</span><span class="tt18 tta3">setSvg</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'Experiment'</span><span class="tt18 ttae">,</span> sanitizer<span class="tt18 ttae">.</span><span class="tt18 tta3">bypassSecurityTrustResourceUrl</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'assets/svg/Experiment'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    iconService<span class="tt18 ttae">.</span><span class="tt18 tta3">setSvg</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'Radiation'</span><span class="tt18 ttae">,</span> sanitizer<span class="tt18 ttae">.</span><span class="tt18 tta3">bypassSecurityTrustResourceUrl</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'assets/svg/radiation'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    iconService<span class="tt18 ttae">.</span><span class="tt18 tta3">setSvg</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'Water'</span><span class="tt18 ttae">,</span> sanitizer<span class="tt18 ttae">.</span><span class="tt18 tta3">bypassSecurityTrustResourceUrl</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'assets/svg/Water'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    iconService<span class="tt18 ttae">.</span><span class="tt18 tta3">setSvg</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'Snow'</span><span class="tt18 ttae">,</span> sanitizer<span class="tt18 ttae">.</span><span class="tt18 tta3">bypassSecurityTrustResourceUrl</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'assets/svg/Snow'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    iconService<span class="tt18 ttae">.</span><span class="tt18 tta3">setSvg</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'Discord'</span><span class="tt18 ttae">,</span> sanitizer<span class="tt18 ttae">.</span><span class="tt18 tta3">bypassSecurityTrustResourceUrl</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'assets/svg/social/discord'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+    <span class="tt18 ttbb">SVG_ICONS</span><span class="tt18 ttae">.</span><span class="tt18 tta3">forEach</span><span class="tt18 ttae">(</span><span class="tt18 parameter">svg</span> <span class="tt18 ttb0">=></span> iconService<span class="tt18 ttae">.</span><span class="tt18 tta3">addSvgIconLiteral</span><span class="tt18 ttae">(</span>svg<span class="tt18 ttae">[</span><span class="tt18 ttap">0</span><span class="tt18 ttae">]</span><span class="tt18 ttae">,</span> sanitizer<span class="tt18 ttae">.</span><span class="tt18 tta3">bypassSecurityTrustHtml</span><span class="tt18 ttae">(</span>svg<span class="tt18 ttae">[</span><span class="tt18 ttap">1</span><span class="tt18 ttae">]</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>router<span class="tt18 ttae">.</span>events
+    <span class="tt18 ttae">.</span><span class="tt18 tta3">pipe</span><span class="tt18 ttae">(</span>
+      <span class="tt18 tta3">filter</span><span class="tt18 ttae">(</span><span class="tt18 ttae">(</span><span class="tt18 parameter">event</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> event <span class="tt18 tt1j">instanceof</span> <span class="tt18 ttc8">NavigationEnd</span><span class="tt18 ttae">)</span>
+    <span class="tt18 ttae">)</span>
+    <span class="tt18 ttae">.</span><span class="tt18 tta3">subscribe</span><span class="tt18 ttae">(</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">const</span> pathname <span class="tt18 ttb0">=</span> Platform<span class="tt18 ttae">.</span>isBrowser
+      <span class="tt18 ttb0">?</span> location<span class="tt18 ttae">.</span>pathname <span class="tt18 ttb0">===</span> <span class="tt18 tt3z">'/'</span>
+        <span class="tt18 ttb0">?</span> <span class="tt18 tt3z">''</span>
+        <span class="tt18 ttae">:</span> location<span class="tt18 ttae">.</span>pathname
+      <span class="tt18 ttae">:</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_location<span class="tt18 ttae">.</span><span class="tt18 tta3">path</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>currentRoutePath <span class="tt18 ttb0">=</span> pathname<span class="tt18 ttae">;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>titleComponent<span class="tt18 ttae">.</span>route <span class="tt18 ttb0">=</span> pathname<span class="tt18 ttae">;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>page<span class="tt18 ttae">.</span><span class="tt18 tta3">updateRoute</span><span class="tt18 ttae">(</span>pathname<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 tta3">ngOnInit</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">addClass</span><span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_el<span class="tt18 ttae">.</span>nativeElement<span class="tt18 ttae">,</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>classes<span class="tt18 ttae">.</span>root<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">reload</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    document<span class="tt18 ttae">.</span>location<span class="tt18 ttae">.</span><span class="tt18 tta3">reload</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+<span class="tt18 ttae">&#125;</span>
+</pre></div>

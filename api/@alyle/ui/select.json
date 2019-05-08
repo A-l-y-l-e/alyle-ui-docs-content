@@ -1,0 +1,35 @@
+{
+  "componentList": [
+    {
+      "name": "LyOption",
+      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-option'</span></pre></div>\n",
+      "inputs": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 ttae\">[</span>\n  <span class=\"tt18 tt3z\">\"bg\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"color\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"raised\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"disabled\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"outlined\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"elevation\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"shadowColor\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"disableRipple\"</span>\n<span class=\"tt18 ttae\">]</span></pre></div>\n",
+      "exportAs": "",
+      "children": "isSelected: boolean\n/** Tracks simple string values bound to the option element. */\n@Input('value') value: any\n/** The displayed value of the option. */\nviewValue: string\nselect(): void\ntoggle(): void"
+    },
+    {
+      "name": "LySelect",
+      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-select'</span></pre></div>\n",
+      "inputs": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 ttae\">[</span>\n  <span class=\"tt18 tt3z\">\"tabIndex\"</span>\n<span class=\"tt18 ttae\">]</span></pre></div>\n",
+      "exportAs": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'lySelect'</span></pre></div>\n",
+      "children": "errorState: boolean\n@ContentChildren() options: QueryList\nstateChanges: Subject\n@ViewChild() templateRef: TemplateRef\n@ViewChild() valueTextDivRef: ElementRef\n/** Whether the input is disabled. */\n@Input() disabled: boolean\nempty: boolean\nfloatingLabel: boolean\nfocused: boolean\n@Input() multiple: boolean\n@Input() placeholder: string\n@Input() required: boolean\n/** Current selecteds */\nselected: any\n/** The value displayed in the trigger. */\ntriggerValue: string\n@Input() valueKey: any\nclose(): void\n/** Focuses the input. */\nfocus(): void\n/** The registered callback function called when a change event occurs on the input element. */\nonChange(_: any): void\n/** The registered callback function called when a blur event occurs on the input element. */\nonTouched(): void\nopen(): void\n/** Registers a function called when the control value changes. */\nregisterOnChange(fn: any): void\n/** Registers a function called when the control is touched. */\nregisterOnTouched(fn: any): void\n/**\n * Disables the select. Part of the ControlValueAccessor interface required\n * to integrate with Angular's core forms API.\n */\nsetDisabledState(isDisabled: boolean): void\n/** Sets the \"value\" property on the input element. */\nwriteValue(value: any): void"
+    }
+  ],
+  "directiveList": [],
+  "variableList": [
+    {
+      "name": "DEFAULT_DISABLE_RIPPLE",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">DEFAULT_DISABLE_RIPPLE</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 boolean\">false</span></pre></div>\n"
+    },
+    {
+      "name": "STYLE_PRIORITY",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">STYLE_PRIORITY</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 ttb0\">-</span><span class=\"tt18 ttap\">2</span></pre></div>\n"
+    }
+  ],
+  "ngModuleList": [
+    {
+      "name": "LySelectModule",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">import</span> <span class=\"tt18 ttae\">&#123;</span> LySelectModule <span class=\"tt18 ttae\">&#125;</span> <span class=\"tt18 tt1j\">from</span> <span class=\"tt18 tt3z\">'@alyle/ui/select'</span></pre></div>\n"
+    }
+  ]
+}

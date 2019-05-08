@@ -1,0 +1,51 @@
+{
+  "componentList": [],
+  "directiveList": [
+    {
+      "name": "ThemeMinimaDark",
+      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'[ly-theme-minima-dark]'</span></pre></div>\n",
+      "inputs": "",
+      "exportAs": "",
+      "children": ""
+    },
+    {
+      "name": "ThemeMinimaLight",
+      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'[ly-theme-minima-light]'</span></pre></div>\n",
+      "inputs": "",
+      "exportAs": "",
+      "children": ""
+    }
+  ],
+  "classList": [],
+  "variableList": [
+    {
+      "name": "contrast",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> contrast <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"<span style=\"background:#fff;color:#202020;opacity:1\">#fff</span>\"</span></pre></div>\n"
+    },
+    {
+      "name": "shadow",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> shadow <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"<span style=\"background:rgba(0, 0, 0, 1);color:white;opacity:1\">rgba(0, 0, 0, 1)</span>\"</span></pre></div>\n"
+    },
+    {
+      "name": "contrast",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> contrast <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"<span style=\"background:#fff;color:#202020;opacity:1\">#fff</span>\"</span></pre></div>\n"
+    },
+    {
+      "name": "shadow",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> shadow <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"<span style=\"background:#333;color:white;opacity:1\">#333</span>\"</span></pre></div>\n"
+    }
+  ],
+  "ngModuleList": [
+    {
+      "name": "ThemeMinimaModule",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">import</span> <span class=\"tt18 ttae\">&#123;</span> ThemeMinimaModule <span class=\"tt18 ttae\">&#125;</span> <span class=\"tt18 tt1j\">from</span> <span class=\"tt18 tt3z\">'@alyle/ui/themes/minima'</span></pre></div>\n"
+    }
+  ],
+  "interfaceList": [
+    {
+      "name": "IMinimaTheme",
+      "children": "interface IMinimaTheme {\n  constructor,\n  animations: any,\n  avatar: any,\n  badge: any,\n  bar: string,\n  breakpoints: any,\n  colorShadow: string,\n  direction: Dir,\n  divider: string,\n  field: any,\n  hover: string,\n  icon: any,\n  iconButton: any,\n  menu: any,\n  name: string,\n  ripple: any,\n  shadow: string,\n  zIndex: any,\n  colorOf,\n  getBreakpoint,\n  getClasses,\n  getDirection,\n  pxToRem,\n  accent: object,\n  action: object,\n  background: object,\n  button: object,\n  disabled: object,\n  drawer: object,\n  expansion: object,\n  paper: object,\n  primary: object,\n  snackBar: object,\n  text: object,\n  toolbar: object,\n  tooltip: object,\n  typography: object,\n  warn: object\n}"
+    }
+  ],
+  "objectLiteralList": []
+}

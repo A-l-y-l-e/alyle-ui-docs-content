@@ -1,0 +1,17 @@
+<div class="lang-ts ttb"><pre class="ttm"><span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span>NgModule<span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/core'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span>ServerModule<span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/platform-server'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span>ModuleMapLoaderModule<span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@nguniversal/module-map-ngfactory-loader'</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span>AppModule<span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./app.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span>AppComponent<span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./app.component'</span><span class="tt18 ttae">;</span>
+
+@<span class="tt18 tta3">NgModule</span><span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  imports<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span>
+    AppModule<span class="tt18 ttae">,</span>
+    ServerModule<span class="tt18 ttae">,</span>
+    ModuleMapLoaderModule <span class="tt18 tt3o">// &lt;-- *Important* to have lazy-loaded routes work</span>
+  <span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
+  bootstrap<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span>AppComponent<span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span>
+<span class="tt18 tt1j">export</span> <span class="tt18 tt1j">class</span> <span class="tt18 ttc8">AppServerModule</span> <span class="tt18 ttae">&#123;</span><span class="tt18 ttae">&#125;</span>
+</pre></div>

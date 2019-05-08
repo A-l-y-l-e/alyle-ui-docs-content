@@ -1,0 +1,43 @@
+<div class="lang-ts ttb"><pre class="ttm"><span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Component<span class="tt18 ttae">,</span> ChangeDetectionStrategy <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/core'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyTheme2<span class="tt18 ttae">,</span> ThemeVariables <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui'</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt3o">/**
+ * Basic style
+ */</span>
+<span class="tt18 tt1j">const</span> <span class="tt18 function-variable tta3">styles</span> <span class="tt18 ttb0">=</span> <span class="tt18 ttae">(</span><span class="tt18 parameter">theme<span class="tt18 ttae">:</span> ThemeVariables</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  <span class="tt18 tt3o">// Style name, is optional, this is used to add a prefix to all classes,</span>
+  <span class="tt18 tt3o">// it will only be seen in dev mode</span>
+  $name<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'example'</span><span class="tt18 ttae">,</span>
+  <span class="tt18 tt3o">// this would be like the name of the class</span>
+  demo<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>primary<span class="tt18 ttae">.</span><span class="tt18 tt1j">default</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3o">// support for direction rtl/ltr</span>
+    borderBefore<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'2px solid'</span><span class="tt18 ttae">,</span>    <span class="tt18 tt3o">// css-ltr: border-left, css-rtl: border-right</span>
+    paddingBefore<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'.5em'</span><span class="tt18 ttae">,</span>        <span class="tt18 tt3o">// css-ltr: padding-left, css-rtl: padding-right</span>
+    <span class="tt18 tt3z">'&amp;:hover'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>                  <span class="tt18 tt3o">// `&amp;` is equal to `demo` and therefore it would be 'demo:hover'</span>
+      color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>accent<span class="tt18 ttae">.</span><span class="tt18 tt1j">default</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  buttonLink<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>primary<span class="tt18 ttae">.</span><span class="tt18 tt1j">default</span><span class="tt18 ttae">,</span>
+    textDecoration<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'inherit'</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'&amp;:hover'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      textDecoration<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'underline'</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+@<span class="tt18 tta3">Component</span><span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  selector<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'aui-ds-basic'</span><span class="tt18 ttae">,</span>
+  templateUrl<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'./ds-basic.component.html'</span><span class="tt18 ttae">,</span>
+  changeDetection<span class="tt18 ttae">:</span> ChangeDetectionStrategy<span class="tt18 ttae">.</span>OnPush
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span>
+<span class="tt18 tt1j">export</span> <span class="tt18 tt1j">class</span> <span class="tt18 ttc8">DsBasicComponent</span> <span class="tt18 ttae">&#123;</span>
+  classes <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>theme<span class="tt18 ttae">.</span><span class="tt18 tta3">addStyleSheet</span><span class="tt18 ttae">(</span>styles<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+  <span class="tt18 tt1j">constructor</span><span class="tt18 ttae">(</span>
+    <span class="tt18 parameter"><span class="tt18 tt1j">private</span> theme<span class="tt18 ttae">:</span> LyTheme2</span>
+  <span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span> <span class="tt18 ttae">&#125;</span>
+
+<span class="tt18 ttae">&#125;</span>
+</pre></div>

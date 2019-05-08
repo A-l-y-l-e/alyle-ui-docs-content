@@ -1,0 +1,82 @@
+<div class="lang-ts ttb"><pre class="ttm"><span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Injectable<span class="tt18 ttae">,</span> Renderer2<span class="tt18 ttae">,</span> RendererFactory2<span class="tt18 ttae">,</span> isDevMode<span class="tt18 ttae">,</span> NgZone <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/core'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Platform<span class="tt18 ttae">,</span> LyTheme2 <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> PageContentComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@app/page-content/page-content.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> take <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'rxjs/operators'</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">let</span> count <span class="tt18 ttb0">=</span> <span class="tt18 ttb0">-</span><span class="tt18 ttap">1</span><span class="tt18 ttae">;</span>
+
+@<span class="tt18 tta3">Injectable</span><span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  providedIn<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'root'</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span>
+<span class="tt18 tt1j">export</span> <span class="tt18 tt1j">class</span> <span class="tt18 ttc8">Ads</span> <span class="tt18 ttae">&#123;</span>
+  <span class="tt18 tt1j">private</span> _renderer<span class="tt18 ttae">:</span> Renderer2<span class="tt18 ttae">;</span>
+
+  <span class="tt18 tt1j">constructor</span><span class="tt18 ttae">(</span>
+    <span class="tt18 parameter"><span class="tt18 tt1j">private</span> _ngZone<span class="tt18 ttae">:</span> NgZone<span class="tt18 ttae">,</span>
+    rendererFactory<span class="tt18 ttae">:</span> RendererFactory2</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_renderer <span class="tt18 ttb0">=</span> rendererFactory<span class="tt18 ttae">.</span><span class="tt18 tta3">createRenderer</span><span class="tt18 ttae">(</span><span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">update</span><span class="tt18 ttae">(</span><span class="tt18 parameter">path<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">,</span> pageContent<span class="tt18 ttae">:</span> PageContentComponent<span class="tt18 ttae">,</span> theme<span class="tt18 ttae">:</span> LyTheme2</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>Platform<span class="tt18 ttae">.</span>isBrowser<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      count<span class="tt18 ttb0">++</span><span class="tt18 ttae">;</span>
+      <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>count <span class="tt18 ttb0">></span> <span class="tt18 ttap">0</span> <span class="tt18 ttb0">||</span> path <span class="tt18 ttb0">!==</span> <span class="tt18 tt3z">''</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">_removeOld</span><span class="tt18 ttae">(</span>pageContent<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_ngZone<span class="tt18 ttae">.</span>onStable
+          <span class="tt18 ttae">.</span><span class="tt18 tta3">asObservable</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span>
+          <span class="tt18 ttae">.</span><span class="tt18 tta3">pipe</span><span class="tt18 ttae">(</span><span class="tt18 tta3">take</span><span class="tt18 ttae">(</span><span class="tt18 ttap">1</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span>
+          <span class="tt18 ttae">.</span><span class="tt18 tta3">subscribe</span><span class="tt18 ttae">(</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+            <span class="tt18 tt1j">let</span> ref <span class="tt18 ttb0">=</span> pageContent<span class="tt18 ttae">.</span><span class="tt18 tta3">_getHostElement</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">querySelector</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'.ad'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+            <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span><span class="tt18 ttb0">!</span>ref<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+              ref <span class="tt18 ttb0">=</span> pageContent<span class="tt18 ttae">.</span><span class="tt18 tta3">_getHostElement</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">querySelector</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'p'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+            <span class="tt18 ttae">&#125;</span>
+            <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span><span class="tt18 ttb0">!</span>ref<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+              ref <span class="tt18 ttb0">=</span> pageContent<span class="tt18 ttae">.</span><span class="tt18 tta3">_getHostElement</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">querySelector</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'demo-view'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+            <span class="tt18 ttae">&#125;</span>
+            <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>ref<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+              <span class="tt18 tt1j">const</span> Div <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">createElement</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'div'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+              <span class="tt18 tt1j">const</span> CodeFund <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">createElement</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'div'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+              <span class="tt18 tt1j">const</span> CodeFundScript <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">createElement</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'script'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+              <span class="tt18 tt1j">const</span> nextSibling <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">nextSibling</span><span class="tt18 ttae">(</span>ref<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+              <span class="tt18 tt1j">const</span> parentNode <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">parentNode</span><span class="tt18 ttae">(</span>ref<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+              <span class="tt18 tt1j">const</span> themeName <span class="tt18 ttb0">=</span> theme<span class="tt18 ttae">.</span>variables<span class="tt18 ttae">.</span>name<span class="tt18 ttae">;</span>
+              <span class="tt18 tt1j">const</span> themeNameForCodeFund <span class="tt18 ttb0">=</span> themeName<span class="tt18 ttae">.</span><span class="tt18 tta3">includes</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'light'</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">?</span> <span class="tt18 tt3z">'light'</span> <span class="tt18 ttae">:</span> <span class="tt18 tt3z">'dark'</span><span class="tt18 ttae">;</span>
+              <span class="tt18 tt1j">let</span> api <span class="tt18 ttb0">=</span> <span class="tt18 template-string"><span class="tt18 tt3z">`https://codefund.app/properties/171/funder.js?`</span></span><span class="tt18 ttae">;</span>
+
+              <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">appendChild</span><span class="tt18 ttae">(</span>Div<span class="tt18 ttae">,</span> CodeFund<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+              <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>path <span class="tt18 ttb0">===</span> <span class="tt18 tt3z">''</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+                api <span class="tt18 ttb0">+=</span> <span class="tt18 template-string"><span class="tt18 tt3z">`theme=dark&amp;template=cente<span style="background:red;color:white;opacity:1">red</span>`</span></span><span class="tt18 ttae">;</span>
+              <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">else</span> <span class="tt18 ttae">&#123;</span>
+                api <span class="tt18 ttb0">+=</span> <span class="tt18 template-string"><span class="tt18 tt3z">`theme=</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>themeNameForCodeFund<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">;</span>
+              <span class="tt18 ttae">&#125;</span>
+              CodeFundScript<span class="tt18 ttae">.</span>src <span class="tt18 ttb0">=</span> api<span class="tt18 ttae">;</span>
+              CodeFundScript<span class="tt18 ttae">.</span><span class="tt18 tt1j">async</span> <span class="tt18 ttb0">=</span> <span class="tt18 ttap">1</span><span class="tt18 ttae">;</span>
+              <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">setAttribute</span><span class="tt18 ttae">(</span>CodeFund<span class="tt18 ttae">,</span> <span class="tt18 tt3z">'id'</span><span class="tt18 ttae">,</span> <span class="tt18 tt3z">'codefund'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+              <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">insertBefore</span><span class="tt18 ttae">(</span>
+                parentNode<span class="tt18 ttae">,</span>
+                Div<span class="tt18 ttae">,</span>
+                nextSibling
+              <span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+              <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span><span class="tt18 tta3">isDevMode</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+                CodeFund<span class="tt18 ttae">.</span>innerHTML <span class="tt18 ttb0">=</span> <span class="tt18 template-string"><span class="tt18 tt3z">`--ad-</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>count<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">--`</span></span><span class="tt18 ttae">;</span>
+              <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">else</span> <span class="tt18 ttae">&#123;</span>
+                <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">appendChild</span><span class="tt18 ttae">(</span>
+                  Div<span class="tt18 ttae">,</span>
+                  CodeFundScript
+                <span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+              <span class="tt18 ttae">&#125;</span>
+            <span class="tt18 ttae">&#125;</span>
+          <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 ttae">&#125;</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tt1j">private</span> <span class="tt18 tta3">_removeOld</span><span class="tt18 ttae">(</span><span class="tt18 parameter">pageContent<span class="tt18 ttae">:</span> PageContentComponent</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">const</span> container <span class="tt18 ttb0">=</span> pageContent<span class="tt18 ttae">.</span><span class="tt18 tta3">_getHostElement</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">querySelector</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'#codefund'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>container<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">removeChild</span><span class="tt18 ttae">(</span>container<span class="tt18 ttae">.</span>parentElement<span class="tt18 ttb0">!</span><span class="tt18 ttae">.</span>parentElement<span class="tt18 ttae">,</span> container<span class="tt18 ttae">.</span>parentElement<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+<span class="tt18 ttae">&#125;</span>
+</pre></div>

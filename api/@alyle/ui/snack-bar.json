@@ -1,0 +1,49 @@
+{
+  "componentList": [],
+  "directiveList": [
+    {
+      "name": "LySnackBar",
+      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ng-template[ly-snack-bar]'</span></pre></div>\n",
+      "inputs": "",
+      "exportAs": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'lySnackBar'</span></pre></div>\n",
+      "children": "@Output() afterDismissed: EventEmitter\nclasses: any\n@Input() duration: any\n@Input() horizontalPosition: any\n@Input() verticalPosition: YPosition\n/** Dismiss snackBar */\ndismiss(): void\nopen(): void"
+    }
+  ],
+  "interfaceList": [
+    {
+      "name": "LySnackBarDismiss",
+      "children": "interface LySnackBarDismiss {\n  /** Whether the snack bar was dismissed using the action fn. */\n  dismissedByAction: boolean\n}"
+    }
+  ],
+  "variableList": [
+    {
+      "name": "DEFAULT_HORIZONTAL_POSITION",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">DEFAULT_HORIZONTAL_POSITION</span> <span class=\"tt18 ttb0\">=</span> XPosition<span class=\"tt18 ttae\">.</span>after</pre></div>\n"
+    },
+    {
+      "name": "DEFAULT_VERTICAL_POSITION",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">DEFAULT_VERTICAL_POSITION</span> <span class=\"tt18 ttb0\">=</span> YPosition<span class=\"tt18 ttae\">.</span>below</pre></div>\n"
+    },
+    {
+      "name": "STYLE_PRIORITY",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">STYLE_PRIORITY</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 ttb0\">-</span><span class=\"tt18 ttap\">2</span></pre></div>\n"
+    },
+    {
+      "name": "DEFAULT_DURATION",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">DEFAULT_DURATION</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 ttap\">6000</span></pre></div>\n"
+    }
+  ],
+  "classList": [],
+  "ngModuleList": [
+    {
+      "name": "LySnackBarModule",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">import</span> <span class=\"tt18 ttae\">&#123;</span> LySnackBarModule <span class=\"tt18 ttae\">&#125;</span> <span class=\"tt18 tt1j\">from</span> <span class=\"tt18 tt3z\">'@alyle/ui/snack-bar'</span></pre></div>\n"
+    }
+  ],
+  "injectableList": [
+    {
+      "name": "LySnackBarService",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\">@<span class=\"tt18 tta3\">Injectable</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">&#123;</span>\n  providedIn<span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt3z\">'root'</span>\n<span class=\"tt18 ttae\">&#125;</span><span class=\"tt18 ttae\">)</span>\n<span class=\"tt18 tt1j\">class</span> <span class=\"tt18 ttc8\">LySnackBarService</span> <span class=\"tt18 ttae\">&#123;</span>\n  \n<span class=\"tt18 ttae\">&#125;</span></pre></div>\n"
+    }
+  ]
+}

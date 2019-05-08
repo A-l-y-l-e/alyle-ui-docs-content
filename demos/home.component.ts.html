@@ -1,0 +1,317 @@
+<div class="lang-ts ttb"><pre class="ttm"><span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Component<span class="tt18 ttae">,</span> ChangeDetectionStrategy<span class="tt18 ttae">,</span> Renderer2<span class="tt18 ttae">,</span> ElementRef<span class="tt18 ttae">,</span> OnInit<span class="tt18 ttae">,</span> OnDestroy<span class="tt18 ttae">,</span> NgZone<span class="tt18 ttae">,</span> HostListener <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/core'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyTheme2<span class="tt18 ttae">,</span> Platform <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui'</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">const</span> styles <span class="tt18 ttb0">=</span> <span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  root<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    display<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'block'</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  intraContainer<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    textAlign<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'center'</span><span class="tt18 ttae">,</span>
+    color<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#fff;color:#202020;opacity:1">#fff</span>'</span><span class="tt18 ttae">,</span>
+    height<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'calc(100vh - 96px)'</span><span class="tt18 ttae">,</span>
+    display<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'flex'</span><span class="tt18 ttae">,</span>
+    justifyContent<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'center'</span><span class="tt18 ttae">,</span>
+    alignItems<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'center'</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  intraContent<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    position<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'relative'</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'&amp; &#123;buttons&#125; a'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      margin<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'8px'</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'&amp; > p'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      fontWeight<span class="tt18 ttae">:</span> <span class="tt18 ttap">300</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'&amp; > h1'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      fontFamily<span class="tt18 ttae">:</span> <span class="tt18 template-string"><span class="tt18 tt3z">`'Nunito', sans-serif`</span></span><span class="tt18 ttae">,</span>
+      letterSpacing<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'-.04em'</span><span class="tt18 ttae">,</span>
+      textShadow<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:rgba(255, 255, 255, 0.4);color:#202020;opacity:0.4">rgba(255, 255, 255, 0.4)</span> 0px 0px 11px'</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  buttons<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    display<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'inline-flex'</span><span class="tt18 ttae">,</span>
+    paddingTop<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'1em'</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  container<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    paddingAbove<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'1.5em'</span><span class="tt18 ttae">,</span>
+    textAlign<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'center'</span><span class="tt18 ttae">,</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  gridContainer<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    position<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'relative'</span><span class="tt18 ttae">,</span>
+    textAlign<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'center'</span><span class="tt18 ttae">,</span>
+    marginTop<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'1em'</span><span class="tt18 ttae">,</span>
+    marginBottom<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'1em'</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'ly-grid'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      h2<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        fontFamily<span class="tt18 ttae">:</span> <span class="tt18 template-string"><span class="tt18 tt3z">`'Nunito', sans-serif`</span></span><span class="tt18 ttae">,</span>
+        marginBelow<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'.5em'</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      p<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        opacity<span class="tt18 ttae">:</span> <span class="tt18 ttap">.87</span>
+      <span class="tt18 ttae">&#125;</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  canvas<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    backgroundColor<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#1a0e2d;color:white;opacity:1">#1a0e2d</span>'</span><span class="tt18 ttae">,</span>
+    width<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'100%'</span><span class="tt18 ttae">,</span>
+    height<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'100vh'</span><span class="tt18 ttae">,</span>
+    position<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'absolute'</span><span class="tt18 ttae">,</span>
+    left<span class="tt18 ttae">:</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">,</span>
+    top<span class="tt18 ttae">:</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">,</span>
+    pointerEvents<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'none'</span>
+  <span class="tt18 ttae">&#125;</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+@<span class="tt18 tta3">Component</span><span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  selector<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'aui-home'</span><span class="tt18 ttae">,</span>
+  templateUrl<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'./home.component.html'</span><span class="tt18 ttae">,</span>
+  preserveWhitespaces<span class="tt18 ttae">:</span> <span class="tt18 boolean">false</span><span class="tt18 ttae">,</span>
+  changeDetection<span class="tt18 ttae">:</span> ChangeDetectionStrategy<span class="tt18 ttae">.</span>OnPush
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span>
+<span class="tt18 tt1j">export</span> <span class="tt18 tt1j">class</span> <span class="tt18 ttc8">HomeComponent</span> <span class="tt18 tt1j">implements</span> <span class="tt18 ttc8">OnInit</span><span class="tt18 ttae">,</span> OnDestroy <span class="tt18 ttae">&#123;</span>
+  <span class="tt18 tt1j">readonly</span> classes <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>theme<span class="tt18 ttae">.</span><span class="tt18 tta3">addStyleSheet</span><span class="tt18 ttae">(</span>styles<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">private</span> intra<span class="tt18 ttae">:</span> Intra<span class="tt18 ttae">;</span>
+
+  @<span class="tt18 tta3">HostListener</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'window:resize'</span><span class="tt18 ttae">)</span> <span class="tt18 tta3">_resize$</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>intra<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ngZone<span class="tt18 ttae">.</span><span class="tt18 tta3">runOutsideAngular</span><span class="tt18 ttae">(</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>intra<span class="tt18 ttae">.</span><span class="tt18 tta3">onWindowResize</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tt1j">constructor</span><span class="tt18 ttae">(</span>
+    <span class="tt18 parameter">renderer<span class="tt18 ttae">:</span> Renderer2<span class="tt18 ttae">,</span>
+    el<span class="tt18 ttae">:</span> ElementRef<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> theme<span class="tt18 ttae">:</span> LyTheme2<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> ngZone<span class="tt18 ttae">:</span> NgZone</span>
+  <span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">addClass</span><span class="tt18 ttae">(</span>el<span class="tt18 ttae">.</span>nativeElement<span class="tt18 ttae">,</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>classes<span class="tt18 ttae">.</span>root<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">ngOnInit</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>Platform<span class="tt18 ttae">.</span>isBrowser<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>theme<span class="tt18 ttae">.</span><span class="tt18 tta3">requestAnimationFrame</span><span class="tt18 ttae">(</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>intra <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">new</span> <span class="tt18 ttc8">Intra</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'<span style="background:#1a0e2d;color:white;opacity:1">#1a0e2d</span>'</span><span class="tt18 ttae">,</span> <span class="tt18 ttap">700</span><span class="tt18 ttae">,</span> <span class="tt18 ttap">17</span><span class="tt18 ttae">,</span> <span class="tt18 ttap">3000</span><span class="tt18 ttae">,</span> <span class="tt18 ttap">0.000009</span><span class="tt18 ttae">,</span> <span class="tt18 ttap">9000</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>intra<span class="tt18 ttae">.</span><span class="tt18 tta3">start</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">ngOnDestroy</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>Platform<span class="tt18 ttae">.</span>isBrowser<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>intra<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>intra<span class="tt18 ttae">.</span><span class="tt18 tta3">stop</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 ttae">&#125;</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span>
+<span class="tt18 ttae">&#125;</span>
+
+<span class="tt18 tt1j">declare</span> <span class="tt18 tt1j">var</span> SimplexNoise<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span> <span class="tt18 tt1j">new</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span> <span class="tt18 function-variable tta3">noise3D</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">(</span><span class="tt18 parameter">arg0<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">,</span> arg1<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">,</span> arg2<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span></span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">;</span> <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span> <span class="tt18 tt1j">new</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span> <span class="tt18 function-variable tta3">noise3D</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">(</span><span class="tt18 parameter">arg0<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">,</span> arg1<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">,</span> arg2<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span></span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">;</span> <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span> <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt3o">// const Config = &#123;</span>
+<span class="tt18 tt3o">//   backgroundColor: '#030722',</span>
+<span class="tt18 tt3o">//   particleNum: 700,</span>
+<span class="tt18 tt3o">//   step: 17,</span>
+<span class="tt18 tt3o">//   base: 3000,</span>
+<span class="tt18 tt3o">//   zInc: 0.000009</span>
+<span class="tt18 tt3o">// &#125;;</span>
+
+<span class="tt18 tt1j">export</span> <span class="tt18 tt1j">class</span> <span class="tt18 ttc8">Intra</span> <span class="tt18 ttae">&#123;</span>
+  <span class="tt18 tt1j">private</span> fadeTime <span class="tt18 ttb0">=</span> <span class="tt18 ttap">2000</span><span class="tt18 ttae">;</span> <span class="tt18 tt3o">// in ms</span>
+  <span class="tt18 tt1j">private</span> fadeTimeStart<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">;</span>
+
+  <span class="tt18 tt1j">private</span> canvas<span class="tt18 ttae">:</span> HTMLCanvasElement<span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">private</span> screenWidth<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">private</span> screenHeight<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">private</span> centerX<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">private</span> centerY<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">private</span> particles<span class="tt18 ttae">:</span> Particle<span class="tt18 ttae">[</span><span class="tt18 ttae">]</span> <span class="tt18 ttb0">=</span> <span class="tt18 ttae">[</span><span class="tt18 ttae">]</span><span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">private</span> hueBase <span class="tt18 ttb0">=</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">private</span> simplexNoise<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span> <span class="tt18 function-variable tta3">noise3D</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">(</span><span class="tt18 parameter">arg0<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">,</span> arg1<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">,</span> arg2<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span></span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">;</span> <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">private</span> zoff <span class="tt18 ttb0">=</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">private</span> can2<span class="tt18 ttae">:</span> HTMLCanvasElement<span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">private</span> ctx2<span class="tt18 ttae">:</span> CanvasRenderingContext2D<span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">private</span> ctx<span class="tt18 ttae">:</span> CanvasRenderingContext2D<span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">private</span> requestId<span class="tt18 ttb0">?</span><span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">private</span> timeoutId<span class="tt18 ttae">:</span> <span class="tt18 ttcj">any</span><span class="tt18 ttae">;</span>
+
+  <span class="tt18 tt3o">// Initialize</span>
+
+  <span class="tt18 tt1j">constructor</span><span class="tt18 ttae">(</span>
+    <span class="tt18 parameter"><span class="tt18 tt1j">private</span> backgroundColor<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> particleNum<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> step<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> base<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> zInc<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> duration<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span></span>
+    <span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span> <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">start</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">stop</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>timeoutId <span class="tt18 ttb0">=</span> <span class="tt18 tta3">setTimeout</span><span class="tt18 ttae">(</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">stop</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>duration<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>canvas <span class="tt18 ttb0">=</span> document<span class="tt18 ttae">.</span><span class="tt18 tta3">getElementById</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'bg'</span><span class="tt18 ttae">)</span> <span class="tt18 tt1j">as</span> HTMLCanvasElement<span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>can2 <span class="tt18 ttb0">=</span>  document<span class="tt18 ttae">.</span><span class="tt18 tta3">createElement</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'canvas'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ctx <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>can2<span class="tt18 ttae">.</span><span class="tt18 tta3">getContext</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'2d'</span><span class="tt18 ttae">)</span><span class="tt18 ttb0">!</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ctx2 <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>canvas<span class="tt18 ttae">.</span><span class="tt18 tta3">getContext</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'2d'</span><span class="tt18 ttae">)</span><span class="tt18 ttb0">!</span><span class="tt18 ttae">;</span>
+
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">updatePosition</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+    <span class="tt18 tt1j">for</span> <span class="tt18 ttae">(</span><span class="tt18 tt1j">let</span> i <span class="tt18 ttb0">=</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">,</span> len <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>particleNum<span class="tt18 ttae">;</span> i <span class="tt18 ttb0">&lt;</span> len<span class="tt18 ttae">;</span> i<span class="tt18 ttb0">++</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>particles<span class="tt18 ttae">[</span>i<span class="tt18 ttae">]</span> <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">new</span> <span class="tt18 ttc8">Particle</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">initParticle</span><span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>particles<span class="tt18 ttae">[</span>i<span class="tt18 ttae">]</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+
+    <span class="tt18 tt3o">// canvas.addEventListener('click', onCanvasClick, true);</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>simplexNoise <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">new</span> <span class="tt18 ttc8">SimplexNoise</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>requestId <span class="tt18 ttb0">=</span> <span class="tt18 tta3">requestAnimationFrame</span><span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">update</span><span class="tt18 ttae">.</span><span class="tt18 tta3">bind</span><span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ctx<span class="tt18 ttae">.</span>lineWidth <span class="tt18 ttb0">=</span> <span class="tt18 ttap">0.7</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ctx<span class="tt18 ttae">.</span>lineCap <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ctx<span class="tt18 ttae">.</span>lineJoin <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'round'</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ctx<span class="tt18 ttae">.</span>fillStyle <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>backgroundColor<span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ctx<span class="tt18 ttae">.</span><span class="tt18 tta3">fillRect</span><span class="tt18 ttae">(</span><span class="tt18 ttap">0</span><span class="tt18 ttae">,</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">,</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>screenWidth<span class="tt18 ttae">,</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>screenHeight<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+
+  <span class="tt18 tt3o">// Event listeners</span>
+
+  <span class="tt18 tta3">onWindowResize</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">updatePosition</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">stop</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">start</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tt1j">private</span> <span class="tt18 tta3">updatePosition</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>can2<span class="tt18 ttae">.</span>width <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>screenWidth  <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>canvas<span class="tt18 ttae">.</span>width  <span class="tt18 ttb0">=</span> window<span class="tt18 ttae">.</span>innerWidth<span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>can2<span class="tt18 ttae">.</span>height <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>screenHeight <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>canvas<span class="tt18 ttae">.</span>height <span class="tt18 ttb0">=</span> window<span class="tt18 ttae">.</span>innerHeight<span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>centerX <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>screenWidth <span class="tt18 ttb0">/</span> <span class="tt18 ttap">10</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>centerY <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>screenHeight <span class="tt18 ttb0">/</span> <span class="tt18 ttap">10</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tt3o">// onCanvasClick(e: any) &#123;</span>
+  <span class="tt18 tt3o">//   this.ctx.globalAlpha = 0.9;</span>
+  <span class="tt18 tt3o">//   this.ctx.fillStyle = this.backgroundColor;</span>
+  <span class="tt18 tt3o">//   this.ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);</span>
+
+  <span class="tt18 tt3o">//   this.simplexNoise = new SimplexNoise();</span>
+  <span class="tt18 tt3o">//   this.fadeTimeStart = undefined;</span>
+  <span class="tt18 tt3o">// &#125;</span>
+
+
+  <span class="tt18 tt3o">// Functions</span>
+
+  <span class="tt18 tta3">getNoise</span><span class="tt18 ttae">(</span><span class="tt18 parameter">x<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">,</span> y<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">,</span> z<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span></span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">const</span> octaves <span class="tt18 ttb0">=</span> <span class="tt18 ttap">2</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">const</span> fallout <span class="tt18 ttb0">=</span> <span class="tt18 ttap">0.5</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">let</span> amp <span class="tt18 ttb0">=</span> <span class="tt18 ttap">1</span><span class="tt18 ttae">,</span> f <span class="tt18 ttb0">=</span> <span class="tt18 ttap">1</span><span class="tt18 ttae">,</span> sum <span class="tt18 ttb0">=</span> <span class="tt18 ttap">1</span><span class="tt18 ttae">;</span>
+
+    <span class="tt18 tt1j">for</span> <span class="tt18 ttae">(</span><span class="tt18 tt1j">let</span> i <span class="tt18 ttb0">=</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">;</span> i <span class="tt18 ttb0">&lt;</span> octaves<span class="tt18 ttae">;</span> <span class="tt18 ttb0">++</span>i<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+        amp <span class="tt18 ttb0">*=</span> fallout<span class="tt18 ttae">;</span>
+        sum <span class="tt18 ttb0">+=</span> amp <span class="tt18 ttb0">*</span> <span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>simplexNoise<span class="tt18 ttae">.</span><span class="tt18 tta3">noise3D</span><span class="tt18 ttae">(</span>x <span class="tt18 ttb0">*</span> f<span class="tt18 ttae">,</span> y <span class="tt18 ttb0">*</span> f<span class="tt18 ttae">,</span> z <span class="tt18 ttb0">*</span> f<span class="tt18 ttae">)</span> <span class="tt18 ttb0">+</span> <span class="tt18 ttap">1</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">*</span> <span class="tt18 ttap">4.4</span><span class="tt18 ttae">;</span>
+        f <span class="tt18 ttb0">*=</span> <span class="tt18 ttap">3</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+
+    <span class="tt18 tt1j">return</span> sum<span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">initParticle</span><span class="tt18 ttae">(</span><span class="tt18 parameter">p<span class="tt18 ttae">:</span> Particle</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    p<span class="tt18 ttae">.</span>x <span class="tt18 ttb0">=</span> p<span class="tt18 ttae">.</span>pastX <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>screenWidth <span class="tt18 ttb0">*</span> Math<span class="tt18 ttae">.</span><span class="tt18 tta3">random</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    p<span class="tt18 ttae">.</span>y <span class="tt18 ttb0">=</span> p<span class="tt18 ttae">.</span>pastY <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>screenHeight <span class="tt18 ttb0">*</span> Math<span class="tt18 ttae">.</span><span class="tt18 tta3">random</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    p<span class="tt18 ttae">.</span>color<span class="tt18 ttae">.</span>h <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>hueBase <span class="tt18 ttb0">+</span> Math<span class="tt18 ttae">.</span><span class="tt18 tta3">atan2</span><span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>centerY <span class="tt18 ttb0">-</span> p<span class="tt18 ttae">.</span>y<span class="tt18 ttae">,</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>centerX <span class="tt18 ttb0">-</span> p<span class="tt18 ttae">.</span>x<span class="tt18 ttae">)</span> <span class="tt18 ttb0">*</span> <span class="tt18 ttap">200</span> <span class="tt18 ttb0">/</span> Math<span class="tt18 ttae">.</span><span class="tt18 ttbb">PI</span><span class="tt18 ttae">;</span>
+    p<span class="tt18 ttae">.</span>color<span class="tt18 ttae">.</span>s <span class="tt18 ttb0">=</span> <span class="tt18 ttap">1</span><span class="tt18 ttae">;</span>
+    p<span class="tt18 ttae">.</span>color<span class="tt18 ttae">.</span>l <span class="tt18 ttb0">=</span> <span class="tt18 ttap">0.6</span><span class="tt18 ttae">;</span>
+    p<span class="tt18 ttae">.</span>color<span class="tt18 ttae">.</span>a <span class="tt18 ttb0">=</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+
+  <span class="tt18 tt3o">// Update</span>
+
+  <span class="tt18 tta3">update</span><span class="tt18 ttae">(</span><span class="tt18 parameter">time<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span></span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">const</span> step <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>step<span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">const</span> base <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>base<span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">let</span> i<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">,</span> p<span class="tt18 ttae">:</span> Particle<span class="tt18 ttae">,</span> angle<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">;</span>
+
+    <span class="tt18 tt1j">for</span> <span class="tt18 ttae">(</span>i <span class="tt18 ttb0">=</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">;</span> i <span class="tt18 ttb0">&lt;</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>particles<span class="tt18 ttae">.</span>length<span class="tt18 ttae">;</span> i<span class="tt18 ttb0">++</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+        p <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>particles<span class="tt18 ttae">[</span>i<span class="tt18 ttae">]</span><span class="tt18 ttae">;</span>
+
+        p<span class="tt18 ttae">.</span>pastX <span class="tt18 ttb0">=</span> p<span class="tt18 ttae">.</span>x<span class="tt18 ttae">;</span>
+        p<span class="tt18 ttae">.</span>pastY <span class="tt18 ttb0">=</span> p<span class="tt18 ttae">.</span>y<span class="tt18 ttae">;</span>
+
+        angle <span class="tt18 ttb0">=</span> Math<span class="tt18 ttae">.</span><span class="tt18 ttbb">PI</span> <span class="tt18 ttb0">*</span> <span class="tt18 ttap">6</span> <span class="tt18 ttb0">*</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">getNoise</span><span class="tt18 ttae">(</span>p<span class="tt18 ttae">.</span>x <span class="tt18 ttb0">/</span> base <span class="tt18 ttb0">*</span> <span class="tt18 ttap">1.75</span><span class="tt18 ttae">,</span> p<span class="tt18 ttae">.</span>y <span class="tt18 ttb0">/</span> base <span class="tt18 ttb0">*</span> <span class="tt18 ttap">1.75</span><span class="tt18 ttae">,</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>zoff<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        p<span class="tt18 ttae">.</span>x <span class="tt18 ttb0">+=</span> Math<span class="tt18 ttae">.</span><span class="tt18 tta3">cos</span><span class="tt18 ttae">(</span>angle<span class="tt18 ttae">)</span> <span class="tt18 ttb0">*</span> step<span class="tt18 ttae">;</span>
+        p<span class="tt18 ttae">.</span>y <span class="tt18 ttb0">+=</span> Math<span class="tt18 ttae">.</span><span class="tt18 tta3">sin</span><span class="tt18 ttae">(</span>angle<span class="tt18 ttae">)</span> <span class="tt18 ttb0">*</span> step<span class="tt18 ttae">;</span>
+
+        <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>p<span class="tt18 ttae">.</span>color<span class="tt18 ttae">.</span>a <span class="tt18 ttb0">&lt;</span> <span class="tt18 ttap">1</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span> p<span class="tt18 ttae">.</span>color<span class="tt18 ttae">.</span>a <span class="tt18 ttb0">+=</span> <span class="tt18 ttap">0.001</span><span class="tt18 ttae">;</span> <span class="tt18 ttae">&#125;</span>
+
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ctx<span class="tt18 ttae">.</span><span class="tt18 tta3">beginPath</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ctx<span class="tt18 ttae">.</span>strokeStyle <span class="tt18 ttb0">=</span> p<span class="tt18 ttae">.</span>color<span class="tt18 ttae">.</span><span class="tt18 tta3">toString</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ctx<span class="tt18 ttae">.</span><span class="tt18 tta3">moveTo</span><span class="tt18 ttae">(</span>p<span class="tt18 ttae">.</span>pastX<span class="tt18 ttae">,</span> p<span class="tt18 ttae">.</span>pastY<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ctx<span class="tt18 ttae">.</span><span class="tt18 tta3">lineTo</span><span class="tt18 ttae">(</span>p<span class="tt18 ttae">.</span>x<span class="tt18 ttae">,</span> p<span class="tt18 ttae">.</span>y<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ctx<span class="tt18 ttae">.</span><span class="tt18 tta3">stroke</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+        <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>p<span class="tt18 ttae">.</span>x <span class="tt18 ttb0">&lt;</span> <span class="tt18 ttap">0</span> <span class="tt18 ttb0">||</span> p<span class="tt18 ttae">.</span>x <span class="tt18 ttb0">></span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>screenWidth <span class="tt18 ttb0">||</span> p<span class="tt18 ttae">.</span>y <span class="tt18 ttb0">&lt;</span> <span class="tt18 ttap">0</span> <span class="tt18 ttb0">||</span> p<span class="tt18 ttae">.</span>y <span class="tt18 ttb0">></span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>screenHeight<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+            <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">initParticle</span><span class="tt18 ttae">(</span>p<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        <span class="tt18 ttae">&#125;</span>
+    <span class="tt18 ttae">&#125;</span>
+
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>hueBase <span class="tt18 ttb0">+=</span> <span class="tt18 ttap">0.4</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>zoff <span class="tt18 ttb0">+=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>zInc<span class="tt18 ttae">;</span>
+
+    <span class="tt18 tt3o">// Code to fade in the view</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>fadeTimeStart <span class="tt18 ttb0">===</span> undefined<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>fadeTimeStart <span class="tt18 ttb0">=</span> time<span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+    <span class="tt18 tt1j">const</span> fTime <span class="tt18 ttb0">=</span> <span class="tt18 ttae">(</span>time <span class="tt18 ttb0">-</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>fadeTimeStart<span class="tt18 ttae">)</span> <span class="tt18 ttb0">/</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>fadeTime<span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>fTime <span class="tt18 ttb0">&lt;</span> <span class="tt18 ttap">1</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ctx2<span class="tt18 ttae">.</span>globalAlpha <span class="tt18 ttb0">=</span> fTime<span class="tt18 ttae">;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ctx2<span class="tt18 ttae">.</span><span class="tt18 tta3">clearRect</span><span class="tt18 ttae">(</span><span class="tt18 ttap">0</span><span class="tt18 ttae">,</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">,</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>canvas<span class="tt18 ttae">.</span>width<span class="tt18 ttae">,</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>canvas<span class="tt18 ttae">.</span>height<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ctx2<span class="tt18 ttae">.</span><span class="tt18 tta3">drawImage</span><span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>can2<span class="tt18 ttae">,</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">,</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">else</span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ctx2<span class="tt18 ttae">.</span>globalAlpha <span class="tt18 ttb0">=</span> <span class="tt18 ttap">1</span><span class="tt18 ttae">;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>ctx2<span class="tt18 ttae">.</span><span class="tt18 tta3">drawImage</span><span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>can2<span class="tt18 ttae">,</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">,</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>requestId <span class="tt18 ttb0">=</span> <span class="tt18 tta3">requestAnimationFrame</span><span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">update</span><span class="tt18 ttae">.</span><span class="tt18 tta3">bind</span><span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">stop</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>timeoutId<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tta3">clearTimeout</span><span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>timeoutId<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>timeoutId <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>requestId<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tta3">cancelAnimationFrame</span><span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>requestId<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>requestId <span class="tt18 ttb0">=</span> undefined<span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span>
+<span class="tt18 ttae">&#125;</span>
+
+
+<span class="tt18 tt3o">/**
+* HSLA
+*/</span>
+<span class="tt18 tt1j">class</span> <span class="tt18 ttc8">HSLA</span> <span class="tt18 ttae">&#123;</span>
+  <span class="tt18 tt1j">constructor</span><span class="tt18 ttae">(</span><span class="tt18 parameter"><span class="tt18 tt1j">public</span> h <span class="tt18 ttb0">=</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">,</span> <span class="tt18 tt1j">public</span> s <span class="tt18 ttb0">=</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">,</span> <span class="tt18 tt1j">public</span> l <span class="tt18 ttb0">=</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">,</span> <span class="tt18 tt1j">public</span> a <span class="tt18 ttb0">=</span> <span class="tt18 ttap">0</span></span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span> <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 tta3">toString</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">return</span> <span class="tt18 tt3z">'hsla('</span> <span class="tt18 ttb0">+</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>h <span class="tt18 ttb0">+</span> <span class="tt18 tt3z">','</span> <span class="tt18 ttb0">+</span> <span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>s <span class="tt18 ttb0">*</span> <span class="tt18 ttap">100</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">+</span> <span class="tt18 tt3z">'%,'</span> <span class="tt18 ttb0">+</span> <span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>l <span class="tt18 ttb0">*</span> <span class="tt18 ttap">100</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">+</span> <span class="tt18 tt3z">'%,'</span> <span class="tt18 ttb0">+</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>a <span class="tt18 ttb0">+</span> <span class="tt18 tt3z">')'</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+<span class="tt18 ttae">&#125;</span>
+
+
+<span class="tt18 tt3o">/**
+* Particle
+*/</span>
+<span class="tt18 tt1j">class</span> <span class="tt18 ttc8">Particle</span> <span class="tt18 ttae">&#123;</span>
+  x<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">;</span>
+  y<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">;</span>
+  color<span class="tt18 ttae">:</span> <span class="tt18 ttbb">HSLA</span><span class="tt18 ttae">;</span>
+  pastX <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>x<span class="tt18 ttae">;</span>
+  pastY <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>y<span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">constructor</span><span class="tt18 ttae">(</span><span class="tt18 parameter">x<span class="tt18 ttb0">?</span><span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">,</span> y<span class="tt18 ttb0">?</span><span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">,</span> color<span class="tt18 ttb0">?</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span> h<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">;</span> s<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">;</span> l<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">;</span> a<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">;</span> <span class="tt18 ttae">&#125;</span></span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>x <span class="tt18 ttb0">=</span> x <span class="tt18 ttb0">||</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>y <span class="tt18 ttb0">=</span> y <span class="tt18 ttb0">||</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>color <span class="tt18 ttb0">=</span> color <span class="tt18 ttb0">||</span> <span class="tt18 tt1j">new</span> <span class="tt18 ttc8">HSLA</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+<span class="tt18 ttae">&#125;</span>
+</pre></div>

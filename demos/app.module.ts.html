@@ -1,0 +1,178 @@
+<div class="lang-ts ttb"><pre class="ttm"><span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> BrowserModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/platform-browser'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> BrowserAnimationsModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/platform-browser/animations'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> CommonModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/common'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> FormsModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/forms'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> HttpClientModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/common/http'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> NgModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/core'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ServiceWorkerModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/service-worker'</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyDrawerModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/drawer'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyToolbarModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/toolbar'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyMenuModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/menu'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyCommonModule<span class="tt18 ttae">,</span> <span class="tt18 ttbb">LY_THEME</span><span class="tt18 ttae">,</span> <span class="tt18 ttbb">LY_THEME_GLOBAL_VARIABLES</span><span class="tt18 ttae">,</span> PartialThemeVariables<span class="tt18 ttae">,</span> <span class="tt18 ttbb">LY_THEME_NAME</span><span class="tt18 ttae">,</span> LyTheme2 <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ResponsiveModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/responsive'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyButtonModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/button'</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> AppComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./app.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> AppRoutingModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./app.routing'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> PrismModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./core/prism/prism.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> environment <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@env/environment'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyIconModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/icon'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> MinimaLight<span class="tt18 ttae">,</span> MinimaDark <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/themes/minima'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> TitleComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./document/title/title.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> DemoViewModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./demo-view'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> InstallationComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/getting-started/installation/installation.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> CardDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/components/card-demo/card-demo.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> CardDemoBasicModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/components/card-demo/card-demo-basic/card-demo-basic.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyTypographyModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/typography'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> MultipleThemesComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/multiple-themes/multiple-themes.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> MultipleThemesDemo01Module <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/multiple-themes/multiple-themes-demo-01/multiple-themes-demo-01.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> DocsModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/docs.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyTabsModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/tabs'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ApiComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./api/api.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyCardModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/card'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> AppBarComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./app-bar/app-bar.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> HomeComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./home/home.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> PageContentComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./page-content/page-content.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LySnackBarModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/snack-bar'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyTooltipModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/tooltip'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyGridModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/grid'</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">const</span> Quepal <span class="tt18 ttb0">=</span> <span class="tt18 ttae">&#123;</span>
+  <span class="tt18 tt1j">default</span><span class="tt18 ttae">:</span> <span class="tt18 template-string"><span class="tt18 tt3z">`linear-gradient(135deg,<span style="background:#11998e;color:white;opacity:1">#11998e</span> 0%,#38ef7d 100%)`</span></span><span class="tt18 ttae">,</span>
+  contrast<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#fff;color:#202020;opacity:1">#fff</span>'</span><span class="tt18 ttae">,</span>
+  shadow<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#11998e;color:white;opacity:1">#11998e</span>'</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">const</span> SublimeLight <span class="tt18 ttb0">=</span> <span class="tt18 ttae">&#123;</span>
+  <span class="tt18 tt1j">default</span><span class="tt18 ttae">:</span> <span class="tt18 template-string"><span class="tt18 tt3z">`linear-gradient(135deg,#FC5C7D 0%,#6A82FB 100%)`</span></span><span class="tt18 ttae">,</span>
+  contrast<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#fff;color:#202020;opacity:1">#fff</span>'</span><span class="tt18 ttae">,</span>
+  shadow<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'#B36FBC'</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">export</span> <span class="tt18 tt1j">class</span> <span class="tt18 ttc8">CustomMinimaLight</span> <span class="tt18 ttae">&#123;</span>
+  name <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'minima-light'</span><span class="tt18 ttae">;</span>
+  shadow <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:#505050;color:white;opacity:1">#505050</span>'</span><span class="tt18 ttae">;</span>
+  codeColor <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:rgba(0, 23, 31, 0.7);color:white;opacity:0.7">rgba(0, 23, 31, 0.7)</span>'</span><span class="tt18 ttae">;</span>
+  codeBg <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:#fff;color:#202020;opacity:1">#fff</span>'</span><span class="tt18 ttae">;</span>
+  myColor <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:pink;color:#202020;opacity:1">pink</span>'</span><span class="tt18 ttae">;</span>
+  discord <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'#7289DA'</span><span class="tt18 ttae">;</span>
+  drawerButton <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:#5f6368;color:white;opacity:1">#5f6368</span>'</span><span class="tt18 ttae">;</span>
+  demoBg <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:#c7c7c7;color:#202020;opacity:1">#c7c7c7</span>'</span><span class="tt18 ttae">;</span>
+  prism <span class="tt18 ttb0">=</span> <span class="tt18 ttae">&#123;</span>
+    colorText<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#626682;color:white;opacity:1">#626682</span>'</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttcj">string</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#27b98f;color:white;opacity:1">#27b98f</span>'</span><span class="tt18 ttae">,</span>
+    keyword<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#7c4dff;color:white;opacity:1">#7c4dff</span>'</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+  stackblitz <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'#1389FD'</span><span class="tt18 ttae">;</span>
+<span class="tt18 ttae">&#125;</span>
+
+<span class="tt18 tt1j">export</span> <span class="tt18 tt1j">class</span> <span class="tt18 ttc8">CustomMinimaDark</span> <span class="tt18 ttae">&#123;</span>
+  name <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'minima-dark'</span><span class="tt18 ttae">;</span>
+  shadow <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:rgba(0, 0, 0, 1);color:white;opacity:1">rgba(0, 0, 0, 1)</span>'</span><span class="tt18 ttae">;</span>
+  codeColor <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:#efefef;color:#202020;opacity:1">#efefef</span>'</span><span class="tt18 ttae">;</span>
+  codeBg <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:#1b1b1b;color:white;opacity:1">#1b1b1b</span>'</span><span class="tt18 ttae">;</span>
+  myColor <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:teal;color:white;opacity:1">teal</span>'</span><span class="tt18 ttae">;</span>
+  discord <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:#fff;color:#202020;opacity:1">#fff</span>'</span><span class="tt18 ttae">;</span>
+  drawerButton <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:#abafb5;color:white;opacity:1">#abafb5</span>'</span><span class="tt18 ttae">;</span>
+  demoBg <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:#070707;color:white;opacity:1">#070707</span>'</span><span class="tt18 ttae">;</span>
+  prism <span class="tt18 ttb0">=</span> <span class="tt18 ttae">&#123;</span>
+    colorText<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#ebebef;color:#202020;opacity:1">#ebebef</span>'</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttcj">string</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#89b72c;color:white;opacity:1">#89b72c</span>'</span><span class="tt18 ttae">,</span>
+    keyword<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#3cd2ad;color:#202020;opacity:1">#3cd2ad</span>'</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+  stackblitz <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:#fff;color:#202020;opacity:1">#fff</span>'</span><span class="tt18 ttae">;</span>
+<span class="tt18 ttae">&#125;</span>
+
+<span class="tt18 tt1j">export</span> <span class="tt18 tt1j">class</span> <span class="tt18 ttc8">GlobalVariables</span> <span class="tt18 tt1j">implements</span> <span class="tt18 ttc8">PartialThemeVariables</span> <span class="tt18 ttae">&#123;</span>
+  testVal <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:#00bcd4;color:white;opacity:1">#00bcd4</span>'</span><span class="tt18 ttae">;</span>
+  Quepal <span class="tt18 ttb0">=</span> Quepal<span class="tt18 ttae">;</span>
+  SublimeLight <span class="tt18 ttb0">=</span> SublimeLight<span class="tt18 ttae">;</span>
+  Amber <span class="tt18 ttb0">=</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">default</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#ffc107;color:#202020;opacity:1">#ffc107</span>'</span><span class="tt18 ttae">,</span>
+    contrast<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:rgba(0, 0, 0, 0.87);color:white;opacity:0.87">rgba(0, 0, 0, 0.87)</span>'</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+  transparent <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:rgba(0, 0, 0, 0);color:white;opacity:0">rgba(0, 0, 0, 0)</span>'</span><span class="tt18 ttae">;</span>
+  typography <span class="tt18 ttb0">=</span> <span class="tt18 ttae">&#123;</span>
+    lyTyp<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      subTitle<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        fontFamily<span class="tt18 ttae">:</span> <span class="tt18 template-string"><span class="tt18 tt3z">`'Nunito', sans-serif`</span></span><span class="tt18 ttae">,</span>
+        textAlign<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'center'</span><span class="tt18 ttae">,</span>
+        paddingAbove<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'1em'</span><span class="tt18 ttae">,</span>
+        opacity<span class="tt18 ttae">:</span> <span class="tt18 ttap">.6</span><span class="tt18 ttae">,</span>
+        fontSize<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'32px'</span><span class="tt18 ttae">,</span>
+        fontWeight<span class="tt18 ttae">:</span> <span class="tt18 ttap">400</span>
+      <span class="tt18 ttae">&#125;</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+<span class="tt18 ttae">&#125;</span>
+
+<span class="tt18 tt1j">export</span> <span class="tt18 tt1j">type</span> AUIThemeVariables <span class="tt18 ttb0">=</span> MinimaLight <span class="tt18 ttb0">&amp;</span> MinimaDark <span class="tt18 ttb0">&amp;</span> CustomMinimaLight <span class="tt18 ttb0">&amp;</span> CustomMinimaDark <span class="tt18 ttb0">&amp;</span> GlobalVariables<span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">export</span> <span class="tt18 tt1j">function</span> <span class="tt18 tta3">themeNameProviderFactory</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+  <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span><span class="tt18 tt1j">typeof</span> localStorage <span class="tt18 ttb0">===</span> <span class="tt18 tt3z">'object'</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">const</span> themeName <span class="tt18 ttb0">=</span> localStorage<span class="tt18 ttae">.</span><span class="tt18 tta3">getItem</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'theme-name'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>themeName<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">return</span> themeName<span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 tt1j">return</span> <span class="tt18 tt3z">'minima-light'</span><span class="tt18 ttae">;</span>
+<span class="tt18 ttae">&#125;</span>
+
+@<span class="tt18 tta3">NgModule</span><span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  declarations<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span>
+    AppComponent<span class="tt18 ttae">,</span>
+    PageContentComponent<span class="tt18 ttae">,</span>
+    AppBarComponent<span class="tt18 ttae">,</span>
+    ApiComponent<span class="tt18 ttae">,</span>
+    TitleComponent<span class="tt18 ttae">,</span>
+    <span class="tt18 tt3o">/** Customization */</span>
+    MultipleThemesComponent<span class="tt18 ttae">,</span>
+    <span class="tt18 tt3o">/** Getting started */</span>
+    InstallationComponent<span class="tt18 ttae">,</span>
+    <span class="tt18 tt3o">/** Components */</span>
+    CardDemoComponent<span class="tt18 ttae">,</span>
+    <span class="tt18 tt3o">/** Pages */</span>
+    HomeComponent
+  <span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
+  imports<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span>
+    BrowserModule<span class="tt18 ttae">.</span><span class="tt18 tta3">withServerTransition</span><span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>appId<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'@alyle/ui'</span><span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3o">/** Customization */</span>
+    <span class="tt18 tt3o">/** MultipleThemes >*/</span>MultipleThemesDemo01Module<span class="tt18 ttae">,</span>
+    <span class="tt18 tt3o">/** CardDemo > */</span>CardDemoBasicModule<span class="tt18 ttae">,</span>
+    CommonModule<span class="tt18 ttae">,</span>
+    FormsModule<span class="tt18 ttae">,</span>
+    HttpClientModule<span class="tt18 ttae">,</span>
+    BrowserAnimationsModule<span class="tt18 ttae">,</span>
+    <span class="tt18 tt3o">// LyThemeModule.setTheme('minima-light'),</span>
+    ResponsiveModule<span class="tt18 ttae">,</span>
+    LyCommonModule<span class="tt18 ttae">,</span>
+    LyButtonModule<span class="tt18 ttae">,</span>
+    LyDrawerModule<span class="tt18 ttae">,</span>
+    LyToolbarModule<span class="tt18 ttae">,</span>
+    LyIconModule<span class="tt18 ttae">,</span>
+    LyMenuModule<span class="tt18 ttae">,</span>
+    LyTypographyModule<span class="tt18 ttae">,</span>
+    LyCardModule<span class="tt18 ttae">,</span>
+    PrismModule<span class="tt18 ttae">,</span>
+    DemoViewModule<span class="tt18 ttae">,</span>
+    DocsModule<span class="tt18 ttae">,</span>
+    AppRoutingModule<span class="tt18 ttae">,</span>
+    ServiceWorkerModule<span class="tt18 ttae">.</span><span class="tt18 tta3">register</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'/ngsw-worker.js'</span><span class="tt18 ttae">,</span> <span class="tt18 ttae">&#123;</span> enabled<span class="tt18 ttae">:</span> environment<span class="tt18 ttae">.</span>production <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">,</span>
+    LyTabsModule<span class="tt18 ttae">,</span>
+    LySnackBarModule<span class="tt18 ttae">,</span>
+    LyTooltipModule<span class="tt18 ttae">,</span>
+    LyGridModule
+  <span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
+  providers<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span>
+    <span class="tt18 ttae">[</span> LyTheme2 <span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttae">&#123;</span> provide<span class="tt18 ttae">:</span> <span class="tt18 ttbb">LY_THEME</span><span class="tt18 ttae">,</span> useClass<span class="tt18 ttae">:</span> MinimaLight<span class="tt18 ttae">,</span> multi<span class="tt18 ttae">:</span> <span class="tt18 boolean">true</span> <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttae">&#123;</span> provide<span class="tt18 ttae">:</span> <span class="tt18 ttbb">LY_THEME</span><span class="tt18 ttae">,</span> useClass<span class="tt18 ttae">:</span> MinimaDark<span class="tt18 ttae">,</span> multi<span class="tt18 ttae">:</span> <span class="tt18 boolean">true</span> <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttae">&#123;</span> provide<span class="tt18 ttae">:</span> <span class="tt18 ttbb">LY_THEME</span><span class="tt18 ttae">,</span> useClass<span class="tt18 ttae">:</span> CustomMinimaLight<span class="tt18 ttae">,</span> multi<span class="tt18 ttae">:</span> <span class="tt18 boolean">true</span> <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttae">&#123;</span> provide<span class="tt18 ttae">:</span> <span class="tt18 ttbb">LY_THEME</span><span class="tt18 ttae">,</span> useClass<span class="tt18 ttae">:</span> CustomMinimaDark<span class="tt18 ttae">,</span> multi<span class="tt18 ttae">:</span> <span class="tt18 boolean">true</span> <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttae">&#123;</span> provide<span class="tt18 ttae">:</span> <span class="tt18 ttbb">LY_THEME_GLOBAL_VARIABLES</span><span class="tt18 ttae">,</span> useClass<span class="tt18 ttae">:</span> GlobalVariables <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttae">&#123;</span> provide<span class="tt18 ttae">:</span> <span class="tt18 ttbb">LY_THEME_NAME</span><span class="tt18 ttae">,</span> useFactory<span class="tt18 ttae">:</span> themeNameProviderFactory <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
+  bootstrap<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span>AppComponent<span class="tt18 ttae">]</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span>
+<span class="tt18 tt1j">export</span> <span class="tt18 tt1j">class</span> <span class="tt18 ttc8">AppModule</span> <span class="tt18 ttae">&#123;</span> <span class="tt18 ttae">&#125;</span>
+</pre></div>

@@ -1,0 +1,363 @@
+<div class="lang-ts ttb"><pre class="ttm"><span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span>
+  Component<span class="tt18 ttae">,</span>
+  Input<span class="tt18 ttae">,</span>
+  OnInit<span class="tt18 ttae">,</span>
+  ElementRef<span class="tt18 ttae">,</span>
+  ChangeDetectionStrategy<span class="tt18 ttae">,</span>
+  <span class="tt18 ttbb">VERSION</span><span class="tt18 ttae">,</span>
+  isDevMode<span class="tt18 ttae">,</span>
+  Renderer2
+<span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/core'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Observable<span class="tt18 ttae">,</span> <span class="tt18 tt1j">of</span><span class="tt18 ttae">,</span> merge<span class="tt18 ttae">,</span> forkJoin <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'rxjs'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> HttpClient<span class="tt18 ttae">,</span> HttpErrorResponse <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/common/http'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Router <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/router'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> catchError<span class="tt18 ttae">,</span> retry<span class="tt18 ttae">,</span> map <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'rxjs/operators'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Platform<span class="tt18 ttae">,</span> <span class="tt18 ttbb">AUI_VERSION</span><span class="tt18 ttae">,</span> LyTheme2 <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> AUIThemeVariables <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@app/app.module'</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">const</span> <span class="tt18 ttbb">MODULE_REGEXP</span> <span class="tt18 ttb0">=</span> <span class="tt18 regex">/export\sclass\s([\w]+)Module/</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">const</span> <span class="tt18 ttbb">EXPORTS_REGEXP</span> <span class="tt18 ttb0">=</span> <span class="tt18 regex">/exports\:\s?\[[\w]+\]\,?([\s]+)?/</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">const</span> <span class="tt18 ttbb">IMPORTS_POINT_REGEXP</span> <span class="tt18 ttb0">=</span> <span class="tt18 regex">/imports\:?(?:[\s]+)?\[(?:[\s]+)?/</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">const</span> <span class="tt18 ttbb">DECLARATIONS_REGEXP</span> <span class="tt18 ttb0">=</span> <span class="tt18 regex">/declarations: \[\:?(?:[\s]+)?([\w]+)(?:[\,\s\w]+)?\]/</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">const</span> <span class="tt18 ttbb">SELECTOR_REGEXP</span> <span class="tt18 ttb0">=</span> <span class="tt18 regex">/selector: \'([\w-]+)\'/</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">const</span> <span class="tt18 ttbb">SELECTOR_APP</span> <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'root-app'</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">const</span> <span class="tt18 ttbb">HOST_DEV</span> <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'http://localhost:1212/demos'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">const</span> <span class="tt18 ttbb">HOST_PROD</span> <span class="tt18 ttb0">=</span> <span class="tt18 template-string"><span class="tt18 tt3z">`https://raw.githubusercontent.com/A-l-y-l-e/alyle-ui-docs-content/</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span><span class="tt18 ttbb">AUI_VERSION</span><span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">/demos`</span></span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">const</span> <span class="tt18 function-variable tta3">styles</span> <span class="tt18 ttb0">=</span> <span class="tt18 ttae">(</span><span class="tt18 parameter">theme<span class="tt18 ttae">:</span> AUIThemeVariables</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  root<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    position<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'relative'</span><span class="tt18 ttae">,</span>
+    display<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'block'</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'> div > ly-paper'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      display<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'block'</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  codeContainer<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    overflowY<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'auto'</span><span class="tt18 ttae">,</span>
+    height<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'100%'</span><span class="tt18 ttae">,</span>
+    background<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'transparent'</span><span class="tt18 ttae">,</span>
+    marginTop<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'1px'</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'> *'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      margin<span class="tt18 ttae">:</span> <span class="tt18 ttap">0</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  tabContainer<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    padding<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'48px 24px 24px 24px'</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  tabContent<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    padding<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'24px 24px 0 24px'</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  code<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    position<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'absolute'</span><span class="tt18 ttae">,</span>
+    after<span class="tt18 ttae">:</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">,</span>
+    top<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'4px'</span><span class="tt18 ttae">,</span>
+    zIndex<span class="tt18 ttae">:</span> <span class="tt18 ttap">1</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  stackblitzButton<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt3z">'&amp;:hover'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>stackblitz
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">interface</span> <span class="tt18 ttc8">Demos</span> <span class="tt18 ttae">&#123;</span>
+  path<span class="tt18 ttb0">?</span><span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">;</span>
+  label<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">type</span><span class="tt18 ttb0">?</span><span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">;</span>
+  ext<span class="tt18 ttb0">?</span><span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">;</span>
+<span class="tt18 ttae">&#125;</span>
+
+@<span class="tt18 tta3">Component</span><span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  selector<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'demo-view'</span><span class="tt18 ttae">,</span>
+  templateUrl<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'./view.component.html'</span><span class="tt18 ttae">,</span>
+  preserveWhitespaces<span class="tt18 ttae">:</span> <span class="tt18 boolean">false</span><span class="tt18 ttae">,</span>
+  changeDetection<span class="tt18 ttae">:</span> ChangeDetectionStrategy<span class="tt18 ttae">.</span>OnPush
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span>
+<span class="tt18 tt1j">export</span> <span class="tt18 tt1j">class</span> <span class="tt18 ttc8">ViewComponent</span> <span class="tt18 tt1j">implements</span> <span class="tt18 ttc8">OnInit</span> <span class="tt18 ttae">&#123;</span>
+  <span class="tt18 tt1j">readonly</span> classes <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>theme<span class="tt18 ttae">.</span><span class="tt18 tta3">addStyleSheet</span><span class="tt18 ttae">(</span>styles<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  hasCode <span class="tt18 ttb0">=</span> <span class="tt18 boolean">false</span><span class="tt18 ttae">;</span>
+  name<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">;</span>
+  folderName<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">;</span>
+  demos<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>label<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">,</span> url<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">,</span> ext<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">&#125;</span><span class="tt18 ttae">[</span><span class="tt18 ttae">]</span> <span class="tt18 ttb0">=</span> <span class="tt18 ttae">[</span><span class="tt18 ttae">]</span><span class="tt18 ttae">;</span>
+  files<span class="tt18 ttae">:</span> Demos<span class="tt18 ttae">[</span><span class="tt18 ttae">]</span> <span class="tt18 ttb0">=</span> <span class="tt18 ttae">[</span>
+    <span class="tt18 ttae">&#123;</span>label<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'Template'</span><span class="tt18 ttae">,</span> <span class="tt18 tt1j">type</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'component'</span><span class="tt18 ttae">,</span> ext<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'html'</span><span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttae">&#123;</span>label<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'Component'</span><span class="tt18 ttae">,</span> <span class="tt18 tt1j">type</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'component'</span><span class="tt18 ttae">,</span> ext<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'ts'</span><span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttae">&#123;</span>label<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'Module'</span><span class="tt18 ttae">,</span> <span class="tt18 tt1j">type</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'module'</span><span class="tt18 ttae">,</span> ext<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'ts'</span><span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">]</span><span class="tt18 ttae">;</span>
+  @<span class="tt18 tta3">Input</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> viewLabel<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">;</span>
+  @<span class="tt18 tta3">Input</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> path<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">;</span>
+  @<span class="tt18 tta3">Input</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span>
+  <span class="tt18 tt1j">set</span> <span class="tt18 tta3">extraPaths</span><span class="tt18 ttae">(</span><span class="tt18 parameter">val<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">[</span><span class="tt18 ttae">]</span></span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    val<span class="tt18 ttae">.</span><span class="tt18 tta3">forEach</span><span class="tt18 ttae">(</span><span class="tt18 parameter">item</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>files<span class="tt18 ttae">.</span><span class="tt18 tta3">push</span><span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+        label<span class="tt18 ttae">:</span> item<span class="tt18 ttae">,</span>
+        path<span class="tt18 ttae">:</span> item<span class="tt18 ttae">,</span>
+        ext<span class="tt18 ttae">:</span> <span class="tt18 tta3">getLanguage</span><span class="tt18 ttae">(</span>item<span class="tt18 ttae">)</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>files<span class="tt18 ttae">.</span><span class="tt18 tta3">push</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 tt1j">constructor</span><span class="tt18 ttae">(</span>
+    <span class="tt18 parameter">renderer<span class="tt18 ttae">:</span> Renderer2<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> http<span class="tt18 ttae">:</span> HttpClient<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> el<span class="tt18 ttae">:</span> ElementRef<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> router<span class="tt18 ttae">:</span> Router<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> theme<span class="tt18 ttae">:</span> LyTheme2</span>
+  <span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">addClass</span><span class="tt18 ttae">(</span>el<span class="tt18 ttae">.</span>nativeElement<span class="tt18 ttae">,</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>classes<span class="tt18 ttae">.</span>root<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 tta3">toggleCode</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>hasCode <span class="tt18 ttb0">=</span> <span class="tt18 ttb0">!</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>hasCode<span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 tta3">getFile</span><span class="tt18 ttae">(</span>index<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span><span class="tt18 ttae">)</span><span class="tt18 ttae">:</span> Observable<span class="tt18 ttb0">&lt;</span><span class="tt18 ttcj">string</span><span class="tt18 ttb0">></span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">const</span> url <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">url</span><span class="tt18 ttae">(</span>index<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">const</span> getUrl <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>http<span class="tt18 ttae">.</span><span class="tt18 tt1j">get</span><span class="tt18 ttae">(</span>url<span class="tt18 ttae">,</span> <span class="tt18 ttae">&#123;</span> responseType<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'text'</span> <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span>
+    <span class="tt18 ttae">.</span><span class="tt18 tta3">pipe</span><span class="tt18 ttae">(</span>
+      <span class="tt18 tta3">retry</span><span class="tt18 ttae">(</span><span class="tt18 ttap">3</span><span class="tt18 ttae">)</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tta3">catchError</span><span class="tt18 ttae">(</span><span class="tt18 ttae">(</span><span class="tt18 parameter">err<span class="tt18 ttae">:</span> HttpErrorResponse</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 tt1j">of</span><span class="tt18 ttae">(</span><span class="tt18 template-string"><span class="tt18 tt3z">`Error: </span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>err<span class="tt18 ttae">.</span>statusText<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span>
+    <span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>Platform<span class="tt18 ttae">.</span>isBrowser<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">const</span> req <span class="tt18 ttb0">=</span> <span class="tt18 tta3">merge</span><span class="tt18 ttae">(</span><span class="tt18 tt1j">of</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'Loading...'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">,</span> getUrl<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 tt1j">return</span> req<span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">else</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">return</span> <span class="tt18 tt1j">of</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">url</span><span class="tt18 ttae">(</span><span class="tt18 parameter">index<span class="tt18 ttae">:</span> <span class="tt18 ttcj">number</span></span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">const</span> file <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>files<span class="tt18 ttae">[</span>index<span class="tt18 ttae">]</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">const</span> host <span class="tt18 ttb0">=</span> <span class="tt18 template-string"><span class="tt18 tt3z">`</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span><span class="tt18 tta3">isDevMode</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">?</span> <span class="tt18 ttbb">HOST_DEV</span> <span class="tt18 ttae">:</span> <span class="tt18 ttbb">HOST_PROD</span><span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>file<span class="tt18 ttae">.</span>path<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">return</span> <span class="tt18 template-string"><span class="tt18 tt3z">`</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">/</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>file<span class="tt18 ttae">.</span>path<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">.html`</span></span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+    <span class="tt18 tt1j">const</span> fileName <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>path<span class="tt18 ttae">.</span><span class="tt18 tta3">split</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'/'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">reverse</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">[</span><span class="tt18 ttap">0</span><span class="tt18 ttae">]</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">return</span> <span class="tt18 template-string"><span class="tt18 tt3z">`</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>host<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">/</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>fileName<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">.</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>file<span class="tt18 ttae">.</span><span class="tt18 tt1j">type</span><span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">.</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>file<span class="tt18 ttae">.</span>ext<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">.html`</span></span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">openPostStackblitz</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">const</span> win <span class="tt18 ttb0">=</span> window<span class="tt18 ttae">.</span><span class="tt18 tta3">open</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'about:blank'</span><span class="tt18 ttae">,</span> <span class="tt18 tt3z">'_blank'</span><span class="tt18 ttae">)</span><span class="tt18 ttb0">!</span><span class="tt18 ttae">;</span>
+    win<span class="tt18 ttae">.</span>document<span class="tt18 ttae">.</span><span class="tt18 tta3">write</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'Loading...'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">const</span> urls <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>files
+    <span class="tt18 ttae">.</span><span class="tt18 tta3">map</span><span class="tt18 ttae">(</span><span class="tt18 ttae">(</span><span class="tt18 parameter">_item<span class="tt18 ttae">,</span> index</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">url</span><span class="tt18 ttae">(</span>index<span class="tt18 ttae">)</span><span class="tt18 ttae">)</span>
+    <span class="tt18 ttae">.</span><span class="tt18 tta3">map</span><span class="tt18 ttae">(</span><span class="tt18 parameter">_</span> <span class="tt18 ttb0">=></span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>http<span class="tt18 ttae">.</span><span class="tt18 tt1j">get</span><span class="tt18 ttae">(</span>_<span class="tt18 ttae">,</span> <span class="tt18 ttae">&#123;</span> responseType<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'text'</span> <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span>
+      <span class="tt18 tt3o">// Convert html to string, since from the server it comes in html.</span>
+      <span class="tt18 ttae">.</span><span class="tt18 tta3">pipe</span><span class="tt18 ttae">(</span><span class="tt18 tta3">map</span><span class="tt18 ttae">(</span><span class="tt18 parameter">html</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">const</span> span <span class="tt18 ttb0">=</span> window<span class="tt18 ttae">.</span>document<span class="tt18 ttae">.</span><span class="tt18 tta3">createElement</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'span'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        span<span class="tt18 ttae">.</span>innerHTML <span class="tt18 ttb0">=</span> html<span class="tt18 ttae">;</span>
+        <span class="tt18 tt1j">return</span> span<span class="tt18 ttae">.</span>innerText<span class="tt18 ttae">;</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">const</span> data <span class="tt18 ttb0">=</span> <span class="tt18 tta3">forkJoin</span><span class="tt18 ttae">(</span>
+      <span class="tt18 ttb0">...</span>urls
+    <span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    data<span class="tt18 ttae">.</span><span class="tt18 tta3">subscribe</span><span class="tt18 ttae">(</span><span class="tt18 ttae">(</span><span class="tt18 parameter"><span class="tt18 ttae">[</span>res1<span class="tt18 ttae">,</span> res2<span class="tt18 ttae">,</span> res3<span class="tt18 ttae">,</span> <span class="tt18 ttb0">...</span>others<span class="tt18 ttae">]</span></span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">const</span> otherModules <span class="tt18 ttb0">=</span> <span class="tt18 template-string"><span class="tt18 tt3z">`/** Angular */
+import &#123; BrowserModule &#125; from '@angular/platform-browser';
+import &#123; BrowserAnimationsModule &#125; from '@angular/platform-browser/animations';
+import &#123; HttpClientModule &#125; from '@angular/common/http';
+
+/** Alyle UI */
+import &#123; LyThemeModule, LY_THEME, LY_THEME_GLOBAL_VARIABLES &#125; from '@alyle/ui';
+import &#123; MinimaLight, MinimaDark &#125; from '@alyle/ui/themes/minima';
+
+export class GlobalVariables &#123;
+  testVal = '<span style="background:#00bcd4;color:white;opacity:1">#00bcd4</span>';
+  Quepal = &#123;
+    default: \`linear-gradient(135deg,#11998e 0%,#38ef7d 100%)\`,
+    contrast: '#fff',
+    shadow: '#11998e'
+  &#125;;
+  SublimeLight = &#123;
+    default: \`linear-gradient(135deg,#FC5C7D 0%,#6A82FB 100%)\`,
+    contrast: '#fff',
+    shadow: '#B36FBC'
+  &#125;;
+  Amber = &#123;
+    default: '#ffc107',
+    contrast: 'rgba(0, 0, 0, 0.87)'
+  &#125;;
+&#125;
+`</span></span><span class="tt18 ttae">;</span>
+      <span class="tt18 tt1j">let</span> moduleName<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">;</span>
+      <span class="tt18 tt1j">const</span> AppModule <span class="tt18 ttb0">=</span> otherModules <span class="tt18 ttb0">+</span> res3<span class="tt18 ttae">.</span><span class="tt18 tta3">replace</span><span class="tt18 ttae">(</span><span class="tt18 ttbb">MODULE_REGEXP</span><span class="tt18 ttae">,</span> <span class="tt18 ttae">(</span><span class="tt18 parameter">str<span class="tt18 ttae">,</span> token</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">const</span> name <span class="tt18 ttb0">=</span> token <span class="tt18 ttb0">+</span> <span class="tt18 tt3z">'App'</span><span class="tt18 ttae">;</span>
+        moduleName <span class="tt18 ttb0">=</span> name <span class="tt18 ttb0">+</span> <span class="tt18 tt3z">'Module'</span><span class="tt18 ttae">;</span>
+        <span class="tt18 tt1j">return</span> str
+        <span class="tt18 ttae">.</span><span class="tt18 tta3">replace</span><span class="tt18 ttae">(</span>token<span class="tt18 ttae">,</span> name<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">replace</span><span class="tt18 ttae">(</span><span class="tt18 ttbb">EXPORTS_REGEXP</span><span class="tt18 ttae">,</span> <span class="tt18 tt3z">''</span><span class="tt18 ttae">)</span>
+      <span class="tt18 ttae">.</span><span class="tt18 tta3">replace</span><span class="tt18 ttae">(</span><span class="tt18 ttbb">IMPORTS_POINT_REGEXP</span><span class="tt18 ttae">,</span> <span class="tt18 ttae">(</span><span class="tt18 parameter">str</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">return</span> str <span class="tt18 ttb0">+</span> <span class="tt18 template-string"><span class="tt18 tt3z">`BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    LyThemeModule.setTheme('minima-light'),
+    `</span></span><span class="tt18 ttae">;</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">replace</span><span class="tt18 ttae">(</span><span class="tt18 ttbb">DECLARATIONS_REGEXP</span><span class="tt18 ttae">,</span> <span class="tt18 ttae">(</span><span class="tt18 parameter">str<span class="tt18 ttae">,</span> token</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">return</span> <span class="tt18 template-string"><span class="tt18 tt3z">`bootstrap: [</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>token<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">],
+  providers: [
+    &#123;
+      provide: LY_THEME,
+      useClass: MinimaLight,
+      multi: true
+    &#125;,
+    &#123;
+      provide: LY_THEME,
+      useClass: MinimaDark,
+      multi: true
+    &#125;,
+    &#123;
+      provide: LY_THEME_GLOBAL_VARIABLES,
+      useClass: GlobalVariables
+    &#125; // global variables
+  ],\n  `</span></span> <span class="tt18 ttb0">+</span> str<span class="tt18 ttae">;</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+      <span class="tt18 tt1j">const</span> appComponentTs <span class="tt18 ttb0">=</span> res2<span class="tt18 ttae">.</span><span class="tt18 tta3">replace</span><span class="tt18 ttae">(</span><span class="tt18 ttbb">SELECTOR_REGEXP</span><span class="tt18 ttae">,</span> <span class="tt18 ttae">(</span><span class="tt18 parameter">str<span class="tt18 ttae">,</span> token</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> str<span class="tt18 ttae">.</span><span class="tt18 tta3">replace</span><span class="tt18 ttae">(</span>token<span class="tt18 ttae">,</span> <span class="tt18 ttbb">SELECTOR_APP</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 tt1j">const</span> form <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">makeForm</span><span class="tt18 ttae">(</span><span class="tt18 ttae">[</span>res1<span class="tt18 ttae">,</span> appComponentTs<span class="tt18 ttae">,</span> AppModule<span class="tt18 ttae">,</span> <span class="tt18 ttb0">...</span>others<span class="tt18 ttae">]</span><span class="tt18 ttae">,</span> moduleName<span class="tt18 ttb0">!</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      win<span class="tt18 ttae">.</span>document<span class="tt18 ttae">.</span>body<span class="tt18 ttae">.</span><span class="tt18 tta3">appendChild</span><span class="tt18 ttae">(</span>form<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      form<span class="tt18 ttae">.</span><span class="tt18 tta3">submit</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      win<span class="tt18 ttae">.</span>document<span class="tt18 ttae">.</span><span class="tt18 tta3">close</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">makeForm</span><span class="tt18 ttae">(</span><span class="tt18 parameter"><span class="tt18 ttae">[</span>res1<span class="tt18 ttae">,</span> res2<span class="tt18 ttae">,</span> res3<span class="tt18 ttae">,</span> <span class="tt18 ttb0">...</span>others<span class="tt18 ttae">]</span><span class="tt18 ttae">,</span> moduleName<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span></span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">const</span> form <span class="tt18 ttb0">=</span> document<span class="tt18 ttae">.</span><span class="tt18 tta3">createElement</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'form'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    form<span class="tt18 ttae">.</span>method <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'POST'</span><span class="tt18 ttae">;</span>
+    form<span class="tt18 ttae">.</span><span class="tt18 tta3">setAttribute</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'style'</span><span class="tt18 ttae">,</span> <span class="tt18 tt3z">'display:none;'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt3o">// form.target = '_blank';</span>
+    <span class="tt18 tt1j">const</span> name <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>path<span class="tt18 ttae">.</span><span class="tt18 tta3">split</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'/'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">reverse</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">[</span><span class="tt18 ttap">0</span><span class="tt18 ttae">]</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">const</span> htmlName <span class="tt18 ttb0">=</span> <span class="tt18 tta3">encodeURIComponent</span><span class="tt18 ttae">(</span><span class="tt18 template-string"><span class="tt18 tt3z">`app/</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>name<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">.component.html`</span></span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    form<span class="tt18 ttae">.</span>action <span class="tt18 ttb0">=</span> <span class="tt18 template-string"><span class="tt18 tt3z">`https://run.stackblitz.com/api/angular/v1/?file=</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>htmlName<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">const</span> title <span class="tt18 ttb0">=</span> name<span class="tt18 ttae">.</span><span class="tt18 tta3">replace</span><span class="tt18 ttae">(</span><span class="tt18 regex">/-/g</span><span class="tt18 ttae">,</span> <span class="tt18 tt3z">' '</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">+</span> <span class="tt18 tt3z">' | Alyle UI'</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">const</span> payload<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      files<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span><span class="tt18 ttae">[</span>path<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+      title<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">;</span>
+      description<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">;</span>
+      template<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'angular-cli'</span> <span class="tt18 ttb0">|</span> <span class="tt18 tt3z">'create-react-app'</span> <span class="tt18 ttb0">|</span> <span class="tt18 tt3z">'typescript'</span> <span class="tt18 ttb0">|</span> <span class="tt18 tt3z">'javascript'</span><span class="tt18 ttae">;</span>
+      tags<span class="tt18 ttb0">?</span><span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">[</span><span class="tt18 ttae">]</span><span class="tt18 ttae">;</span>
+      dependencies<span class="tt18 ttb0">?</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span><span class="tt18 ttae">[</span>name<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+      settings<span class="tt18 ttb0">?</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        compile<span class="tt18 ttb0">?</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          trigger<span class="tt18 ttb0">?</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'auto'</span> <span class="tt18 ttb0">|</span> <span class="tt18 tt3z">'keystroke'</span> <span class="tt18 ttb0">|</span> <span class="tt18 tt3z">'save'</span><span class="tt18 ttae">;</span>
+          action<span class="tt18 ttb0">?</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'hmr'</span> <span class="tt18 ttb0">|</span> <span class="tt18 tt3z">'refresh'</span><span class="tt18 ttae">;</span>
+          clearConsole<span class="tt18 ttb0">?</span><span class="tt18 ttae">:</span> <span class="tt18 ttcj">boolean</span><span class="tt18 ttae">;</span>
+        <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span> <span class="tt18 ttb0">=</span> <span class="tt18 ttae">&#123;</span>
+      files<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`app/</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>name<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">.component.html`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> res1<span class="tt18 ttae">,</span>
+        <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`app/</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>name<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">.component.ts`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> res2<span class="tt18 ttae">,</span>
+        <span class="tt18 ttae">[</span><span class="tt18 template-string"><span class="tt18 tt3z">`app/</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>name<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">.module.ts`</span></span><span class="tt18 ttae">]</span><span class="tt18 ttae">:</span> res3<span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'main.ts'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">(</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`import './polyfills';\n`</span></span> <span class="tt18 ttb0">+</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`import &#123; BrowserModule &#125; from '@angular/platform-browser';\n`</span></span> <span class="tt18 ttb0">+</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`import &#123; platformBrowserDynamic &#125; from '@angular/platform-browser-dynamic';\n`</span></span> <span class="tt18 ttb0">+</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`import &#123; </span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>moduleName<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z"> &#125; from './app/</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>name<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">.module';\n`</span></span> <span class="tt18 ttb0">+</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`\n`</span></span> <span class="tt18 ttb0">+</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`platformBrowserDynamic().bootstrapModule(</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>moduleName<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">).then(ref => &#123;\n`</span></span> <span class="tt18 ttb0">+</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`  // Ensure Angular destroys itself on hot reloads.\n`</span></span> <span class="tt18 ttb0">+</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`  if (window['ngRef']) &#123;\n`</span></span> <span class="tt18 ttb0">+</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`    window['ngRef'].destroy();\n`</span></span> <span class="tt18 ttb0">+</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`  &#125;\n`</span></span> <span class="tt18 ttb0">+</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`  window['ngRef'] = ref;\n`</span></span> <span class="tt18 ttb0">+</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`\n`</span></span> <span class="tt18 ttb0">+</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`  // Otherwise, log the boot error\n`</span></span> <span class="tt18 ttb0">+</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`&#125;).catch(err => console.error(err));`</span></span>
+        <span class="tt18 ttae">)</span><span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'polyfills.ts'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">(</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`import 'core-js/es6/reflect';\nimport 'core-js/es7/reflect';\nimport 'zone.js/dist/zone';\nimport 'hammerjs';\nimport 'web-animations-js';\n`</span></span>
+        <span class="tt18 ttae">)</span><span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'index.html'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">(</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`&lt;link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons" rel="stylesheet">\n`</span></span> <span class="tt18 ttb0">+</span>
+          <span class="tt18 template-string"><span class="tt18 tt3z">`&lt;</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span><span class="tt18 ttbb">SELECTOR_APP</span><span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">>&lt;/</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span><span class="tt18 ttbb">SELECTOR_APP</span><span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">>`</span></span>
+        <span class="tt18 ttae">)</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      title<span class="tt18 ttae">,</span>
+      description<span class="tt18 ttae">:</span> title<span class="tt18 ttae">,</span>
+      template<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'angular-cli'</span><span class="tt18 ttae">,</span>
+      dependencies<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt3z">'@alyle/ui'</span><span class="tt18 ttae">:</span> <span class="tt18 ttbb">AUI_VERSION</span><span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'@angular/cli'</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'^7.1.0'</span><span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'@angular/core'</span><span class="tt18 ttae">:</span> <span class="tt18 ttbb">VERSION</span><span class="tt18 ttae">.</span>full<span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'@angular/common'</span><span class="tt18 ttae">:</span> <span class="tt18 ttbb">VERSION</span><span class="tt18 ttae">.</span>full<span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'@angular/forms'</span><span class="tt18 ttae">:</span> <span class="tt18 ttbb">VERSION</span><span class="tt18 ttae">.</span>full<span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'@angular/http'</span><span class="tt18 ttae">:</span> <span class="tt18 ttbb">VERSION</span><span class="tt18 ttae">.</span>full<span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'@angular/animations'</span><span class="tt18 ttae">:</span> <span class="tt18 ttbb">VERSION</span><span class="tt18 ttae">.</span>full<span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'@angular/platform-browser'</span><span class="tt18 ttae">:</span> <span class="tt18 ttbb">VERSION</span><span class="tt18 ttae">.</span>full<span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'@angular/compiler'</span><span class="tt18 ttae">:</span> <span class="tt18 ttbb">VERSION</span><span class="tt18 ttae">.</span>full<span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'@angular/platform-browser-dynamic'</span><span class="tt18 ttae">:</span> <span class="tt18 ttbb">VERSION</span><span class="tt18 ttae">.</span>full<span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'chroma-js'</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'latest'</span><span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'web-animations-js'</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'latest'</span><span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'core-js'</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'2.6.5'</span><span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'zone.js'</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'0.8.29'</span><span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'rxjs'</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'latest'</span><span class="tt18 ttae">,</span>
+        <span class="tt18 tt3z">'hammerjs'</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'2.0.8'</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      settings<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        compile<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          action<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'refresh'</span><span class="tt18 ttae">,</span>
+          clearConsole<span class="tt18 ttae">:</span> <span class="tt18 boolean">false</span>
+        <span class="tt18 ttae">&#125;</span>
+      <span class="tt18 ttae">&#125;</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+
+    others<span class="tt18 ttae">.</span><span class="tt18 tta3">forEach</span><span class="tt18 ttae">(</span><span class="tt18 ttae">(</span><span class="tt18 parameter">text<span class="tt18 ttae">,</span> index</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">const</span> filePath <span class="tt18 ttb0">=</span> <span class="tt18 template-string"><span class="tt18 tt3z">`app/</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>files<span class="tt18 ttae">[</span>index <span class="tt18 ttb0">+</span> <span class="tt18 ttap">3</span><span class="tt18 ttae">]</span><span class="tt18 ttae">.</span>path<span class="tt18 ttb0">!</span><span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">;</span>
+      payload<span class="tt18 ttae">.</span>files<span class="tt18 ttae">[</span>filePath<span class="tt18 ttae">]</span> <span class="tt18 ttb0">=</span> text<span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+    <span class="tt18 tt1j">for</span> <span class="tt18 ttae">(</span><span class="tt18 tt1j">const</span> key <span class="tt18 tt1j">in</span> payload<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>payload<span class="tt18 ttae">.</span><span class="tt18 tta3">hasOwnProperty</span><span class="tt18 ttae">(</span>key<span class="tt18 ttae">)</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">let</span> input<span class="tt18 ttae">;</span>
+        <span class="tt18 tt1j">const</span> element <span class="tt18 ttb0">=</span> payload<span class="tt18 ttae">[</span>key<span class="tt18 ttae">]</span><span class="tt18 ttae">;</span>
+        <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span><span class="tt18 tt1j">typeof</span> element <span class="tt18 ttb0">===</span> <span class="tt18 tt3z">'string'</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+          input <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">createHiddenField</span><span class="tt18 ttae">(</span><span class="tt18 template-string"><span class="tt18 tt3z">`[</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>key<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">]`</span></span><span class="tt18 ttae">,</span> element<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+          form<span class="tt18 ttae">.</span><span class="tt18 tta3">appendChild</span><span class="tt18 ttae">(</span>input<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">else</span> <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>key <span class="tt18 ttb0">===</span> <span class="tt18 tt3z">'files'</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+          Object<span class="tt18 ttae">.</span><span class="tt18 tta3">keys</span><span class="tt18 ttae">(</span>element<span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">forEach</span><span class="tt18 ttae">(</span><span class="tt18 parameter">_</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+            input <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">createHiddenField</span><span class="tt18 ttae">(</span><span class="tt18 template-string"><span class="tt18 tt3z">`[</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>key<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">][</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>_<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">]`</span></span><span class="tt18 ttae">,</span> element<span class="tt18 ttae">[</span>_<span class="tt18 ttae">]</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+            form<span class="tt18 ttae">.</span><span class="tt18 tta3">appendChild</span><span class="tt18 ttae">(</span>input<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+          <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">else</span> <span class="tt18 ttae">&#123;</span>
+          input <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">createHiddenField</span><span class="tt18 ttae">(</span><span class="tt18 template-string"><span class="tt18 tt3z">`[</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>key<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">]`</span></span><span class="tt18 ttae">,</span> <span class="tt18 ttbb">JSON</span><span class="tt18 ttae">.</span><span class="tt18 tta3">stringify</span><span class="tt18 ttae">(</span>element<span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+          form<span class="tt18 ttae">.</span><span class="tt18 tta3">appendChild</span><span class="tt18 ttae">(</span>input<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        <span class="tt18 ttae">&#125;</span>
+      <span class="tt18 ttae">&#125;</span>
+    <span class="tt18 ttae">&#125;</span>
+
+    <span class="tt18 tt1j">return</span> form<span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">createHiddenField</span><span class="tt18 ttae">(</span><span class="tt18 parameter">name<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">,</span> value<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span></span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">const</span> field <span class="tt18 ttb0">=</span> document<span class="tt18 ttae">.</span><span class="tt18 tta3">createElement</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'input'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    field<span class="tt18 ttae">.</span><span class="tt18 tta3">setAttribute</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'type'</span><span class="tt18 ttae">,</span> <span class="tt18 tt3z">'hidden'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    field<span class="tt18 ttae">.</span><span class="tt18 tta3">setAttribute</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'value'</span><span class="tt18 ttae">,</span> value<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    field<span class="tt18 ttae">.</span><span class="tt18 tta3">setAttribute</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'name'</span><span class="tt18 ttae">,</span> name<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">return</span> field<span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">encode</span><span class="tt18 ttae">(</span><span class="tt18 parameter">str<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span></span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">const</span> buf<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">[</span><span class="tt18 ttae">]</span> <span class="tt18 ttb0">=</span> <span class="tt18 ttae">[</span><span class="tt18 ttae">]</span><span class="tt18 ttae">;</span>
+
+    <span class="tt18 tt1j">for</span> <span class="tt18 ttae">(</span><span class="tt18 tt1j">let</span> i <span class="tt18 ttb0">=</span> str<span class="tt18 ttae">.</span>length <span class="tt18 ttb0">-</span> <span class="tt18 ttap">1</span><span class="tt18 ttae">;</span> i <span class="tt18 ttb0">>=</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">;</span> i<span class="tt18 ttb0">--</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      buf<span class="tt18 ttae">.</span><span class="tt18 tta3">unshift</span><span class="tt18 ttae">(</span><span class="tt18 ttae">[</span><span class="tt18 tt3z">'&amp;#'</span><span class="tt18 ttae">,</span> str<span class="tt18 ttae">[</span>i<span class="tt18 ttae">]</span><span class="tt18 ttae">.</span><span class="tt18 tta3">charCodeAt</span><span class="tt18 ttae">(</span><span class="tt18 ttap">0</span><span class="tt18 ttae">)</span><span class="tt18 ttae">,</span> <span class="tt18 tt3z">';'</span><span class="tt18 ttae">]</span><span class="tt18 ttae">.</span><span class="tt18 tta3">join</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">''</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+
+    <span class="tt18 tt1j">return</span> buf<span class="tt18 ttae">.</span><span class="tt18 tta3">join</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">''</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">ngOnInit</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>name <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>router<span class="tt18 ttae">.</span>url<span class="tt18 ttae">.</span><span class="tt18 tta3">replace</span><span class="tt18 ttae">(</span><span class="tt18 regex">/\//g</span><span class="tt18 ttae">,</span> <span class="tt18 tt3z">''</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">replace</span><span class="tt18 ttae">(</span><span class="tt18 regex">/component/</span><span class="tt18 ttae">,</span> <span class="tt18 tt3z">''</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span><span class="tt18 tta3">isDevMode</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">&amp;&amp;</span> <span class="tt18 ttb0">!</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>path<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>folderName <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>el<span class="tt18 ttae">.</span>nativeElement<span class="tt18 ttae">.</span><span class="tt18 tta3">querySelector</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'.tab-container > *'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span>nodeName<span class="tt18 ttae">.</span><span class="tt18 tta3">toLowerCase</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 ttcj">console</span><span class="tt18 ttae">.</span><span class="tt18 tta3">warn</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'requi<span style="background:red;color:white;opacity:1">red</span> path for'</span><span class="tt18 ttae">,</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>router<span class="tt18 ttae">.</span>url<span class="tt18 ttae">,</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>folderName<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>files<span class="tt18 ttae">.</span><span class="tt18 tta3">forEach</span><span class="tt18 ttae">(</span><span class="tt18 ttae">(</span><span class="tt18 parameter">_item<span class="tt18 ttae">,</span> i</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>files<span class="tt18 ttae">[</span>i<span class="tt18 ttae">]</span><span class="tt18 ttae">[</span><span class="tt18 tt3z">'text'</span><span class="tt18 ttae">]</span> <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">getFile</span><span class="tt18 ttae">(</span>i<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+<span class="tt18 ttae">&#125;</span>
+
+<span class="tt18 tt1j">function</span> <span class="tt18 tta3">getLanguage</span><span class="tt18 ttae">(</span><span class="tt18 parameter">str<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span></span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+  <span class="tt18 tt1j">return</span> str<span class="tt18 ttae">.</span><span class="tt18 tta3">split</span><span class="tt18 ttae">(</span><span class="tt18 regex">/\./</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">reverse</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">[</span><span class="tt18 ttap">0</span><span class="tt18 ttae">]</span><span class="tt18 ttae">;</span>
+<span class="tt18 ttae">&#125;</span>
+</pre></div>

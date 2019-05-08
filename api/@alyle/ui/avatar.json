@@ -1,0 +1,32 @@
+{
+  "componentList": [],
+  "directiveList": [
+    {
+      "name": "LyAvatar",
+      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-avatar'</span></pre></div>\n",
+      "inputs": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 ttae\">[</span>\n  <span class=\"tt18 tt3z\">\"bg\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"color\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"raised\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"outlined\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"elevation\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"shadowColor\"</span>\n<span class=\"tt18 ttae\">]</span></pre></div>\n",
+      "exportAs": "",
+      "children": "@Input() size: number"
+    }
+  ],
+  "variableList": [
+    {
+      "name": "DEFAULT_BG",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">DEFAULT_BG</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"action\"</span></pre></div>\n"
+    },
+    {
+      "name": "DEFAULT_SIZE",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">DEFAULT_SIZE</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 ttap\">40</span></pre></div>\n"
+    },
+    {
+      "name": "STYLE_PRIORITY",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">STYLE_PRIORITY</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 ttb0\">-</span><span class=\"tt18 ttap\">2</span></pre></div>\n"
+    }
+  ],
+  "ngModuleList": [
+    {
+      "name": "LyAvatarModule",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">import</span> <span class=\"tt18 ttae\">&#123;</span> LyAvatarModule <span class=\"tt18 ttae\">&#125;</span> <span class=\"tt18 tt1j\">from</span> <span class=\"tt18 tt3z\">'@alyle/ui/avatar'</span></pre></div>\n"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "componentList": [],
+  "directiveList": [],
+  "functionList": [],
+  "variableList": [
+    {
+      "name": "hammerjsImportStatement",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> hammerjsImportStatement <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 template-string\"><span class=\"tt18 tt3z\">`import 'hammerjs';`</span></span></pre></div>\n"
+    },
+    {
+      "name": "CHROMA_JS_VERSION",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">CHROMA_JS_VERSION</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"^1.3.6\"</span></pre></div>\n"
+    },
+    {
+      "name": "HAMMERJS_VERSION",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">HAMMERJS_VERSION</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"^2.0.8\"</span></pre></div>\n"
+    }
+  ],
+  "interfaceList": [
+    {
+      "name": "Schema",
+      "children": "interface Schema {\n  gestures: boolean,\n  project: string,\n  themes: any\n}"
+    }
+  ]
+}

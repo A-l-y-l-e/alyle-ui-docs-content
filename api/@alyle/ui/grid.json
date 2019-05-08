@@ -1,0 +1,45 @@
+{
+  "componentList": [],
+  "directiveList": [
+    {
+      "name": "LyGrid",
+      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-grid[container]'</span></pre></div>\n",
+      "inputs": "",
+      "exportAs": "",
+      "children": "/**\n * Defines the `align-items` style property.\n * Support breakpoints\n */\n@Input() alignItems: 'center' | 'baseline' | 'start' | 'end' | 'stretch'\n/**\n * Defines the justify-content style property.\n * Support breakpoints\n */\n@Input() direction: Direction\n/**\n * Defines the justify-content style property.\n * Support breakpoints\n */\n@Input() justify: Justify\n/**\n * Defines the space between the component with the `item` attribute.\n * Support breakpoints\n */\n@Input() spacing: string | number\n@Input() spacingX: string | number\n@Input() spacingY: string | number"
+    },
+    {
+      "name": "LyGridItem",
+      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-grid[item], [ly-grid-item], [lyGridItem]'</span></pre></div>\n",
+      "inputs": "",
+      "exportAs": "",
+      "children": "/**\n * Defines the number of grids\n * Support breakpoints\n */\n@Input() col: string | number\n@Input('lyGridItem') gridItemCol: string | number\n/**\n * Defines the order style property.\n * Support breakpoints\n */\n@Input() order: string | number"
+    }
+  ],
+  "typeAliasList": [
+    {
+      "name": "AlignItems",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">type</span> AlignItems <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">'start'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'center'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'end'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'stretch'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'baseline'</span></pre></div>\n"
+    },
+    {
+      "name": "Direction",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">type</span> Direction <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">'row'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'rowReverse'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'column'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'columnReverse'</span></pre></div>\n"
+    },
+    {
+      "name": "Justify",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">type</span> Justify <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">'start'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'center'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'end'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'between'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'around'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'evenly'</span></pre></div>\n"
+    }
+  ],
+  "variableList": [
+    {
+      "name": "STYLE_PRIORITY",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">STYLE_PRIORITY</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 ttb0\">-</span><span class=\"tt18 ttap\">1</span></pre></div>\n"
+    }
+  ],
+  "ngModuleList": [
+    {
+      "name": "LyGridModule",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">import</span> <span class=\"tt18 ttae\">&#123;</span> LyGridModule <span class=\"tt18 ttae\">&#125;</span> <span class=\"tt18 tt1j\">from</span> <span class=\"tt18 tt3z\">'@alyle/ui/grid'</span></pre></div>\n"
+    }
+  ]
+}

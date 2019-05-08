@@ -1,0 +1,18 @@
+{
+  "componentList": [],
+  "directiveList": [
+    {
+      "name": "LyDivider",
+      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-divider'</span></pre></div>\n",
+      "inputs": "",
+      "exportAs": "",
+      "children": "/** Add indentation (72px) */\n@Input() inset: boolean"
+    }
+  ],
+  "ngModuleList": [
+    {
+      "name": "LyDividerModule",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">import</span> <span class=\"tt18 ttae\">&#123;</span> LyDividerModule <span class=\"tt18 ttae\">&#125;</span> <span class=\"tt18 tt1j\">from</span> <span class=\"tt18 tt3z\">'@alyle/ui/divider'</span></pre></div>\n"
+    }
+  ]
+}

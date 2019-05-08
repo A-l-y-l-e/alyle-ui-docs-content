@@ -1,0 +1,82 @@
+{
+  "componentList": [
+    {
+      "name": "LyTab",
+      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-tab'</span></pre></div>\n",
+      "inputs": "",
+      "exportAs": "",
+      "children": "/** Current tab index */\nindex: number"
+    },
+    {
+      "name": "LyTabLabel",
+      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'button[ly-tab-label]'</span></pre></div>\n",
+      "inputs": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 ttae\">[</span>\n  <span class=\"tt18 tt3z\">\"bg\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"color\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"raised\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"disabled\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"outlined\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"elevation\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"shadowColor\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"disableRipple\"</span>\n<span class=\"tt18 ttae\">]</span></pre></div>\n",
+      "exportAs": "",
+      "children": "/** Button appearance */\n@Input() appearance: string\n/** Button size */\n@Input() size: LyButtonSize\nfocus(): void"
+    },
+    {
+      "name": "LyTabs",
+      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-tabs'</span></pre></div>\n",
+      "inputs": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 ttae\">[</span>\n  <span class=\"tt18 tt3z\">\"bg\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"elevation\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"shadowColor\"</span>\n<span class=\"tt18 ttae\">]</span></pre></div>\n",
+      "exportAs": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'lyTabs'</span></pre></div>\n",
+      "children": "@Output() selectedIndexChange: EventEmitter\n@Input() selectedIndexOnChange: any\n@ViewChild() tabContents: ElementRef\n@ViewChild() tabsIndicator: ElementRef\n@ContentChildren() tabsList: QueryList\n@ViewChild() tabsRef: ElementRef\n@Input() alignTabs: 'center' | 'baseline' | 'start' | 'end' | 'stretch'\n@Input() headerPlacement: 'before' | 'after' | 'above' | 'below'\n@Input() indicatorColor: string\n@Input() scrollable: any\n@Input() selectedIndex: number\n@Input() textColor: string\nloadTemplate(tab: LyTab, index: number): void"
+    }
+  ],
+  "directiveList": [
+    {
+      "name": "LyTabContent",
+      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'[ly-tab-content]'</span></pre></div>\n",
+      "inputs": "",
+      "exportAs": "",
+      "children": "template: TemplateRef"
+    }
+  ],
+  "typeAliasList": [
+    {
+      "name": "AlignTabs",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">type</span> AlignTabs <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">'start'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'center'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'end'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'stretch'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'baseline'</span></pre></div>\n"
+    },
+    {
+      "name": "LyTabsHeaderPlacement",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">type</span> LyTabsHeaderPlacement <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">'before'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'after'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'above'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'below'</span></pre></div>\n"
+    }
+  ],
+  "variableList": [
+    {
+      "name": "DEFAULT_BG",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">DEFAULT_BG</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"primary\"</span></pre></div>\n"
+    },
+    {
+      "name": "DEFAULT_DISABLE_RIPPLE",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">DEFAULT_DISABLE_RIPPLE</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 boolean\">false</span></pre></div>\n"
+    },
+    {
+      "name": "DEFAULT_ELEVATION",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">DEFAULT_ELEVATION</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 ttap\">4</span></pre></div>\n"
+    },
+    {
+      "name": "DEFAULT_HEADER_PLACEMENT",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">DEFAULT_HEADER_PLACEMENT</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"above\"</span></pre></div>\n"
+    },
+    {
+      "name": "DEFAULT_INDICATOR_COLOR",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">DEFAULT_INDICATOR_COLOR</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"accent\"</span></pre></div>\n"
+    },
+    {
+      "name": "STYLE_PRIORITY",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">STYLE_PRIORITY</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 ttb0\">-</span><span class=\"tt18 ttap\">2</span></pre></div>\n"
+    }
+  ],
+  "injectableList": [
+    {
+      "name": "LyTabsClassesService",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\">@<span class=\"tt18 tta3\">Injectable</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">&#123;</span>\n  providedIn<span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt3z\">'root'</span>\n<span class=\"tt18 ttae\">&#125;</span><span class=\"tt18 ttae\">)</span>\n<span class=\"tt18 tt1j\">class</span> <span class=\"tt18 ttc8\">LyTabsClassesService</span> <span class=\"tt18 ttae\">&#123;</span>\n  \n<span class=\"tt18 ttae\">&#125;</span></pre></div>\n"
+    }
+  ],
+  "ngModuleList": [
+    {
+      "name": "LyTabsModule",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">import</span> <span class=\"tt18 ttae\">&#123;</span> LyTabsModule <span class=\"tt18 ttae\">&#125;</span> <span class=\"tt18 tt1j\">from</span> <span class=\"tt18 tt3z\">'@alyle/ui/tabs'</span></pre></div>\n"
+    }
+  ]
+}

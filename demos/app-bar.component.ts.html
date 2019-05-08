@@ -1,0 +1,139 @@
+<div class="lang-ts ttb"><pre class="ttm"><span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Component<span class="tt18 ttae">,</span> OnInit<span class="tt18 ttae">,</span> ChangeDetectionStrategy<span class="tt18 ttae">,</span> ViewEncapsulation<span class="tt18 ttae">,</span> OnDestroy<span class="tt18 ttae">,</span> ChangeDetectorRef <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/core'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyTheme2<span class="tt18 ttae">,</span> CoreTheme <span class="tt18 tt1j">as</span> ThemeManager<span class="tt18 ttae">,</span> Platform<span class="tt18 ttae">,</span> WinScroll <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Router<span class="tt18 ttae">,</span> NavigationEnd <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/router'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Subscription <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'rxjs'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> filter <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'rxjs/operators'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyDrawer <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/drawer'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> AppComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'../app.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> AUIThemeVariables <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'../app.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Ads <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@sha<span style="background:red;color:white;opacity:1">red</span>/ads'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Location <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/common'</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">const</span> <span class="tt18 function-variable tta3">styles</span> <span class="tt18 ttb0">=</span> <span class="tt18 ttae">(</span><span class="tt18 parameter">theme<span class="tt18 ttae">:</span> AUIThemeVariables</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  root<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    transition<span class="tt18 ttae">:</span> <span class="tt18 template-string"><span class="tt18 tt3z">`350ms </span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>theme<span class="tt18 ttae">.</span>animations<span class="tt18 ttae">.</span>curves<span class="tt18 ttae">.</span>standard<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">,</span>
+    transitionProperty<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'background, color'</span><span class="tt18 ttae">,</span>
+    width<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'100vw'</span><span class="tt18 ttae">,</span>
+    paddingRight<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'32px'</span><span class="tt18 ttae">,</span>
+    left<span class="tt18 ttae">:</span> <span class="tt18 ttap">0</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  themePickerText<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    paddingBefore<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'8px'</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  logo<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    height<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'64px'</span><span class="tt18 ttae">,</span>
+    borderRadius<span class="tt18 ttae">:</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">,</span>
+    fontSize<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'20px'</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  version<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    fontSize<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'71%'</span><span class="tt18 ttae">,</span>
+    opacity<span class="tt18 ttae">:</span> <span class="tt18 ttap">.71</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  supportMenuIcon<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    paddingAfter<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'16px'</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  discordHover<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt3z">'&amp;:hover ly-icon'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>discord
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+@<span class="tt18 tta3">Component</span><span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  selector<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'aui-app-bar'</span><span class="tt18 ttae">,</span>
+  templateUrl<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'./app-bar.component.html'</span><span class="tt18 ttae">,</span>
+  changeDetection<span class="tt18 ttae">:</span> ChangeDetectionStrategy<span class="tt18 ttae">.</span>OnPush<span class="tt18 ttae">,</span>
+  encapsulation<span class="tt18 ttae">:</span> ViewEncapsulation<span class="tt18 ttae">.</span>None
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span>
+<span class="tt18 tt1j">export</span> <span class="tt18 tt1j">class</span> <span class="tt18 ttc8">AppBarComponent</span> <span class="tt18 tt1j">implements</span> <span class="tt18 ttc8">OnInit</span><span class="tt18 ttae">,</span> OnDestroy <span class="tt18 ttae">&#123;</span>
+  classes <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>theme<span class="tt18 ttae">.</span><span class="tt18 tta3">addStyleSheet</span><span class="tt18 ttae">(</span>styles<span class="tt18 ttae">,</span> <span class="tt18 ttap">1</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  themes<span class="tt18 ttae">:</span> Set<span class="tt18 ttb0">&lt;</span><span class="tt18 ttcj">string</span><span class="tt18 ttb0">></span><span class="tt18 ttae">;</span>
+  drawer<span class="tt18 ttae">:</span> LyDrawer<span class="tt18 ttae">;</span>
+  bg <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'transparent'</span><span class="tt18 ttae">;</span>
+  elevation <span class="tt18 ttb0">=</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">;</span>
+  color <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:#fff;color:#202020;opacity:1">#fff</span>'</span><span class="tt18 ttae">;</span>
+
+  supportList <span class="tt18 ttb0">=</span> <span class="tt18 ttae">[</span>
+    <span class="tt18 ttae">&#123;</span>
+      label<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'Discord community'</span><span class="tt18 ttae">,</span>
+      classes<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>classes<span class="tt18 ttae">.</span>discordHover<span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
+      icon<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'Discord'</span><span class="tt18 ttae">,</span>
+      href<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'https://discord.gg/65hMpAJ'</span> <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttae">&#123;</span>
+      label<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'Report a bug'</span><span class="tt18 ttae">,</span>
+      classes<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span><span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
+      icon<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'github'</span><span class="tt18 ttae">,</span>
+      href<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'https://github.com/A-l-y-l-e/Alyle-UI/issues/new/choose'</span> <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">]</span><span class="tt18 ttae">;</span>
+
+  <span class="tt18 tt1j">private</span> scrollSub<span class="tt18 ttae">:</span> Subscription<span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">constructor</span><span class="tt18 ttae">(</span>
+    <span class="tt18 parameter"><span class="tt18 tt1j">private</span> appComponent<span class="tt18 ttae">:</span> AppComponent<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">public</span> theme<span class="tt18 ttae">:</span> LyTheme2<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">public</span> themeManager<span class="tt18 ttae">:</span> ThemeManager<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> winScroll<span class="tt18 ttae">:</span> WinScroll<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> router<span class="tt18 ttae">:</span> Router<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> cd<span class="tt18 ttae">:</span> ChangeDetectorRef<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> _ads<span class="tt18 ttae">:</span> Ads<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> _location<span class="tt18 ttae">:</span> Location</span>
+  <span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>themes <span class="tt18 ttb0">=</span> themeManager<span class="tt18 ttae">.</span>themes<span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">ngOnInit</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>drawer <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>appComponent<span class="tt18 ttae">.</span>drawer<span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>router<span class="tt18 ttae">.</span>events
+    <span class="tt18 ttae">.</span><span class="tt18 tta3">pipe</span><span class="tt18 ttae">(</span>
+      <span class="tt18 tta3">filter</span><span class="tt18 ttae">(</span><span class="tt18 ttae">(</span><span class="tt18 parameter">event</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">return</span> event <span class="tt18 tt1j">instanceof</span> <span class="tt18 ttc8">NavigationEnd</span><span class="tt18 ttae">;</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span>
+    <span class="tt18 ttae">)</span>
+    <span class="tt18 ttae">.</span><span class="tt18 tta3">subscribe</span><span class="tt18 ttae">(</span><span class="tt18 ttae">(</span><span class="tt18 parameter">event<span class="tt18 ttae">:</span> NavigationEnd</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>event<span class="tt18 ttae">.</span>url <span class="tt18 ttb0">===</span> <span class="tt18 tt3z">'/'</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">setForHomeStyles</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">else</span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">setDefaultStyles</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 ttae">&#125;</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>Platform<span class="tt18 ttae">.</span>isBrowser<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>scrollSub <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>winScroll<span class="tt18 ttae">.</span>scroll$<span class="tt18 ttae">.</span><span class="tt18 tta3">subscribe</span><span class="tt18 ttae">(</span><span class="tt18 ttae">(</span><span class="tt18 parameter">val</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>router<span class="tt18 ttae">.</span>url <span class="tt18 ttb0">===</span> <span class="tt18 tt3z">'/'</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+          <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>val <span class="tt18 ttb0">></span> <span class="tt18 ttap">90</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+            <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">setDefaultStyles</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+          <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">else</span> <span class="tt18 ttae">&#123;</span>
+            <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">setForHomeStyles</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+          <span class="tt18 ttae">&#125;</span>
+        <span class="tt18 ttae">&#125;</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tt1j">private</span> <span class="tt18 tta3">setDefaultStyles</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>bg <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'primary'</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>elevation <span class="tt18 ttb0">=</span> <span class="tt18 ttap">3</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>color <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'primary:contrast'</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>cd<span class="tt18 ttae">.</span><span class="tt18 tta3">markForCheck</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 tt1j">private</span> <span class="tt18 tta3">setForHomeStyles</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>bg <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'transparent'</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>elevation <span class="tt18 ttb0">=</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>color <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'<span style="background:#fff;color:#202020;opacity:1">#fff</span>'</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>cd<span class="tt18 ttae">.</span><span class="tt18 tta3">markForCheck</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">setTheme</span><span class="tt18 ttae">(</span><span class="tt18 parameter">themeName<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span></span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span><span class="tt18 tt1j">typeof</span> localStorage <span class="tt18 ttb0">===</span> <span class="tt18 tt3z">'object'</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      localStorage<span class="tt18 ttae">.</span><span class="tt18 tta3">setItem</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'theme-name'</span><span class="tt18 ttae">,</span> themeName<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>theme<span class="tt18 ttae">.</span><span class="tt18 tta3">setTheme</span><span class="tt18 ttae">(</span>themeName<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_ads<span class="tt18 ttae">.</span><span class="tt18 tta3">update</span><span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_location<span class="tt18 ttae">.</span><span class="tt18 tta3">path</span><span class="tt18 ttae">(</span><span class="tt18 boolean">true</span><span class="tt18 ttae">)</span><span class="tt18 ttae">,</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>appComponent<span class="tt18 ttae">.</span>page<span class="tt18 ttae">,</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>theme<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">ngOnDestroy</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>Platform<span class="tt18 ttae">.</span>isBrowser<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>scrollSub<span class="tt18 ttae">.</span><span class="tt18 tta3">unsubscribe</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+<span class="tt18 ttae">&#125;</span>
+</pre></div>

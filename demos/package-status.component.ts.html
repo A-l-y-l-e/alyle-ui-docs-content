@@ -1,0 +1,43 @@
+<div class="lang-ts ttb"><pre class="ttm"><span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Component<span class="tt18 ttae">,</span> OnInit<span class="tt18 ttae">,</span> ChangeDetectionStrategy<span class="tt18 ttae">,</span> ViewEncapsulation<span class="tt18 ttae">,</span> Input <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/core'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyTheme2 <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui'</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">const</span> <span class="tt18 ttbb">STYLES</span> <span class="tt18 ttb0">=</span> <span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  card<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    margin<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'1em 0'</span><span class="tt18 ttae">,</span>
+    display<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'flex'</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  icon<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    alignItems<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'center'</span><span class="tt18 ttae">,</span>
+    display<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'flex'</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'&amp; svg *'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      fill<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'inherit'</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  cardContent<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    paddingLeft<span class="tt18 ttae">:</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">,</span>
+    paddingRight<span class="tt18 ttae">:</span> <span class="tt18 ttap">0</span><span class="tt18 ttae">,</span>
+    alignItems<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'center'</span><span class="tt18 ttae">,</span>
+    display<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'flex'</span>
+  <span class="tt18 ttae">&#125;</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+@<span class="tt18 tta3">Component</span><span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  selector<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'aui-package-status'</span><span class="tt18 ttae">,</span>
+  templateUrl<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'./package-status.component.html'</span><span class="tt18 ttae">,</span>
+  changeDetection<span class="tt18 ttae">:</span> ChangeDetectionStrategy<span class="tt18 ttae">.</span>OnPush<span class="tt18 ttae">,</span>
+  encapsulation<span class="tt18 ttae">:</span> ViewEncapsulation<span class="tt18 ttae">.</span>None
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span>
+<span class="tt18 tt1j">export</span> <span class="tt18 tt1j">class</span> <span class="tt18 ttc8">PackageStatusComponent</span> <span class="tt18 tt1j">implements</span> <span class="tt18 ttc8">OnInit</span> <span class="tt18 ttae">&#123;</span>
+  classes <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_theme<span class="tt18 ttae">.</span><span class="tt18 tta3">addStyleSheet</span><span class="tt18 ttae">(</span><span class="tt18 ttbb">STYLES</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  @<span class="tt18 tta3">Input</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> status<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'beta'</span> <span class="tt18 ttb0">|</span> <span class="tt18 tt3z">'deprecated'</span><span class="tt18 ttae">;</span>
+  @<span class="tt18 tta3">Input</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> packageName<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">;</span>
+
+  <span class="tt18 tt1j">constructor</span><span class="tt18 ttae">(</span>
+    <span class="tt18 parameter"><span class="tt18 tt1j">private</span> _theme<span class="tt18 ttae">:</span> LyTheme2</span>
+  <span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span> <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">ngOnInit</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+<span class="tt18 ttae">&#125;</span>
+</pre></div>

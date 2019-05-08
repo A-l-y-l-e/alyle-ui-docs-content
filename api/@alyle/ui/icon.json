@@ -1,0 +1,44 @@
+{
+  "componentList": [],
+  "directiveList": [
+    {
+      "name": "LyIcon",
+      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-icon'</span></pre></div>\n",
+      "inputs": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 ttae\">[</span>\n  <span class=\"tt18 tt3z\">\"bg\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"color\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"raised\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"outlined\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"elevation\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"shadowColor\"</span>\n<span class=\"tt18 ttae\">]</span></pre></div>\n",
+      "exportAs": "",
+      "children": "@Input() fontIcon: string\n@Input() fontSet: string\n@Input() icon: string"
+    }
+  ],
+  "variableList": [
+    {
+      "name": "STYLE_PRIORITY",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">STYLE_PRIORITY</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 ttb0\">-</span><span class=\"tt18 ttap\">2</span></pre></div>\n"
+    },
+    {
+      "name": "STYLE_PRIORITY",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">STYLE_PRIORITY</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 ttb0\">-</span><span class=\"tt18 ttap\">2</span></pre></div>\n"
+    }
+  ],
+  "ngModuleList": [
+    {
+      "name": "LyIconModule",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">import</span> <span class=\"tt18 ttae\">&#123;</span> LyIconModule <span class=\"tt18 ttae\">&#125;</span> <span class=\"tt18 tt1j\">from</span> <span class=\"tt18 tt3z\">'@alyle/ui/icon'</span></pre></div>\n"
+    }
+  ],
+  "injectableList": [
+    {
+      "name": "LyIconService",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\">@<span class=\"tt18 tta3\">Injectable</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">&#123;</span>\n  providedIn<span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt3z\">'root'</span>\n<span class=\"tt18 ttae\">&#125;</span><span class=\"tt18 ttae\">)</span>\n<span class=\"tt18 tt1j\">class</span> <span class=\"tt18 ttc8\">LyIconService</span> <span class=\"tt18 ttae\">&#123;</span>\n  defaultSvgIcon<span class=\"tt18 ttae\">:</span> SVGElement\n  defaultClass<span class=\"tt18 ttae\">:</span> undefined <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 ttcj\">string</span>\n  defaultClassPrefix<span class=\"tt18 ttae\">:</span> undefined <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 ttcj\">string</span>\n  <span class=\"tt18 tta3\">addSvgIconLiteral</span><span class=\"tt18 ttae\">(</span>key<span class=\"tt18 ttae\">:</span> <span class=\"tt18 ttcj\">string</span><span class=\"tt18 ttae\">,</span> literal<span class=\"tt18 ttae\">:</span> SafeHtml<span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span>\n  <span class=\"tt18 tta3\">getFontClass</span><span class=\"tt18 ttae\">(</span>key<span class=\"tt18 ttae\">:</span> <span class=\"tt18 ttcj\">string</span><span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span>\n  <span class=\"tt18 tta3\">getSvg</span><span class=\"tt18 ttae\">(</span>key<span class=\"tt18 ttae\">:</span> <span class=\"tt18 ttcj\">string</span><span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span>\n  <span class=\"tt18 tt3o\">/**\n   * Register new font class alias\n   * demo:\n   * For FontAwesome\n   * registerFontClass(&#123;\n   *   key: 'fa',\n   *   class: 'fa'\n   *   prefix: 'fa-'\n   * &#125;)\n   */</span>\n  <span class=\"tt18 tta3\">registerFontClass</span><span class=\"tt18 ttae\">(</span>opt<span class=\"tt18 ttae\">:</span> FontClassOptions<span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span>\n  <span class=\"tt18 tt3o\">/** Set default className for `ly-icon` */</span>\n  <span class=\"tt18 tta3\">setDefaultClass</span><span class=\"tt18 ttae\">(</span>className<span class=\"tt18 ttb0\">?</span><span class=\"tt18 ttae\">:</span> undefined <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 ttcj\">string</span><span class=\"tt18 ttae\">,</span> prefix<span class=\"tt18 ttb0\">?</span><span class=\"tt18 ttae\">:</span> undefined <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 ttcj\">string</span><span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span>\n  <span class=\"tt18 tta3\">setSvg</span><span class=\"tt18 ttae\">(</span>key<span class=\"tt18 ttae\">:</span> <span class=\"tt18 ttcj\">string</span><span class=\"tt18 ttae\">,</span> url<span class=\"tt18 ttae\">:</span> SafeResourceUrl<span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span>\n<span class=\"tt18 ttae\">&#125;</span></pre></div>\n"
+    }
+  ],
+  "interfaceList": [
+    {
+      "name": "FontClassOptions",
+      "children": "interface FontClassOptions {\n  /** Class name */\n  class: undefined | string,\n  key: string,\n  /** Frefix class */\n  prefix: undefined | string\n}"
+    },
+    {
+      "name": "SvgIcon",
+      "children": "interface SvgIcon {\n  obs: Observable,\n  svg: SVGElement\n}"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "componentList": [
+    {
+      "name": "LyCarousel",
+      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-carousel'</span></pre></div>\n",
+      "inputs": "",
+      "exportAs": "",
+      "children": "@ContentChildren() lyItems: QueryList\n@Input() selectedIndex: number\n@ViewChild() slideContainer: ElementRef\n@Input() autoplay: boolean\n@Input() hasProgressBar: boolean\n@Input() interval: number\n@Input() touch: boolean\nnext(notResetInterval?: undefined | false | true): void\nprev(): void\nstop(): void"
+    }
+  ],
+  "directiveList": [
+    {
+      "name": "LyCarouselItem",
+      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-carousel-item'</span></pre></div>\n",
+      "inputs": "",
+      "exportAs": "",
+      "children": "@Input() srcImg: any"
+    }
+  ],
+  "variableList": [
+    {
+      "name": "DEFAULT_AUTOPLAY",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">DEFAULT_AUTOPLAY</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 boolean\">true</span></pre></div>\n"
+    },
+    {
+      "name": "DEFAULT_HAS_PROGRESS_BAR",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">DEFAULT_HAS_PROGRESS_BAR</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 boolean\">false</span></pre></div>\n"
+    },
+    {
+      "name": "DEFAULT_INTERVAL",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">DEFAULT_INTERVAL</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 ttap\">7000</span></pre></div>\n"
+    },
+    {
+      "name": "STYLE_PRIORITY",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">STYLE_PRIORITY</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 ttb0\">-</span><span class=\"tt18 ttap\">2</span></pre></div>\n"
+    }
+  ],
+  "ngModuleList": [
+    {
+      "name": "LyCarouselModule",
+      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">import</span> <span class=\"tt18 ttae\">&#123;</span> LyCarouselModule <span class=\"tt18 ttae\">&#125;</span> <span class=\"tt18 tt1j\">from</span> <span class=\"tt18 tt3z\">'@alyle/ui/carousel'</span></pre></div>\n"
+    }
+  ]
+}

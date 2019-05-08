@@ -1,0 +1,305 @@
+<div class="lang-ts ttb"><pre class="ttm"><span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Component<span class="tt18 ttae">,</span> ElementRef<span class="tt18 ttae">,</span> Input<span class="tt18 ttae">,</span> OnInit<span class="tt18 ttae">,</span> Renderer2<span class="tt18 ttae">,</span> ChangeDetectionStrategy<span class="tt18 ttae">,</span> Inject <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/core'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Platform<span class="tt18 ttae">,</span> LyTheme2 <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> PrismService <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./prism.service'</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">import</span> <span class="tt18 ttb0">*</span> <span class="tt18 tt1j">as</span> _chroma <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'chroma-js'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> AUIThemeVariables <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'../../app.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> <span class="tt18 ttbb">DOCUMENT</span> <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/common'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">const</span> chroma <span class="tt18 ttb0">=</span> _chroma<span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">const</span> Prism <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">require</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'prismjs'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+Prism<span class="tt18 ttae">.</span>languages<span class="tt18 ttae">.</span>typescript <span class="tt18 ttb0">=</span> Prism<span class="tt18 ttae">.</span>languages<span class="tt18 ttae">.</span><span class="tt18 tta3">extend</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'javascript'</span><span class="tt18 ttae">,</span> <span class="tt18 ttae">&#123;</span>
+  <span class="tt18 tt3o">// tslint:disable-next-line:max-line-length</span>
+  keyword<span class="tt18 ttae">:</span> <span class="tt18 regex">/\b(?:abstract|as|async|await|break|case|catch|class|const|constructor|continue|debugger|declare|default|delete|do|else|enum|export|extends|finally|for|from|function|get|if|implements|import|in|instanceof|interface|is|keyof|let|module|namespace|new|null|of|package|private|protected|public|readonly|return|require|set|static|super|switch|this|throw|try|type|typeof|var|void|while|with|yield)\b/</span><span class="tt18 ttae">,</span>
+  builtin<span class="tt18 ttae">:</span> <span class="tt18 regex">/\b(?:string|Function|any|number|boolean|Array|symbol|console|Promise|unknown|never)\b/</span><span class="tt18 ttae">,</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+Prism<span class="tt18 ttae">.</span>languages<span class="tt18 ttae">.</span>ts <span class="tt18 ttb0">=</span> Prism<span class="tt18 ttae">.</span>languages<span class="tt18 ttae">.</span>typescript<span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">require</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'prismjs/components/prism-markdown'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">require</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'prismjs/components/prism-json'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+Prism<span class="tt18 ttae">.</span>hooks<span class="tt18 ttae">.</span><span class="tt18 tta3">add</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'wrap'</span><span class="tt18 ttae">,</span> <span class="tt18 tt1j">function</span><span class="tt18 ttae">(</span><span class="tt18 parameter">env</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+  <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>env<span class="tt18 ttae">.</span><span class="tt18 tt1j">type</span> <span class="tt18 ttb0">===</span> <span class="tt18 tt3z">'string'</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">const</span> <span class="tt18 ttbb">VALUE</span> <span class="tt18 ttb0">=</span> env<span class="tt18 ttae">.</span>content<span class="tt18 ttae">.</span><span class="tt18 tta3">slice</span><span class="tt18 ttae">(</span><span class="tt18 ttap">1</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">slice</span><span class="tt18 ttae">(</span><span class="tt18 ttap">0</span><span class="tt18 ttae">,</span> <span class="tt18 ttb0">-</span><span class="tt18 ttap">1</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>
+      <span class="tt18 regex">/(#(?:[0-9a-f]&#123;2&#125;)&#123;2,4&#125;|#[0-9a-f]&#123;3&#125;|(?:rgba?|hsla?)\((?:\d+%?(?:deg|rad|grad|turn)?(?:,|\s)+)&#123;2,3&#125;[\s\/]*[\d\.]+%?\))/i</span><span class="tt18 ttae">.</span><span class="tt18 tta3">test</span><span class="tt18 ttae">(</span>env<span class="tt18 ttae">.</span>content<span class="tt18 ttae">)</span> <span class="tt18 ttb0">||</span> <span class="tt18 ttbb">VALUE</span> <span class="tt18 tt1j">in</span> chroma<span class="tt18 ttae">[</span><span class="tt18 tt3z">'colors'</span><span class="tt18 ttae">]</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">try</span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">const</span> chromaColor <span class="tt18 ttb0">=</span> <span class="tt18 tta3">chroma</span><span class="tt18 ttae">(</span><span class="tt18 ttbb">VALUE</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        <span class="tt18 tt1j">const</span> luminance <span class="tt18 ttb0">=</span> chromaColor<span class="tt18 ttae">.</span><span class="tt18 tta3">luminance</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        env<span class="tt18 ttae">.</span>attributes<span class="tt18 ttae">.</span>style <span class="tt18 ttb0">=</span> <span class="tt18 template-string"><span class="tt18 tt3z">`background:</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span><span class="tt18 ttbb">VALUE</span><span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">;color:</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>luminance <span class="tt18 ttb0">&lt;</span> <span class="tt18 ttap">0.5</span> <span class="tt18 ttb0">?</span> <span class="tt18 tt3z">'<span style="background:white;color:#202020;opacity:1">white</span>'</span> <span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#202020;color:white;opacity:1">#202020</span>'</span><span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">;opacity:</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>chromaColor<span class="tt18 ttae">.</span><span class="tt18 tta3">alpha</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">;</span>
+      <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">catch</span> <span class="tt18 ttae">(</span>error<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span> <span class="tt18 ttae">&#125;</span>
+    <span class="tt18 ttae">&#125;</span>
+    env<span class="tt18 ttae">.</span>content <span class="tt18 ttb0">=</span> <span class="tt18 template-string"><span class="tt18 tt3z">`&lt;span></span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>env<span class="tt18 ttae">.</span>content<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">&lt;/span>`</span></span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">const</span> <span class="tt18 ttbb">GLOBAL_STYLES</span> <span class="tt18 ttb0">=</span> <span class="tt18 ttae">&#123;</span>
+  <span class="tt18 tt3z">'@global'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt3z">'prism'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      display<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'block'</span><span class="tt18 ttae">,</span>
+      padding<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'1em'</span><span class="tt18 ttae">,</span>
+      overflow<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'auto'</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">const</span> <span class="tt18 function-variable tta3">STYLES</span> <span class="tt18 ttb0">=</span> <span class="tt18 ttae">(</span><span class="tt18 parameter">theme<span class="tt18 ttae">:</span> AUIThemeVariables</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  root<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+    color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>codeColor<span class="tt18 ttae">,</span>
+    backgroundColor<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>codeBg<span class="tt18 ttae">,</span>
+    direction<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'ltr'</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'pre[class*="language-"]'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      padding<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'1em'</span><span class="tt18 ttae">,</span>
+      margin<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'.5em 0'</span><span class="tt18 ttae">,</span>
+      overflow<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'auto'</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'&amp; code[class*="language-"], &amp; pre[class*="language-"]'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      background<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'none'</span><span class="tt18 ttae">,</span>
+      fontFamily<span class="tt18 ttae">:</span> <span class="tt18 template-string"><span class="tt18 tt3z">`'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace`</span></span><span class="tt18 ttae">,</span>
+      textAlign<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'left'</span><span class="tt18 ttae">,</span>
+      fontSize<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'0.8125em'</span><span class="tt18 ttae">,</span>
+      fontWeight<span class="tt18 ttae">:</span> <span class="tt18 ttap">500</span><span class="tt18 ttae">,</span>
+      whiteSpace<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'pre'</span><span class="tt18 ttae">,</span>
+      wordSpacing<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'normal'</span><span class="tt18 ttae">,</span>
+      wordBreak<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'break-word'</span><span class="tt18 ttae">,</span>
+      wordWrap<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'normal'</span><span class="tt18 ttae">,</span>
+      lineHeight<span class="tt18 ttae">:</span> <span class="tt18 ttap">1.5</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'-moz-tab-size'</span><span class="tt18 ttae">:</span> <span class="tt18 ttap">4</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'-o-tab-size'</span><span class="tt18 ttae">:</span> <span class="tt18 ttap">4</span><span class="tt18 ttae">,</span>
+      tabSize<span class="tt18 ttae">:</span> <span class="tt18 ttap">4</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'-webkit-hyphens'</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'none'</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'-moz-hyphens'</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'none'</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'-ms-hyphens'</span><span class="tt18 ttae">:</span> <span class="tt18 tt3z">'none'</span><span class="tt18 ttae">,</span>
+      hyphens<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'none'</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+
+
+<span class="tt18 tt1j">const</span> <span class="tt18 function-variable tta3">PRISM_STYLES</span> <span class="tt18 ttb0">=</span> <span class="tt18 ttae">(</span><span class="tt18 parameter">theme<span class="tt18 ttae">:</span> AUIThemeVariables</span><span class="tt18 ttae">)</span> <span class="tt18 ttb0">=></span> <span class="tt18 ttae">&#123;</span>
+  <span class="tt18 tt1j">return</span> <span class="tt18 ttae">&#123;</span>
+    token<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>prism<span class="tt18 ttae">.</span>colorText<span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'&amp;&#123;keyword&#125;, &amp;&#123;selector-tag&#125;, &amp;&#123;title&#125;, &amp;&#123;section&#125;, &amp;&#123;doctag&#125;, &amp;&#123;name&#125;, &amp;&#123;strong&#125;'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>prism<span class="tt18 ttae">.</span>keyword<span class="tt18 ttae">,</span>
+        fontWeight<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'600'</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'&amp;&#123;comment&#125;'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        color<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:rgba(115, 129, 145, 0.65);color:white;opacity:0.65">rgba(115, 129, 145, 0.65)</span>'</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'&amp;&#123;string&#125;, &amp;&#123;title&#125;, &amp;&#123;section&#125;, &amp;&#123;built_in&#125;, &amp;&#123;literal&#125;, &amp;&#123;type&#125;, &amp;&#123;addition&#125;, &amp;&#123;tag&#125;, &amp;&#123;quote&#125;, &amp;&#123;name&#125;, &amp;&#123;selector-id&#125;, &amp;&#123;selector-class&#125;'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>prism<span class="tt18 ttae">.</span>keyword
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'&amp;&#123;meta&#125;, &amp;&#123;subst&#125;, &amp;&#123;symbol&#125;, &amp;&#123;regexp&#125;, &amp;&#123;attribute&#125;, &amp;&#123;deletion&#125;, &amp;&#123;variable&#125;, &amp;&#123;template-variable&#125;, &amp;&#123;link&#125;, &amp;&#123;bullet&#125;'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        color<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#4c81c9;color:white;opacity:1">#4c81c9</span>'</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'&amp;&#123;emphasis&#125;'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        fontStyle<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'italic'</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'&amp;&#123;function&#125;'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        color<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#4584ff;color:white;opacity:1">#4584ff</span>'</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'&amp;&#123;attr-name&#125;'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        color<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'#FFB62C'</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'&amp;&#123;attr-value&#125;'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>prism<span class="tt18 ttae">.</span>keyword
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'&amp;&#123;string&#125;'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        color<span class="tt18 ttae">:</span> theme<span class="tt18 ttae">.</span>prism<span class="tt18 ttae">.</span><span class="tt18 ttcj">string</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'&amp;&#123;number&#125;'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        color<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:rgb(36, 212, 158);color:white;opacity:1">rgb(36, 212, 158)</span>'</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'&amp;&#123;punctuation&#125;, &amp;&#123;operator&#125;'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        color<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#9786c5;color:white;opacity:1">#9786c5</span>'</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'&amp;&#123;class-name&#125;'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        color<span class="tt18 ttae">:</span> <span class="tt18 tta3">chroma</span><span class="tt18 ttae">(</span>theme<span class="tt18 ttae">.</span>accent<span class="tt18 ttae">.</span><span class="tt18 tt1j">default</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">alpha</span><span class="tt18 ttae">(</span><span class="tt18 ttap">.88</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span><span class="tt18 tta3">css</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'&amp;&#123;cons<span style="background:tan;color:white;opacity:1">tan</span>t&#125;'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        color<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'#EF5350'</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3z">'&amp;&#123;builtin&#125;'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+        color<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'<span style="background:#8796b0;color:white;opacity:1">#8796b0</span>'</span>
+      <span class="tt18 ttae">&#125;</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    keyword<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'selector-tag'</span><span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    title<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    section<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    doctag<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    name<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    strong<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    comment<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttcj">string</span><span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    built_in<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    literal<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">type</span><span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    addition<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    tag<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    quote<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'selector-id'</span><span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'selector-class'</span><span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    meta<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    subst<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttcj">symbol</span><span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    regexp<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    attribute<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    deletion<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    variable<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'template-variable'</span><span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    link<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    bullet<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    emphasis<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">function</span><span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    punctuation<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    <span class="tt18 ttcj">number</span><span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    operator<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    constant<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'attr-value'</span><span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'attr-name'</span><span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'class-name'</span><span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    builtin<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span><span class="tt18 ttae">,</span>
+    property<span class="tt18 ttae">:</span> <span class="tt18 tt1j">null</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">const</span> <span class="tt18 ttbb">NOP_STYLES</span> <span class="tt18 ttb0">=</span> <span class="tt18 ttae">&#123;</span><span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+
+@<span class="tt18 tta3">Component</span><span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
+  selector<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'[prism], prism'</span><span class="tt18 ttae">,</span>
+  template<span class="tt18 ttae">:</span> <span class="tt18 template-string"><span class="tt18 tt3z">`&lt;code class="language-">&#123;&#123; code &#125;&#125;&lt;/code>`</span></span><span class="tt18 ttae">,</span>
+  changeDetection<span class="tt18 ttae">:</span> ChangeDetectionStrategy<span class="tt18 ttae">.</span>OnPush
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span>
+<span class="tt18 tt1j">export</span> <span class="tt18 tt1j">class</span> <span class="tt18 ttc8">PrismDirective</span> <span class="tt18 tt1j">implements</span> <span class="tt18 ttc8">OnInit</span> <span class="tt18 ttae">&#123;</span>
+  classes <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>theme<span class="tt18 ttae">.</span><span class="tt18 tta3">addStyleSheet</span><span class="tt18 ttae">(</span><span class="tt18 ttbb">STYLES</span><span class="tt18 ttae">,</span> <span class="tt18 ttb0">-</span><span class="tt18 ttap">2</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  prismClasses <span class="tt18 ttb0">=</span> Platform<span class="tt18 ttae">.</span>isBrowser <span class="tt18 ttb0">?</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>theme<span class="tt18 ttae">.</span><span class="tt18 tta3">addStyleSheet</span><span class="tt18 ttae">(</span><span class="tt18 ttbb">PRISM_STYLES</span><span class="tt18 ttae">,</span> <span class="tt18 ttb0">-</span><span class="tt18 ttap">2</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">:</span> <span class="tt18 ttbb">NOP_STYLES</span><span class="tt18 ttae">;</span>
+  <span class="tt18 tt1j">private</span> _code<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">;</span>
+  @<span class="tt18 tta3">Input</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> language <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">'ts'</span><span class="tt18 ttae">;</span>
+  @<span class="tt18 tta3">Input</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span>
+  <span class="tt18 tt1j">set</span> <span class="tt18 tta3">code</span><span class="tt18 ttae">(</span><span class="tt18 parameter">val</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_code <span class="tt18 ttb0">=</span> val<span class="tt18 ttae">;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span><span class="tt18 tta3">codeToHtml</span><span class="tt18 ttae">(</span>val<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 tt1j">get</span> <span class="tt18 tta3">code</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span> <span class="tt18 tt1j">return</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_code<span class="tt18 ttae">;</span> <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tt1j">constructor</span><span class="tt18 ttae">(</span>
+    <span class="tt18 parameter"><span class="tt18 tt1j">private</span> theme<span class="tt18 ttae">:</span> LyTheme2<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> _elementRef<span class="tt18 ttae">:</span> ElementRef<span class="tt18 ttae">,</span>
+    <span class="tt18 tt1j">private</span> renderer<span class="tt18 ttae">:</span> Renderer2<span class="tt18 ttae">,</span>
+    @<span class="tt18 tta3">Inject</span><span class="tt18 ttae">(</span><span class="tt18 ttbb">DOCUMENT</span><span class="tt18 ttae">)</span> <span class="tt18 tt1j">private</span> _document<span class="tt18 ttae">:</span> <span class="tt18 ttcj">any</span><span class="tt18 ttae">,</span>
+    _prismService<span class="tt18 ttae">:</span> PrismService</span>
+  <span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    theme<span class="tt18 ttae">.</span><span class="tt18 tta3">addStyleSheet</span><span class="tt18 ttae">(</span><span class="tt18 ttbb">GLOBAL_STYLES</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    _prismService<span class="tt18 ttae">.</span><span class="tt18 tta3">setCustomClass</span><span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>prismClasses<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+  <span class="tt18 tta3">ngOnInit</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">addClass</span><span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_elementRef<span class="tt18 ttae">.</span>nativeElement<span class="tt18 ttae">,</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>classes<span class="tt18 ttae">.</span>root<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+  <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 tta3">codeToHtml</span><span class="tt18 ttae">(</span><span class="tt18 parameter">val<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span></span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>Platform<span class="tt18 ttae">.</span>isBrowser<span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt1j">let</span> code<span class="tt18 ttae">:</span> <span class="tt18 ttcj">string</span><span class="tt18 ttae">;</span>
+      <span class="tt18 tt1j">const</span> containerCode <span class="tt18 ttb0">=</span> <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_document<span class="tt18 ttae">.</span><span class="tt18 tta3">createElement</span><span class="tt18 ttae">(</span><span class="tt18 tt3z">'code'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>language <span class="tt18 ttb0">===</span> <span class="tt18 tt3z">'ts'</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">addClass</span><span class="tt18 ttae">(</span>containerCode<span class="tt18 ttae">,</span> <span class="tt18 tt3z">'language-typescript'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        code <span class="tt18 ttb0">=</span> Prism<span class="tt18 ttae">.</span><span class="tt18 tta3">highlight</span><span class="tt18 ttae">(</span><span class="tt18 template-string"><span class="tt18 tt3z">`</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>val<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">,</span> Prism<span class="tt18 ttae">.</span>languages<span class="tt18 ttae">.</span>javascript<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">else</span> <span class="tt18 ttae">&#123;</span>
+        <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">addClass</span><span class="tt18 ttae">(</span>containerCode<span class="tt18 ttae">,</span> <span class="tt18 template-string"><span class="tt18 tt3z">`language-</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>language<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+        code <span class="tt18 ttb0">=</span> Prism<span class="tt18 ttae">.</span><span class="tt18 tta3">highlight</span><span class="tt18 ttae">(</span><span class="tt18 template-string"><span class="tt18 tt3z">`</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>val<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">`</span></span><span class="tt18 ttae">,</span> Prism<span class="tt18 ttae">.</span>languages<span class="tt18 ttae">[</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>language<span class="tt18 ttae">]</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+      <span class="tt18 ttae">&#125;</span>
+      containerCode<span class="tt18 ttae">.</span>innerHTML <span class="tt18 ttb0">=</span> code<span class="tt18 ttae">;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_elementRef<span class="tt18 ttae">.</span>nativeElement<span class="tt18 ttae">.</span>innerHTML <span class="tt18 ttb0">=</span> <span class="tt18 tt3z">''</span><span class="tt18 ttae">;</span>
+      <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">appendChild</span><span class="tt18 ttae">(</span><span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_elementRef<span class="tt18 ttae">.</span>nativeElement<span class="tt18 ttae">,</span> containerCode<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+    <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#125;</span>
+
+<span class="tt18 ttae">&#125;</span>
+
+<span class="tt18 tt3o">// tslint:disable-next-line:no-shadowed-variable</span>
+<span class="tt18 ttae">(</span><span class="tt18 tt1j">function</span><span class="tt18 ttae">(</span><span class="tt18 parameter">Prism</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
+  <span class="tt18 tt1j">const</span> insideString <span class="tt18 ttb0">=</span> <span class="tt18 ttae">&#123;</span>
+    variable<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span>
+      <span class="tt18 tt3o">// Arithmetic Environment</span>
+      <span class="tt18 ttae">&#123;</span>
+        pattern<span class="tt18 ttae">:</span> <span class="tt18 regex">/\$?\(\([\s\S]+?\)\)/</span><span class="tt18 ttae">,</span>
+        inside<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          <span class="tt18 tt3o">// If there is a $ sign at the beginning highlight $(( and )) as variable</span>
+          variable<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span><span class="tt18 ttae">&#123;</span>
+              pattern<span class="tt18 ttae">:</span> <span class="tt18 regex">/(^\$\(\([\s\S]+)\)\)/</span><span class="tt18 ttae">,</span>
+              lookbehind<span class="tt18 ttae">:</span> <span class="tt18 boolean">true</span>
+            <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+            <span class="tt18 regex">/^\$\(\(/</span>
+          <span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
+          <span class="tt18 ttcj">number</span><span class="tt18 ttae">:</span> <span class="tt18 regex">/\b0x[\dA-Fa-f]+\b|(?:\b\d+\.?\d*|\B\.\d+)(?:[Ee]-?\d+)?/</span><span class="tt18 ttae">,</span>
+          <span class="tt18 tt3o">// Operators according to https://www.gnu.org/software/bash/manual/bashref.html#Shell-Arithmetic</span>
+          operator<span class="tt18 ttae">:</span> <span class="tt18 regex">/--?|-=|\+\+?|\+=|!=?|~|\*\*?|\*=|\/=?|%=?|&lt;&lt;=?|>>=?|&lt;=?|>=?|==?|&amp;&amp;?|&amp;=|\^=?|\|\|?|\|=|\?|:/</span><span class="tt18 ttae">,</span>
+          <span class="tt18 tt3o">// If there is no $ sign at the beginning highlight (( and )) as punctuation</span>
+          punctuation<span class="tt18 ttae">:</span> <span class="tt18 regex">/\(\(?|\)\)?|,|;/</span>
+        <span class="tt18 ttae">&#125;</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 tt3o">// Command Substitution</span>
+      <span class="tt18 ttae">&#123;</span>
+        pattern<span class="tt18 ttae">:</span> <span class="tt18 regex">/\$\([^)]+\)|`[^`]+`/</span><span class="tt18 ttae">,</span>
+        greedy<span class="tt18 ttae">:</span> <span class="tt18 boolean">true</span><span class="tt18 ttae">,</span>
+        inside<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+          variable<span class="tt18 ttae">:</span> <span class="tt18 regex">/^\$\(|^`|\)$|`$/</span>
+        <span class="tt18 ttae">&#125;</span>
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 regex">/\$(?:[\w#?*!@]+|\&#123;[^&#125;]+\&#125;)/i</span>
+    <span class="tt18 ttae">]</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+
+  Prism<span class="tt18 ttae">.</span>languages<span class="tt18 ttae">.</span>bash <span class="tt18 ttb0">=</span> <span class="tt18 ttae">&#123;</span>
+    <span class="tt18 tt3z">'shebang'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      pattern<span class="tt18 ttae">:</span> <span class="tt18 regex">/^#!\s*\/bin\/bash|^#!\s*\/bin\/sh/</span><span class="tt18 ttae">,</span>
+      alias<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'impor<span style="background:tan;color:white;opacity:1">tan</span>t'</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    'comment'<span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      pattern<span class="tt18 ttae">:</span> <span class="tt18 regex">/(^|[^"&#123;\\])#.*/</span><span class="tt18 ttae">,</span>
+      lookbehind<span class="tt18 ttae">:</span> <span class="tt18 boolean">true</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    '<span class="tt18 ttcj">string</span>'<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span>
+      <span class="tt18 tt3o">// Support for Here-Documents https://en.wikipedia.org/wiki/Here_document</span>
+      <span class="tt18 ttae">&#123;</span>
+        pattern<span class="tt18 ttae">:</span> <span class="tt18 regex">/((?:^|[^&lt;])&lt;&lt;\s*)["']?(\w+?)["']?\s*\r?\n(?:[\s\S])*?\r?\n\2/</span><span class="tt18 ttae">,</span>
+        lookbehind<span class="tt18 ttae">:</span> <span class="tt18 boolean">true</span><span class="tt18 ttae">,</span>
+        greedy<span class="tt18 ttae">:</span> <span class="tt18 boolean">true</span><span class="tt18 ttae">,</span>
+        inside<span class="tt18 ttae">:</span> insideString
+      <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+      <span class="tt18 ttae">&#123;</span>
+        pattern<span class="tt18 ttae">:</span> <span class="tt18 regex">/(["'])(?:\\[\s\S]|\$\([^)]+\)|`[^`]+`|(?!\1)[^\\])*\1/</span><span class="tt18 ttae">,</span>
+        greedy<span class="tt18 ttae">:</span> <span class="tt18 boolean">true</span><span class="tt18 ttae">,</span>
+        inside<span class="tt18 ttae">:</span> insideString
+      <span class="tt18 ttae">&#125;</span>
+    <span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'variable'</span><span class="tt18 ttae">:</span> insideString<span class="tt18 ttae">.</span>variable<span class="tt18 ttae">,</span>
+    <span class="tt18 tt3o">// Originally based on http://ss64.com/bash/</span>
+    <span class="tt18 tt3z">'function'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      <span class="tt18 tt3o">// tslint:disable-next-line:max-line-length</span>
+      pattern<span class="tt18 ttae">:</span> <span class="tt18 regex">/(^|[\s;|&amp;])(?:alias|apropos|apt-get|aptitude|aspell|awk|basename|bash|bc|bg|builtin|bzip2|cal|cat|cd|cfdisk|chgrp|chmod|chown|chroot|chkconfig|cksum|clear|cmp|comm|command|cp|cron|crontab|csplit|curl|cut|date|dc|dd|ddrescue|df|diff|diff3|dig|dir|dircolors|dirname|dirs|dmesg|du|egrep|eject|enable|env|ethtool|eval|exec|expand|expect|export|expr|fdformat|fdisk|fg|fgrep|file|find|fmt|fold|format|free|fsck|ftp|fuser|gawk|getopts|git|grep|groupadd|groupdel|groupmod|groups|gzip|hash|head|help|hg|history|hostname|htop|iconv|id|ifconfig|ifdown|ifup|import|install|jobs|join|kill|killall|less|link|ln|locate|logname|logout|look|lpc|lpr|lprint|lprintd|lprintq|lprm|ls|lsof|make|man|mkdir|mkfifo|mkisofs|mknod|more|most|mount|mtools|mtr|mv|mmv|nano|netstat|nice|nl|nohup|notify-send|npm|yarn|nslookup|open|op|passwd|paste|pathchk|ping|pkill|popd|pr|printcap|printenv|printf|ps|pushd|pv|pwd|quota|quotacheck|quotactl|ram|rar|rcp|read|readarray|readonly|reboot|rename|renice|remsync|rev|rm|rmdir|rsync|screen|scp|sdiff|sed|seq|service|sftp|shift|shopt|shutdown|sleep|slocate|sort|source|split|ssh|stat|strace|su|sudo|sum|suspend|sync|tail|tar|tee|test|time|timeout|times|touch|top|traceroute|trap|tr|tsort|tty|type|ulimit|umask|umount|unalias|uname|unexpand|uniq|units|unrar|unshar|uptime|useradd|userdel|usermod|users|uuencode|uudecode|v|vdir|vi|vmstat|wait|watch|wc|wget|whereis|which|who|whoami|write|xargs|xdg-open|yes|zip)(?=$|[\s;|&amp;])/</span><span class="tt18 ttae">,</span>
+      lookbehind<span class="tt18 ttae">:</span> <span class="tt18 boolean">true</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'keyword'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      pattern<span class="tt18 ttae">:</span> <span class="tt18 regex">/(^|[\s;|&amp;])(?:let|:|\.|if|then|else|elif|fi|for|break|continue|while|in|case|function|select|do|done|until|echo|exit|return|set|declare)(?=$|[\s;|&amp;])/</span><span class="tt18 ttae">,</span>
+      lookbehind<span class="tt18 ttae">:</span> <span class="tt18 boolean">true</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'boolean'</span><span class="tt18 ttae">:</span> <span class="tt18 ttae">&#123;</span>
+      pattern<span class="tt18 ttae">:</span> <span class="tt18 regex">/(^|[\s;|&amp;])(?:true|false)(?=$|[\s;|&amp;])/</span><span class="tt18 ttae">,</span>
+      lookbehind<span class="tt18 ttae">:</span> <span class="tt18 boolean">true</span>
+    <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'operator'</span><span class="tt18 ttae">:</span> <span class="tt18 regex">/&amp;&amp;?|\|\|?|==?|!=?|&lt;&lt;&lt;?|>>|&lt;=?|>=?|=~/</span><span class="tt18 ttae">,</span>
+    <span class="tt18 tt3z">'punctuation'</span><span class="tt18 ttae">:</span> <span class="tt18 regex">/\$?\(\(?|\)\)?|\.\.|[&#123;&#125;[\];]/</span>
+  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">;</span>
+
+  <span class="tt18 tt1j">const</span> inside <span class="tt18 ttb0">=</span> <span class="tt18 ttae">(</span>insideString<span class="tt18 ttae">.</span>variable<span class="tt18 ttae">[</span><span class="tt18 ttap">1</span><span class="tt18 ttae">]</span> <span class="tt18 tt1j">as</span> <span class="tt18 ttcj">any</span><span class="tt18 ttae">)</span><span class="tt18 ttae">.</span>inside<span class="tt18 ttae">;</span>
+  inside<span class="tt18 ttae">.</span><span class="tt18 ttcj">string</span> <span class="tt18 ttb0">=</span> Prism<span class="tt18 ttae">.</span>languages<span class="tt18 ttae">.</span>bash<span class="tt18 ttae">.</span><span class="tt18 ttcj">string</span><span class="tt18 ttae">;</span>
+  inside<span class="tt18 ttae">[</span><span class="tt18 tt3z">'function'</span><span class="tt18 ttae">]</span> <span class="tt18 ttb0">=</span> Prism<span class="tt18 ttae">.</span>languages<span class="tt18 ttae">.</span>bash<span class="tt18 ttae">[</span><span class="tt18 tt3z">'function'</span><span class="tt18 ttae">]</span><span class="tt18 ttae">;</span>
+  inside<span class="tt18 ttae">.</span>keyword <span class="tt18 ttb0">=</span> Prism<span class="tt18 ttae">.</span>languages<span class="tt18 ttae">.</span>bash<span class="tt18 ttae">.</span>keyword<span class="tt18 ttae">;</span>
+  inside<span class="tt18 ttae">[</span><span class="tt18 tt3z">'boolean'</span><span class="tt18 ttae">]</span> <span class="tt18 ttb0">=</span> Prism<span class="tt18 ttae">.</span>languages<span class="tt18 ttae">.</span>bash<span class="tt18 ttae">[</span><span class="tt18 tt3z">'boolean'</span><span class="tt18 ttae">]</span><span class="tt18 ttae">;</span>
+  inside<span class="tt18 ttae">.</span>operator <span class="tt18 ttb0">=</span> Prism<span class="tt18 ttae">.</span>languages<span class="tt18 ttae">.</span>bash<span class="tt18 ttae">.</span>operator<span class="tt18 ttae">;</span>
+  inside<span class="tt18 ttae">.</span>punctuation <span class="tt18 ttb0">=</span> Prism<span class="tt18 ttae">.</span>languages<span class="tt18 ttae">.</span>bash<span class="tt18 ttae">.</span>punctuation<span class="tt18 ttae">;</span>
+
+  Prism<span class="tt18 ttae">.</span>languages<span class="tt18 ttae">.</span>shell <span class="tt18 ttb0">=</span> Prism<span class="tt18 ttae">.</span>languages<span class="tt18 ttae">.</span>bash<span class="tt18 ttae">;</span>
+<span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span><span class="tt18 ttae">(</span>Prism<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+</pre></div>
