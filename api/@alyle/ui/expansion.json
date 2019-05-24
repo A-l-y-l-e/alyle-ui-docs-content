@@ -2,73 +2,73 @@
   "componentList": [
     {
       "name": "LyExpansionPanel",
-      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-expansion-panel'</span></pre></div>\n",
-      "inputs": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 ttae\">[</span>\n  <span class=\"tt18 tt3z\">\"bg\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"color\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"elevation\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"shadowColor\"</span>\n<span class=\"tt18 ttae\">]</span></pre></div>\n",
-      "exportAs": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'lyExpansionPanel'</span></pre></div>\n",
-      "children": "/** An event emitted after the body's collapse animation happens. */\n@Output() afterCollapse: EventEmitter\n/** An event emitted after the body's expansion animation happens. */\n@Output() afterExpand: EventEmitter\n/** Event emitted every time the LyExpansionPanel is closed. */\n@Output() closed: EventEmitter\n/** Event emitted when the LyExpansionPanel is destroyed. */\n@Output() destroyed: EventEmitter\n/** Event emitted every time the LyExpansionPanel is opened. */\n@Output() opened: EventEmitter\n@Input() disabled: boolean\n@Input() expanded: boolean\n@Input() hasToggle: boolean\nclose(): void\nopen(): void\ntoggle(): void"
+      "selector": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-expansion-panel'</span></pre></div>",
+      "inputs": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 ttae\">[</span>\n  <span class=\"tt18 tt3z\">\"bg\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"color\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"elevation\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"shadowColor\"</span>\n<span class=\"tt18 ttae\">]</span></pre></div>",
+      "exportAs": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'lyExpansionPanel'</span></pre></div>",
+      "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3o\">/** An event emitted after the body's collapse animation happens. */</span>\n@<span class=\"tt18 tta3\">Output</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> afterCollapse<span class=\"tt18 ttae\">:</span> EventEmitter\n<span class=\"tt18 tt3o\">/** An event emitted after the body's expansion animation happens. */</span>\n@<span class=\"tt18 tta3\">Output</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> afterExpand<span class=\"tt18 ttae\">:</span> EventEmitter\n<span class=\"tt18 tt3o\">/** Event emitted every time the LyExpansionPanel is closed. */</span>\n@<span class=\"tt18 tta3\">Output</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> closed<span class=\"tt18 ttae\">:</span> EventEmitter\n<span class=\"tt18 tt3o\">/** Event emitted when the LyExpansionPanel is destroyed. */</span>\n@<span class=\"tt18 tta3\">Output</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> destroyed<span class=\"tt18 ttae\">:</span> EventEmitter\n<span class=\"tt18 tt3o\">/** Event emitted every time the LyExpansionPanel is opened. */</span>\n@<span class=\"tt18 tta3\">Output</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> opened<span class=\"tt18 ttae\">:</span> EventEmitter\n@<span class=\"tt18 tta3\">Input</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> disabled<span class=\"tt18 ttae\">:</span> <span class=\"tt18 ttcj\">boolean</span>\n@<span class=\"tt18 tta3\">Input</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> expanded<span class=\"tt18 ttae\">:</span> <span class=\"tt18 ttcj\">boolean</span>\n@<span class=\"tt18 tta3\">Input</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> hasToggle<span class=\"tt18 ttae\">:</span> <span class=\"tt18 ttcj\">boolean</span>\n<span class=\"tt18 tta3\">close</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span>\n<span class=\"tt18 tta3\">open</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span>\n<span class=\"tt18 tta3\">toggle</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span></pre></div>"
     },
     {
       "name": "LyExpansionPanelHeader",
-      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-expansion-panel-header'</span></pre></div>\n",
+      "selector": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-expansion-panel-header'</span></pre></div>",
       "inputs": "",
       "exportAs": "",
-      "children": ""
+      "children": "<div class=\"ttb\"><pre class=\"ttm\"></pre></div>"
     }
   ],
   "directiveList": [
     {
       "name": "LyAccordion",
-      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-accordion'</span></pre></div>\n",
+      "selector": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-accordion'</span></pre></div>",
       "inputs": "",
-      "exportAs": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'lyAccordion'</span></pre></div>\n",
-      "children": "@Input() appearance: string\n@Input() hasToggle: boolean\n@Input() multiple: boolean\ncloseAll(): void\nopenAll(): void"
+      "exportAs": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'lyAccordion'</span></pre></div>",
+      "children": "<div class=\"ttb\"><pre class=\"ttm\">@<span class=\"tt18 tta3\">Input</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> appearance<span class=\"tt18 ttae\">:</span> <span class=\"tt18 ttcj\">string</span>\n@<span class=\"tt18 tta3\">Input</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> hasToggle<span class=\"tt18 ttae\">:</span> <span class=\"tt18 ttcj\">boolean</span>\n@<span class=\"tt18 tta3\">Input</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> multiple<span class=\"tt18 ttae\">:</span> <span class=\"tt18 ttcj\">boolean</span>\n<span class=\"tt18 tta3\">closeAll</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span>\n<span class=\"tt18 tta3\">openAll</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span></pre></div>"
     },
     {
       "name": "LyExpansionPanelAction",
-      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-action-row'</span></pre></div>\n",
+      "selector": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-action-row'</span></pre></div>",
       "inputs": "",
       "exportAs": "",
-      "children": ""
+      "children": "<div class=\"ttb\"><pre class=\"ttm\"></pre></div>"
     },
     {
       "name": "LyExpansionPanelContent",
-      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ng-template[lyExpansionPanelContent]'</span></pre></div>\n",
+      "selector": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ng-template[lyExpansionPanelContent]'</span></pre></div>",
       "inputs": "",
       "exportAs": "",
-      "children": ""
+      "children": "<div class=\"ttb\"><pre class=\"ttm\"></pre></div>"
     },
     {
       "name": "LyExpansionPanelDescription",
-      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-panel-description'</span></pre></div>\n",
+      "selector": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-panel-description'</span></pre></div>",
       "inputs": "",
       "exportAs": "",
-      "children": ""
+      "children": "<div class=\"ttb\"><pre class=\"ttm\"></pre></div>"
     },
     {
       "name": "LyExpansionPanelTitle",
-      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-panel-title'</span></pre></div>\n",
+      "selector": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-panel-title'</span></pre></div>",
       "inputs": "",
       "exportAs": "",
-      "children": ""
+      "children": "<div class=\"ttb\"><pre class=\"ttm\"></pre></div>"
     }
   ],
   "variableList": [
     {
       "name": "STYLE_PRIORITY",
-      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">STYLE_PRIORITY</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 ttb0\">-</span><span class=\"tt18 ttap\">0.9</span></pre></div>\n"
+      "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">STYLE_PRIORITY</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 ttb0\">-</span><span class=\"tt18 ttap\">0.9</span></pre></div>"
     }
   ],
   "objectLiteralList": [],
   "typeAliasList": [
     {
       "name": "LyExpansionPanelState",
-      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3o\">/** LyExpansionPanel's states. */</span>\n<span class=\"tt18 tt1j\">type</span> LyExpansionPanelState <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">'expanded'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'collapsed'</span></pre></div>\n"
+      "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3o\">/** LyExpansionPanel's states. */</span>\n<span class=\"tt18 tt1j\">type</span> LyExpansionPanelState <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">'expanded'</span> <span class=\"tt18 ttb0\">|</span> <span class=\"tt18 tt3z\">'collapsed'</span></pre></div>"
     }
   ],
   "ngModuleList": [
     {
       "name": "LyExpansionModule",
-      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">import</span> <span class=\"tt18 ttae\">&#123;</span> LyExpansionModule <span class=\"tt18 ttae\">&#125;</span> <span class=\"tt18 tt1j\">from</span> <span class=\"tt18 tt3z\">'@alyle/ui/expansion'</span></pre></div>\n"
+      "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">import</span> <span class=\"tt18 ttae\">&#123;</span> LyExpansionModule <span class=\"tt18 ttae\">&#125;</span> <span class=\"tt18 tt1j\">from</span> <span class=\"tt18 tt3z\">'@alyle/ui/expansion'</span></pre></div>"
     }
   ]
 }

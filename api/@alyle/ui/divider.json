@@ -3,16 +3,16 @@
   "directiveList": [
     {
       "name": "LyDivider",
-      "selector": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-divider'</span></pre></div>\n",
+      "selector": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'ly-divider'</span></pre></div>",
       "inputs": "",
       "exportAs": "",
-      "children": "/** Add indentation (72px) */\n@Input() inset: boolean"
+      "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3o\">/** Add indentation (72px) */</span>\n@<span class=\"tt18 tta3\">Input</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> inset<span class=\"tt18 ttae\">:</span> <span class=\"tt18 ttcj\">boolean</span></pre></div>"
     }
   ],
   "ngModuleList": [
     {
       "name": "LyDividerModule",
-      "children": "<div class=\"lang-ts ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">import</span> <span class=\"tt18 ttae\">&#123;</span> LyDividerModule <span class=\"tt18 ttae\">&#125;</span> <span class=\"tt18 tt1j\">from</span> <span class=\"tt18 tt3z\">'@alyle/ui/divider'</span></pre></div>\n"
+      "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">import</span> <span class=\"tt18 ttae\">&#123;</span> LyDividerModule <span class=\"tt18 ttae\">&#125;</span> <span class=\"tt18 tt1j\">from</span> <span class=\"tt18 tt3z\">'@alyle/ui/divider'</span></pre></div>"
     }
   ]
 }
