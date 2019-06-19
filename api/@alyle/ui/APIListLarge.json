@@ -1339,11 +1339,11 @@
       },
       {
         "name": "AUI_LAST_UPDATE",
-        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">AUI_LAST_UPDATE</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"2019-05-24T01:33:45.105Z\"</span></pre></div>"
+        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">AUI_LAST_UPDATE</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"2019-06-19T02:40:40.472Z\"</span></pre></div>"
       },
       {
         "name": "AUI_VERSION",
-        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">AUI_VERSION</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"2.7.7\"</span></pre></div>"
+        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">AUI_VERSION</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"2.7.8\"</span></pre></div>"
       }
     ],
     "functionList": [],
@@ -1517,10 +1517,10 @@
       },
       {
         "name": "LyTabLabel",
-        "selector": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'button[ly-tab-label]'</span></pre></div>",
+        "selector": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'button[ly-tab-label], a[ly-tab-label]'</span></pre></div>",
         "inputs": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 ttae\">[</span>\n  <span class=\"tt18 tt3z\">\"bg\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"color\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"raised\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"disabled\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"outlined\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"elevation\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"shadowColor\"</span><span class=\"tt18 ttae\">,</span>\n  <span class=\"tt18 tt3z\">\"disableRipple\"</span>\n<span class=\"tt18 ttae\">]</span></pre></div>",
         "exportAs": "",
-        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3o\">/** Button appearance */</span>\n@<span class=\"tt18 tta3\">Input</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> appearance<span class=\"tt18 ttae\">:</span> <span class=\"tt18 ttcj\">string</span>\n<span class=\"tt18 tt3o\">/** Button size */</span>\n@<span class=\"tt18 tta3\">Input</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> size<span class=\"tt18 ttae\">:</span> LyButtonSize\n<span class=\"tt18 tta3\">focus</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span></pre></div>"
+        "children": "<div class=\"ttb\"><pre class=\"ttm\">@<span class=\"tt18 tta3\">Input</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> active<span class=\"tt18 ttae\">:</span> <span class=\"tt18 ttcj\">boolean</span>\n<span class=\"tt18 tt3o\">/** Button appearance */</span>\n@<span class=\"tt18 tta3\">Input</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> appearance<span class=\"tt18 ttae\">:</span> <span class=\"tt18 ttcj\">string</span>\n<span class=\"tt18 tt3o\">/** Button size */</span>\n@<span class=\"tt18 tta3\">Input</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> size<span class=\"tt18 ttae\">:</span> LyButtonSize\n<span class=\"tt18 tta3\">focus</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span></pre></div>"
       },
       {
         "name": "LyTabs",
