@@ -1,24 +1,14 @@
 <div class="ttb"><pre class="ttm"><span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> NgModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/core'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> Routes<span class="tt18 ttae">,</span> RouterModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/router'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> HomeComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./home/home.component'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> CardDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/components/card-demo/card-demo.component'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> TypographyDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/components/typography-demo/typography-demo.component'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> MultipleThemesComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/multiple-themes/multiple-themes.component'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ThemingComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/customization/theming/theming.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> CardDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./docs/components/card-demo/card-demo.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> TypographyDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./docs/components/typography-demo/typography-demo.component'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ApiComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./api/api.component'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> PageNotFoundComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/page-not-found/page-not-found.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> PageNotFoundComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./page-not-found/page-not-found.component'</span><span class="tt18 ttae">;</span>
 
 <span class="tt18 tt1j">const</span> routes<span class="tt18 ttae">:</span> Routes <span class="tt18 ttb0">=</span> <span class="tt18 ttae">[</span>
   <span class="tt18 tt3o">/** Pages */</span>
   <span class="tt18 ttae">&#123;</span> path<span class="tt18 ttae">:</span> <span class="tt18 tt3z">''</span><span class="tt18 ttae">,</span> component<span class="tt18 ttae">:</span> HomeComponent <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
-  <span class="tt18 tt3o">/** Customization */</span>
-  <span class="tt18 ttae">&#123;</span> path<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'customization/multiple-themes'</span><span class="tt18 ttae">,</span> component<span class="tt18 ttae">:</span> MultipleThemesComponent <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
-  <span class="tt18 ttae">&#123;</span>
-    path<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'customization'</span><span class="tt18 ttae">,</span>
-    children<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span>
-      <span class="tt18 ttae">&#123;</span> path<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'theming'</span><span class="tt18 ttae">,</span> component<span class="tt18 ttae">:</span> ThemingComponent <span class="tt18 ttae">&#125;</span>
-    <span class="tt18 ttae">]</span>
-  <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
   <span class="tt18 ttae">&#123;</span>
     path<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'api'</span><span class="tt18 ttae">,</span>
     children<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span>
@@ -33,10 +23,10 @@
       <span class="tt18 ttae">&#123;</span> path<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'typography'</span><span class="tt18 ttae">,</span> component<span class="tt18 ttae">:</span> TypographyDemoComponent <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
     <span class="tt18 ttae">]</span>
   <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
-  <span class="tt18 ttae">&#123;</span> path<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'component'</span><span class="tt18 ttae">,</span> redirectTo<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'components'</span> <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
-  <span class="tt18 ttae">&#123;</span> path<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'get-started/install'</span><span class="tt18 ttae">,</span> redirectTo<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'getting-started/installation'</span> <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
-  <span class="tt18 ttae">&#123;</span> path<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'getting-started'</span><span class="tt18 ttae">,</span> redirectTo<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'getting-started/installation'</span> <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
-  <span class="tt18 ttae">&#123;</span> path<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'**'</span><span class="tt18 ttae">,</span> component<span class="tt18 ttae">:</span> PageNotFoundComponent <span class="tt18 ttae">&#125;</span>
+  <span class="tt18 ttae">&#123;</span> path<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'component'</span><span class="tt18 ttae">,</span> redirectTo<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'components'</span><span class="tt18 ttae">,</span> pathMatch<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'full'</span> <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  <span class="tt18 ttae">&#123;</span> path<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'get-started/install'</span><span class="tt18 ttae">,</span> redirectTo<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'getting-started/installation'</span><span class="tt18 ttae">,</span> pathMatch<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'full'</span> <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  <span class="tt18 ttae">&#123;</span> path<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'getting-started'</span><span class="tt18 ttae">,</span> redirectTo<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'getting-started/installation'</span><span class="tt18 ttae">,</span> pathMatch<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'full'</span> <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
+  <span class="tt18 ttae">&#123;</span> path<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'**'</span><span class="tt18 ttae">,</span> component<span class="tt18 ttae">:</span> PageNotFoundComponent <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">,</span>
 <span class="tt18 ttae">]</span><span class="tt18 ttae">;</span>
 
 @<span class="tt18 tta3">NgModule</span><span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
@@ -45,9 +35,6 @@
       initialNavigation<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'enabled'</span><span class="tt18 ttae">,</span>
       scrollPositionRestoration<span class="tt18 ttae">:</span> <span class="tt18 tt3z">'enabled'</span>
     <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span>
-  <span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
-  exports<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span>
-    RouterModule
   <span class="tt18 ttae">]</span>
 <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span>
 <span class="tt18 tt1j">export</span> <span class="tt18 tt1j">class</span> <span class="tt18 ttc8">AppRoutingModule</span> <span class="tt18 ttae">&#123;</span> <span class="tt18 ttae">&#125;</span>

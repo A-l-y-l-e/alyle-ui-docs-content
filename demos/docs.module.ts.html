@@ -1,5 +1,5 @@
 <div class="ttb"><pre class="ttm"><span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> NgModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/core'</span><span class="tt18 ttae">;</span>
-
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> RouterModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@angular/router'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyCardModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/card'</span><span class="tt18 ttae">;</span>
 
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> DemoViewModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'../demo-view'</span><span class="tt18 ttae">;</span>
@@ -8,57 +8,57 @@
 <span class="tt18 tt3o">/** Getting Started */</span>
 
 <span class="tt18 tt3o">/** Customization */</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ThemingComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/customization/theming/theming.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ThemingComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./customization/theming/theming.component'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ThemingComponentsComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./customization/theming-components/theming-components.component'</span><span class="tt18 ttae">;</span>
 
 <span class="tt18 tt3o">/** Layout */</span>
 <span class="tt18 tt3o">/** Grid */</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> GridDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/layout/grid-demo/grid-demo.component'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> GridDemoBasicModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/layout/grid-demo/grid-demo-basic/grid-demo-basic.module'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> GridDemoAutoLayoutModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/layout/grid-demo/grid-demo-auto-layout/grid-demo-auto-layout.module'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> GridDemoResponsiveModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/layout/grid-demo/grid-demo-responsive/grid-demo-responsive.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> GridDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./layout/grid-demo/grid-demo.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> GridDemoBasicModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./layout/grid-demo/grid-demo-basic/grid-demo-basic.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> GridDemoAutoLayoutModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./layout/grid-demo/grid-demo-auto-layout/grid-demo-auto-layout.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> GridDemoResponsiveModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./layout/grid-demo/grid-demo-responsive/grid-demo-responsive.module'</span><span class="tt18 ttae">;</span>
 
 <span class="tt18 tt3o">/** Tabs */</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> TabsDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/layout/tabs-demo/tabs-demo.component'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> BasicTabsModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/layout/tabs-demo/basic-tabs/basic-tabs.module'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> TabsWithAsynchronouslyLoadingModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/layout/tabs-demo/tabs-with-asynchronously-loading/tabs-with-asynchronously-loading.module'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> TabsWithLazyLoadingModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/layout/tabs-demo/tabs-with-lazy-loading/tabs-with-lazy-loading.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> TabsDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./layout/tabs-demo/tabs-demo.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> BasicTabsModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./layout/tabs-demo/basic-tabs/basic-tabs.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> TabsWithAsynchronouslyLoadingModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./layout/tabs-demo/tabs-with-asynchronously-loading/tabs-with-asynchronously-loading.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> TabsWithLazyLoadingModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./layout/tabs-demo/tabs-with-lazy-loading/tabs-with-lazy-loading.module'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> TabsAlignModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./layout/tabs-demo/tabs-align/tabs-align.module'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> TabsWithIconModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./layout/tabs-demo/tabs-with-icon/tabs-with-icon.module'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> TabsPlacementModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./layout/tabs-demo/tabs-placement/tabs-placement.module'</span><span class="tt18 ttae">;</span>
 
 <span class="tt18 tt3o">/** Components */</span>
 <span class="tt18 tt3o">/** Button */</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ButtonDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/components/button-demo/button-demo.component'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ButtonTypesDemoModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/components/button-demo/button-types-demo/button-types-demo.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ButtonDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/button-demo/button-demo.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ButtonTypesDemoModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/button-demo/button-types-demo/button-types-demo.module'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> IconLabelButtonsModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/button-demo/icon-label-buttons/icon-label-buttons.module'</span><span class="tt18 ttae">;</span>
 
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LyTypographyModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@alyle/ui/typography'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> DocsRoutingModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/docs.routing'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> DocsRoutingModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./docs.routing'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> SharedModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'../sha<span style="background:red;color:white;opacity:1">red</span>/shared.module'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> DynamicStylesComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/customization/dynamic-styles/dynamic-styles.component'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> DsBasicModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/customization/dynamic-styles/ds-basic/ds-basic.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> DynamicStylesComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./customization/dynamic-styles/dynamic-styles.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> DsBasicModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./customization/dynamic-styles/ds-basic/ds-basic.module'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> DsCssDeclarationsBlockModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./customization/dynamic-styles/ds-css-declarations-block/ds-css-declarations-block.module'</span><span class="tt18 ttae">;</span>
 
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ToolbarDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/components/toolbar-demo/toolbar-demo.component'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ToolbarBasicDemoModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/components/toolbar-demo/toolbar-basic-demo/toolbar-basic-demo.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ToolbarDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/toolbar-demo/toolbar-demo.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ToolbarBasicDemoModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/toolbar-demo/toolbar-basic-demo/toolbar-basic-demo.module'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ToolbarWithIconsModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/toolbar-demo/toolbar-with-icons/toolbar-with-icons.module'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ToolbarDenseModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/toolbar-demo/toolbar-dense/toolbar-dense.module'</span><span class="tt18 ttae">;</span>
 
 <span class="tt18 tt3o">// tslint:disable-next-line:max-line-length</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ResizingCroppingImagesExample01Module <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/components/resizing-cropping-images-demo/resizing-cropping-images-example-01/resizing-cropping-images-example-01.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ResizingCroppingImagesExample01Module <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/resizing-cropping-images-demo/resizing-cropping-images-example-01/resizing-cropping-images-example-01.module'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt3o">// tslint:disable-next-line:max-line-length</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ResizingCroppingImagesExample02Module <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/components/resizing-cropping-images-demo/resizing-cropping-images-example-02/resizing-cropping-images-example-02.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ResizingCroppingImagesExample02Module <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/resizing-cropping-images-demo/resizing-cropping-images-example-02/resizing-cropping-images-example-02.module'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt3o">// tslint:disable-next-line:max-line-length</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ResizingCroppingImagesExample03Module <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/components/resizing-cropping-images-demo/resizing-cropping-images-example-03/resizing-cropping-images-example-03.module'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ResizingCroppingImagesDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/components/resizing-cropping-images-demo/resizing-cropping-images-demo.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ResizingCroppingImagesExample03Module <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/resizing-cropping-images-demo/resizing-cropping-images-example-03/resizing-cropping-images-example-03.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ResizingCroppingImagesDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/resizing-cropping-images-demo/resizing-cropping-images-demo.component'</span><span class="tt18 ttae">;</span>
 
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> BadgeDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/badge-demo/badge-demo.component'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> BasicBadgeModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/components/badge-demo/basic-badge/basic-badge.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> BasicBadgeModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/badge-demo/basic-badge/basic-badge.module'</span><span class="tt18 ttae">;</span>
 
 <span class="tt18 tt3o">/** Field */</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> FieldDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/field-demo/field-demo.component'</span><span class="tt18 ttae">;</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> BasicFieldModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'@docs/components/field-demo/basic-field/basic-field.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> BasicFieldModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/field-demo/basic-field/basic-field.module'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> FieldPlaygroundModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/field-demo/field-playground/field-playground.module'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> SimpleFormModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/field-demo/simple-form/simple-form.module'</span><span class="tt18 ttae">;</span>
 
@@ -122,9 +122,6 @@
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> RadioExample01Module <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/radio-demo/radio-example-01/radio-example-01.module'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> BasicRadioModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/radio-demo/basic-radio/basic-radio.module'</span><span class="tt18 ttae">;</span>
 
-<span class="tt18 tt3o">/** 404 */</span>
-<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> PageNotFoundComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./page-not-found/page-not-found.component'</span><span class="tt18 ttae">;</span>
-
 <span class="tt18 tt3o">/** Select */</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> SelectDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/select-demo/select-demo.component'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> BasicSelectModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/select-demo/basic-select/basic-select.module'</span><span class="tt18 ttae">;</span>
@@ -152,11 +149,21 @@
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> ExpansionDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/expansion-demo/expansion-demo.component'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> BasicExpansionModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/expansion-demo/basic-expansion/basic-expansion.module'</span><span class="tt18 ttae">;</span>
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> CustomExpansionPanelModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/expansion-demo/custom-expansion-panel/custom-expansion-panel.module'</span><span class="tt18 ttae">;</span>
+
 <span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> LazyLoadingComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./guides/lazy-loading/lazy-loading.component'</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> MultipleThemesDemo01Module <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'../components/multiple-themes/multiple-themes-demo-01/multiple-themes-demo-01.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> MultipleThemesComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'../components/multiple-themes/multiple-themes.component'</span><span class="tt18 ttae">;</span>
+
+<span class="tt18 tt3o">/** Slider */</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> SliderDemoComponent <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/slider-demo/slider-demo.component'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> BasicSliderModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/slider-demo/basic-slider/basic-slider.module'</span><span class="tt18 ttae">;</span>
+<span class="tt18 tt1j">import</span> <span class="tt18 ttae">&#123;</span> SliderPlaygroundModule <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">from</span> <span class="tt18 tt3z">'./components/slider-demo/slider-playground/slider-playground.module'</span><span class="tt18 ttae">;</span>
 
 @<span class="tt18 tta3">NgModule</span><span class="tt18 ttae">(</span><span class="tt18 ttae">&#123;</span>
   imports<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span>
     SharedModule<span class="tt18 ttae">,</span>
+    RouterModule<span class="tt18 ttae">,</span>
     PrismModule<span class="tt18 ttae">,</span>
     DemoViewModule<span class="tt18 ttae">,</span>
     DocsRoutingModule<span class="tt18 ttae">,</span>
@@ -248,11 +255,16 @@
     CarouselWithBarModule<span class="tt18 ttae">,</span>
     <span class="tt18 tt3o">/** Expansion */</span>
     BasicExpansionModule<span class="tt18 ttae">,</span>
-    CustomExpansionPanelModule
+    CustomExpansionPanelModule<span class="tt18 ttae">,</span>
+    MultipleThemesDemo01Module<span class="tt18 ttae">,</span>
+    <span class="tt18 tt3o">/** Slider */</span>
+    BasicSliderModule<span class="tt18 ttae">,</span>
+    SliderPlaygroundModule
   <span class="tt18 ttae">]</span><span class="tt18 ttae">,</span>
   declarations<span class="tt18 ttae">:</span> <span class="tt18 ttae">[</span>
     ThemingComponent<span class="tt18 ttae">,</span>
     ThemingComponentsComponent<span class="tt18 ttae">,</span>
+    MultipleThemesComponent<span class="tt18 ttae">,</span>
     <span class="tt18 tt3o">/** Grid */</span>
     GridDemoComponent<span class="tt18 ttae">,</span>
     <span class="tt18 tt3o">/** Responsive */</span>
@@ -295,8 +307,6 @@
     DrawerDemoComponent<span class="tt18 ttae">,</span>
     <span class="tt18 tt3o">/** Radio */</span>
     RadioDemoComponent<span class="tt18 ttae">,</span>
-    <span class="tt18 tt3o">/** 404 */</span>
-    PageNotFoundComponent<span class="tt18 ttae">,</span>
     <span class="tt18 tt3o">/** Select */</span>
     SelectDemoComponent<span class="tt18 ttae">,</span>
     <span class="tt18 tt3o">/** Dialog */</span>
@@ -306,7 +316,9 @@
     <span class="tt18 tt3o">/** Expansion */</span>
     ExpansionDemoComponent<span class="tt18 ttae">,</span>
     <span class="tt18 tt3o">/** Lazy Loading */</span>
-    LazyLoadingComponent
+    LazyLoadingComponent<span class="tt18 ttae">,</span>
+    <span class="tt18 tt3o">/** Slider */</span>
+    SliderDemoComponent
   <span class="tt18 ttae">]</span>
 <span class="tt18 ttae">&#125;</span><span class="tt18 ttae">)</span>
 <span class="tt18 tt1j">export</span> <span class="tt18 tt1j">class</span> <span class="tt18 ttc8">DocsModule</span> <span class="tt18 ttae">&#123;</span> <span class="tt18 ttae">&#125;</span>

@@ -795,134 +795,6 @@
       }
     ]
   },
-  "schematics/component": {
-    "children": [
-      {
-        "name": "default",
-        "type": "Function"
-      },
-      {
-        "name": "updateFiles",
-        "type": "Function"
-      }
-    ]
-  },
-  "schematics/directive": {
-    "children": [
-      {
-        "name": "default",
-        "type": "Function"
-      },
-      {
-        "name": "updateFiles",
-        "type": "Function"
-      }
-    ]
-  },
-  "schematics/ng-add": {
-    "children": [
-      {
-        "name": "addFontsToIndex",
-        "type": "Function"
-      },
-      {
-        "name": "hammerjsImportStatement",
-        "type": "Variable"
-      },
-      {
-        "name": "addHammerJsToMain",
-        "type": "Function"
-      },
-      {
-        "name": "ANGULAR_CORE_VERSION",
-        "type": "Variable"
-      },
-      {
-        "name": "AUI_VERSION",
-        "type": "Variable"
-      },
-      {
-        "name": "CHROMA_JS_VERSION",
-        "type": "Variable"
-      },
-      {
-        "name": "HAMMERJS_VERSION",
-        "type": "Variable"
-      },
-      {
-        "name": "addPkg",
-        "type": "Function"
-      },
-      {
-        "name": "default",
-        "type": "Function"
-      },
-      {
-        "name": "installPkgs",
-        "type": "Function"
-      },
-      {
-        "name": "sortObjectByKeys",
-        "type": "Function"
-      },
-      {
-        "name": "Schema",
-        "type": "Interface"
-      },
-      {
-        "name": "getTsSourceFile",
-        "type": "Function"
-      },
-      {
-        "name": "setUpAppModule",
-        "type": "Function"
-      },
-      {
-        "name": "updateAppModule",
-        "type": "Function"
-      }
-    ]
-  },
-  "schematics/utils": {
-    "children": [
-      {
-        "name": "addImport",
-        "type": "Function"
-      },
-      {
-        "name": "getTsSourceFile",
-        "type": "Function"
-      },
-      {
-        "name": "prettierConstructorParameters",
-        "type": "Function"
-      },
-      {
-        "name": "getAppComponentPath",
-        "type": "Function"
-      },
-      {
-        "name": "getProjectFromWorkspace",
-        "type": "Function"
-      },
-      {
-        "name": "getProjectTargetOptions",
-        "type": "Function"
-      },
-      {
-        "name": "getComponentOrDirective",
-        "type": "Function"
-      },
-      {
-        "name": "getContructor",
-        "type": "Function"
-      },
-      {
-        "name": "setUpStyles",
-        "type": "Function"
-      }
-    ]
-  },
   "select": {
     "children": [
       {
@@ -972,6 +844,94 @@
       {
         "name": "LySelectModule",
         "type": "NgModule"
+      }
+    ]
+  },
+  "slider": {
+    "children": [
+      {
+        "name": "LyMark",
+        "type": "Component"
+      },
+      {
+        "name": "LySlider",
+        "type": "Component"
+      },
+      {
+        "name": "LySliderChange",
+        "type": "Class"
+      },
+      {
+        "name": "LySliderMark",
+        "type": "Interface"
+      },
+      {
+        "name": "ThemeVariablesWithSlider",
+        "type": "Interface"
+      },
+      {
+        "name": "Thumb",
+        "type": "Interface"
+      },
+      {
+        "name": "STYLE_PRIORITY",
+        "type": "Variable"
+      },
+      {
+        "name": "ASC",
+        "type": "Function"
+      },
+      {
+        "name": "arrayEquals",
+        "type": "Function"
+      },
+      {
+        "name": "clamp",
+        "type": "Function"
+      },
+      {
+        "name": "findClosest",
+        "type": "Function"
+      },
+      {
+        "name": "percentToValue",
+        "type": "Function"
+      },
+      {
+        "name": "valueEquals",
+        "type": "Function"
+      },
+      {
+        "name": "гbetween",
+        "type": "Function"
+      },
+      {
+        "name": "гvalueToPercent",
+        "type": "Function"
+      },
+      {
+        "name": "LY_SLIDER_CONTROL_VALUE_ACCESSOR",
+        "type": "Object literal"
+      },
+      {
+        "name": "LySliderStyleConfig",
+        "type": "Interface"
+      },
+      {
+        "name": "SliderVariables",
+        "type": "Interface"
+      },
+      {
+        "name": "Omit",
+        "type": "Type alias"
+      },
+      {
+        "name": "LySliderModule",
+        "type": "NgModule"
+      },
+      {
+        "name": "LyTick",
+        "type": "Directive"
       }
     ]
   },
@@ -1218,6 +1178,14 @@
         "type": "Injectable"
       },
       {
+        "name": "getLyThemeStyleUndefinedError",
+        "type": "Function"
+      },
+      {
+        "name": "getLyThemeVariableOptionUndefinedError",
+        "type": "Function"
+      },
+      {
         "name": "getLyThemeVariableUndefinedError",
         "type": "Function"
       },
@@ -1302,8 +1270,20 @@
         "type": "Interface"
       },
       {
+        "name": "componentDestroyed",
+        "type": "Function"
+      },
+      {
+        "name": "untilComponentDestroyed",
+        "type": "Function"
+      },
+      {
         "name": "defaultEntry",
         "type": "Function"
+      },
+      {
+        "name": "LyHostClass",
+        "type": "Injectable"
       },
       {
         "name": "toBoolean",
@@ -1327,6 +1307,10 @@
       },
       {
         "name": "scrollWithAnimation",
+        "type": "Function"
+      },
+      {
+        "name": "toNumber",
         "type": "Function"
       },
       {
@@ -1538,6 +1522,10 @@
         "type": "Interface"
       },
       {
+        "name": "LyComponentStyle",
+        "type": "Interface"
+      },
+      {
         "name": "StyleContainer",
         "type": "Interface"
       },
@@ -1551,6 +1539,10 @@
       },
       {
         "name": "LyClasses",
+        "type": "Type alias"
+      },
+      {
+        "name": "LyComponentStyleItem",
         "type": "Type alias"
       },
       {
@@ -1754,6 +1746,14 @@
         "type": "Interface"
       },
       {
+        "name": "SliderAppearance",
+        "type": "Interface"
+      },
+      {
+        "name": "SliderVariables",
+        "type": "Interface"
+      },
+      {
         "name": "SnackBarVariables",
         "type": "Interface"
       },
@@ -1886,6 +1886,10 @@
         "type": "Class"
       },
       {
+        "name": "chroma",
+        "type": "Variable"
+      },
+      {
         "name": "MinimaDark",
         "type": "Class"
       },
@@ -1944,6 +1948,14 @@
       {
         "name": "zIndex",
         "type": "Object literal"
+      }
+    ]
+  },
+  "themes/minima/styles": {
+    "children": [
+      {
+        "name": "LY_SLIDER_STANDARD_APPEARANCE",
+        "type": "Variable"
       }
     ]
   },
