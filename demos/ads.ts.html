@@ -44,6 +44,8 @@
               <span class="tt18 tt1j">let</span> api <span class="tt18 ttb0">=</span> <span class="tt18 template-string"><span class="tt18 tt3z">`https://codefund.app/properties/171/funder.js?`</span></span><span class="tt18 ttae">;</span>
 
               <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">appendChild</span><span class="tt18 ttae">(</span>Div<span class="tt18 ttae">,</span> CodeFund<span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+              <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">setStyle</span><span class="tt18 ttae">(</span>Div<span class="tt18 ttae">,</span> <span class="tt18 tt3z">'display'</span><span class="tt18 ttae">,</span> <span class="tt18 tt3z">'flex'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
+              <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">setStyle</span><span class="tt18 ttae">(</span>Div<span class="tt18 ttae">,</span> <span class="tt18 tt3z">'min-height'</span><span class="tt18 ttae">,</span> <span class="tt18 tt3z">'64px'</span><span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
               <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span>path <span class="tt18 ttb0">===</span> <span class="tt18 tt3z">''</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
                 api <span class="tt18 ttb0">+=</span> <span class="tt18 template-string"><span class="tt18 tt3z">`theme=dark&amp;template=cente<span style="background:red;color:white;opacity:1">red</span>`</span></span><span class="tt18 ttae">;</span>
               <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">else</span> <span class="tt18 ttae">&#123;</span>
@@ -58,7 +60,7 @@
                 nextSibling
               <span class="tt18 ttae">)</span><span class="tt18 ttae">;</span>
               <span class="tt18 tt1j">if</span> <span class="tt18 ttae">(</span><span class="tt18 tta3">isDevMode</span><span class="tt18 ttae">(</span><span class="tt18 ttae">)</span><span class="tt18 ttae">)</span> <span class="tt18 ttae">&#123;</span>
-                CodeFund<span class="tt18 ttae">.</span>innerHTML <span class="tt18 ttb0">=</span> <span class="tt18 template-string"><span class="tt18 tt3z">`--ad-</span><span class="tt18 interpolation"><span class="tt18 interpolation-punctuation ttae">$&#123;</span>count<span class="tt18 interpolation-punctuation ttae">&#125;</span></span><span class="tt18 tt3z">--`</span></span><span class="tt18 ttae">;</span>
+                CodeFund<span class="tt18 ttae">.</span>innerHTML <span class="tt18 ttb0">=</span> <span class="tt18 template-string"><span class="tt18 tt3z">`&lt;div style="padding: 1em">ads&lt;/div>`</span></span><span class="tt18 ttae">;</span>
               <span class="tt18 ttae">&#125;</span> <span class="tt18 tt1j">else</span> <span class="tt18 ttae">&#123;</span>
                 <span class="tt18 tt1j">this</span><span class="tt18 ttae">.</span>_renderer<span class="tt18 ttae">.</span><span class="tt18 tta3">appendChild</span><span class="tt18 ttae">(</span>
                   Div<span class="tt18 ttae">,</span>
