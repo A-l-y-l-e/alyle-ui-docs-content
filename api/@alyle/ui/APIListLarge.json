@@ -1290,8 +1290,8 @@
         "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> hasV8BreakIterator <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 ttae\">(</span><span class=\"tt18 tt1j\">typeof</span><span class=\"tt18 ttae\">(</span>Intl<span class=\"tt18 ttae\">)</span> <span class=\"tt18 ttb0\">!==</span> <span class=\"tt18 tt3z\">'undefined'</span> <span class=\"tt18 ttb0\">&amp;&amp;</span> <span class=\"tt18 ttae\">(</span>Intl <span class=\"tt18 tt1j\">as</span> <span class=\"tt18 ttcj\">any</span><span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">.</span>v8BreakIterator<span class=\"tt18 ttae\">)</span></pre></div>"
       },
       {
-        "name": "INITIAL_WH",
-        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">INITIAL_WH</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"initial\"</span></pre></div>"
+        "name": "INITIAL_V",
+        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">INITIAL_V</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"initial\"</span></pre></div>"
       },
       {
         "name": "Shadows",
@@ -1359,11 +1359,11 @@
       },
       {
         "name": "AUI_LAST_UPDATE",
-        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">AUI_LAST_UPDATE</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"2019-07-14T20:14:22.259Z\"</span></pre></div>"
+        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">AUI_LAST_UPDATE</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"2019-07-18T00:40:21.096Z\"</span></pre></div>"
       },
       {
         "name": "AUI_VERSION",
-        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">AUI_VERSION</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"2.9.1\"</span></pre></div>"
+        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">AUI_VERSION</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"2.9.2\"</span></pre></div>"
       }
     ],
     "functionList": [],
