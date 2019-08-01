@@ -707,8 +707,8 @@
         "name": "LyMenuTriggerFor",
         "selector": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'[lyMenuTriggerFor]'</span></pre></div>",
         "inputs": "",
-        "exportAs": "",
-        "children": "<div class=\"ttb\"><pre class=\"ttm\">@<span class=\"tt18 tta3\">Input</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> lyMenuTriggerFor<span class=\"tt18 ttae\">:</span> TemplateRef\n<span class=\"tt18 tta3\">destroy</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span>\n<span class=\"tt18 tta3\">detach</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span></pre></div>"
+        "exportAs": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt3z\">'lyMenuTriggerFor'</span></pre></div>",
+        "children": "<div class=\"ttb\"><pre class=\"ttm\">@<span class=\"tt18 tta3\">Input</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> lyMenuTriggerFor<span class=\"tt18 ttae\">:</span> TemplateRef\n@<span class=\"tt18 tta3\">Output</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> menuClosed<span class=\"tt18 ttae\">:</span> EventEmitter\n@<span class=\"tt18 tta3\">Output</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span> menuOpened<span class=\"tt18 ttae\">:</span> EventEmitter\n<span class=\"tt18 tt3o\">/** Whether the menu is open. */</span>\nmenuOpen<span class=\"tt18 ttae\">:</span> <span class=\"tt18 ttcj\">boolean</span>\n<span class=\"tt18 tt3o\">/** Closes the menu */</span>\n<span class=\"tt18 tta3\">closeMenu</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span>\n<span class=\"tt18 tt3o\">/** Opens the menu */</span>\n<span class=\"tt18 tta3\">openMenu</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span>\n<span class=\"tt18 tt3o\">/** Toggle menu */</span>\n<span class=\"tt18 tta3\">toggleMenu</span><span class=\"tt18 ttae\">(</span><span class=\"tt18 ttae\">)</span><span class=\"tt18 ttae\">:</span> <span class=\"tt18 tt1j\">void</span></pre></div>"
       }
     ],
     "variableList": [
@@ -1359,11 +1359,11 @@
       },
       {
         "name": "AUI_LAST_UPDATE",
-        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">AUI_LAST_UPDATE</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"2019-07-18T00:40:21.096Z\"</span></pre></div>"
+        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">AUI_LAST_UPDATE</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"2019-08-01T04:23:33.591Z\"</span></pre></div>"
       },
       {
         "name": "AUI_VERSION",
-        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">AUI_VERSION</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"2.9.2\"</span></pre></div>"
+        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">AUI_VERSION</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"2.9.3\"</span></pre></div>"
       }
     ],
     "functionList": [],
