@@ -1367,11 +1367,11 @@
       },
       {
         "name": "AUI_LAST_UPDATE",
-        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">AUI_LAST_UPDATE</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"2019-10-24T19:08:59.921Z\"</span></pre></div>"
+        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">AUI_LAST_UPDATE</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"2019-10-24T21:35:04.329Z\"</span></pre></div>"
       },
       {
         "name": "AUI_VERSION",
-        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">AUI_VERSION</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"2.9.5\"</span></pre></div>"
+        "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">AUI_VERSION</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"2.9.6\"</span></pre></div>"
       }
     ],
     "functionList": [],
