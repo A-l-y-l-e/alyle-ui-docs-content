@@ -814,6 +814,10 @@
         "type": "Class"
       },
       {
+        "name": "LySelectTrigger",
+        "type": "Directive"
+      },
+      {
         "name": "ANIMATIONS",
         "type": "Variable"
       },
