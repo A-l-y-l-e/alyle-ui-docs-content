@@ -43,6 +43,10 @@
       "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">CONFIG_DEFAULT</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 ttb0\">&lt;</span>ImgCropperConfig<span class=\"tt18 ttb0\">></span><span class=\"tt18 ttae\">&#123;</span>\n  width<span class=\"tt18 ttae\">:</span> <span class=\"tt18 ttap\">250</span><span class=\"tt18 ttae\">,</span>\n  height<span class=\"tt18 ttae\">:</span> <span class=\"tt18 ttap\">200</span><span class=\"tt18 ttae\">,</span>\n  output<span class=\"tt18 ttae\">:</span> ImgResolution<span class=\"tt18 ttae\">.</span>Default<span class=\"tt18 ttae\">,</span>\n  antiAliased<span class=\"tt18 ttae\">:</span> <span class=\"tt18 boolean\">true</span>\n<span class=\"tt18 ttae\">&#125;</span></pre></div>"
     },
     {
+      "name": "DATA_IMAGE_SVG_PREFIX",
+      "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">DATA_IMAGE_SVG_PREFIX</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 tt3z\">\"data:image/svg+xml;base64,\"</span></pre></div>"
+    },
+    {
       "name": "STYLE_PRIORITY",
       "children": "<div class=\"ttb\"><pre class=\"ttm\"><span class=\"tt18 tt1j\">const</span> <span class=\"tt18 ttbb\">STYLE_PRIORITY</span> <span class=\"tt18 ttb0\">=</span> <span class=\"tt18 ttb0\">-</span><span class=\"tt18 ttap\">2</span></pre></div>"
     }
